@@ -1,17 +1,31 @@
 const express = require('express');
 const chalk = require('chalk');
+const path = require('path');
+const engine = require('ejs-locals');
+const indexRouter = require('./routes/index');
 
 /**
  * Create Express server.
  */
 const app = express();
 
-// Start the app by listening on the default Heroku port
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.engine('ejs', engine);
+app.set('view engine', 'ejs');
+
+// Listening on the default Heroku port
 app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 5000);
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-});
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+// app.get('/', (req, res) => {
+//     res.send('Hello World!')
+// });
+
+app.use('/', indexRouter);
 
 
 /**

@@ -1,0 +1,49 @@
+<% layout('layout') -%>
+    <!-- <% script('foo.js') -%> -->
+    <!-- <% stylesheet('foo.css') -%> -->
+    <!-- <% block('headerrr', "<p>I'm in the header.</p>") -%> -->
+    <!-- <% block('footerrr', "<p>I'm in the footer.</p>") -%> -->
+    <style>
+        .jumbotron {
+            background-image: url("/images/Crypto-Block-61.gif");
+            background-size: cover;
+        }
+
+        .card-img-top {
+            height: 286px;
+        }
+    </style>
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1>Moon (阿滿) Personal website</h1>
+            <p class="h5">This site serve as a personal bag of stuff that I find interesting,<br>
+                including projects that I've done.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card-deck">
+            <div class="card">
+                <img src="/images/Pen-Sudoku.jpg" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="card-title">Sudoku</h5>
+                    <p class="card-text">A hobby experimental Sudoku game developed during covid-19 lockdown.</p>
+
+                </div>
+                <div class="card-footer">
+                    <a href="/sudoku" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/images/Crypto-Block-84.gif" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="card-title">Crypto Block</h5>
+                    <p class="card-text">A NFT collection.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/crypto-blocks" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+    </div>
