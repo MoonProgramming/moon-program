@@ -1,3 +1,8 @@
+/**
+ * Load environment variables from .env file, where API keys and passwords are configured.
+ */
+require('dotenv').config();
+
 const express = require('express');
 const chalk = require('chalk');
 const path = require('path');
@@ -7,6 +12,7 @@ const indexRouter = require('./routes/index');
 const sudokuRouter = require('./routes/sudoku');
 const cryptoBlocksRouter = require('./routes/crypto-blocks');
 const signupRouter = require('./routes/signup');
+
 
 /**
  * Create Express server.

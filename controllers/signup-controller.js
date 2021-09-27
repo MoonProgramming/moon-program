@@ -23,6 +23,8 @@ exports.getSignup = (req, res) => {
 //     res.render('signup');
 // }
 exports.postSignup = (req, res, next) => {
+    
+    console.log('postSignup called');
 //     const validationErrors = [];
 //     if (!validator.isEmail(req.body.email)) validationErrors.push({ msg: 'Please enter a valid email address.' });
 //     if (!validator.isLength(req.body.password, { min: 8 })) validationErrors.push({ msg: 'Password must be at least 8 characters long' });
@@ -37,7 +39,6 @@ exports.postSignup = (req, res, next) => {
     const user = new User();
     user.email = req.body.email;
     user.password = req.body.password
-    console.log('user', user);
 
     // User.findOne(user.email, (err, existingUser, huh) => {
     //     console.log('tell me why ',err, existingUser, huh);
@@ -45,10 +46,11 @@ exports.postSignup = (req, res, next) => {
 
     User.findOne(user.email, (err, existingUser) => {
         if (err) { return next(err); }
-        if (existingUser) {
+        if (existingUser.length > 0) {
             alertsUtil.addAlert(res, 'danger', 'Account with that email address already exists.');
-            alertsUtil.addAlert(res, 'success', 'Account succesfully created.');
+            // alertsUtil.addAlert(res, 'success', 'Account succesfully created.');
             // req.flash('errors', { msg: 'Account with that email address already exists.' });
+            // res.send(JSON.stringify(existingUser));
             return res.render('signup');
         }
         // user.save((err) => {
@@ -60,6 +62,6 @@ exports.postSignup = (req, res, next) => {
         //         res.redirect('/');
         //     });
         // });
-        console.log('User.findOne complete ');
+        console.log('Proceed to save user...');
     });
 };
