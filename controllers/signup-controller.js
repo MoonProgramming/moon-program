@@ -1,4 +1,5 @@
 const {User} = require('../models/user');
+const alertsUtil = require('../utils/alerts');
 
 /**
  * GET /signup
@@ -45,14 +46,8 @@ exports.postSignup = (req, res, next) => {
     User.findOne(user.email, (err, existingUser) => {
         if (err) { return next(err); }
         if (existingUser) {
-            res.locals.alerts = [{
-                status: 'danger',
-                message: 'Account with that email address already exists.'
-            }];
-            res.locals.alerts.push({
-                status: 'success',
-                message: 'Account succesfully created.'
-            })
+            alertsUtil.addAlert(res, 'danger', 'Account with that email address already exists.');
+            alertsUtil.addAlert(res, 'success', 'Account succesfully created.');
             // req.flash('errors', { msg: 'Account with that email address already exists.' });
             return res.render('signup');
         }
