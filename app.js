@@ -6,6 +6,7 @@ const engine = require('ejs-locals');
 const indexRouter = require('./routes/index');
 const sudokuRouter = require('./routes/sudoku');
 const cryptoBlocksRouter = require('./routes/crypto-blocks');
+const signupRouter = require('./routes/signup');
 
 /**
  * Create Express server.
@@ -21,20 +22,20 @@ app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json({ limit: '20mb' }));
+app.use(express.urlencoded());
 
-// page ejbProperties
+// set pageName to local
 app.use(function(req, res, next){
-    const ejbProperties = {
-        pageName: req.path.split('/')[1],
-    }
-    console.log(ejbProperties);
-    req.ejbProperties = ejbProperties;
+    res.locals.pageName = req.path.split('/')[1];
+    res.locals.alerts = [];
     next();
 });
 
 app.use('/', indexRouter);
 app.use('/sudoku', sudokuRouter);
 app.use('/crypto-blocks', cryptoBlocksRouter);
+app.use('/signup', signupRouter);
 
 /**
  * Start Express server.

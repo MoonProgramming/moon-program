@@ -1,0 +1,35 @@
+<% layout('layout') -%>
+
+<div class="container">
+    <div class="pb-2 mt-2 mb-4 border-bottom">
+        <h3>Sign up</h3>
+    </div>
+
+    <% include templates/alert.ejs %>
+
+    <form id="signup-form" method="POST"><input type="hidden" name="_csrf"
+            value="BoAxn1jir6yeXHRfXNrcK6czQfiQRNQtTNerc=">
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label font-weight-bold text-right"
+                for="email">Email
+            </label>
+            <div class="col-md-7"><input class="form-control" type="email" name="email" id="email" placeholder="Email"
+                    autofocus="" autocomplete="email" required=""></div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label font-weight-bold text-right"
+                for="password">Password
+            </label>
+            <div class="col-md-7"><input class="form-control" type="password" name="password" id="password"
+                    placeholder="Password" autocomplete="new-password" minlength="8" required=""></div>
+        </div>
+        <div class="form-group row"><label class="col-md-3 col-form-label font-weight-bold text-right"
+                for="confirmPassword">Confirm Password</label>
+            <div class="col-md-7"><input class="form-control" type="password" name="confirmPassword"
+                    id="confirmPassword" placeholder="Confirm Password" autocomplete="new-password" minlength="8"
+                    required=""></div>
+        </div>
+        <div class="form-group offset-sm-3 col-md-7 pl-2"><button class="btn btn-success" type="submit"><i
+                    class="fas fa-user-plus fa-sm"></i>Signup</button></div>
+    </form>
+</div>
