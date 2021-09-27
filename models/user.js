@@ -1,54 +1,21 @@
-const db = require('../utils/db');
+const { query } = require('../utils/db');
 
 class User {
     email;
     password;
 
     save(next) {
-        // try {
-        //     const client = await db().connect();
-        //     const result = await client.query('SELECT * FROM test_table');
-        //     const results = { 'results': (result) ? result.rows : null };
-        //     res.send(JSON.stringify(results));
-        //     client.release();
-        // } catch (err) {
-        //     console.error(err);
-        //     res.send("Error " + err);
-        // }
+        const text = 'INSERT INTO users(email, password) VALUES($1, $2) RETURNING *';
+        const values = [this.email, this.password];
+
+        query(text, values, next);
     }
 
-    // app.get('/db', async (req, res) => {
-    //     try {
-    //         const client = await pool.connect();
-    //         const result = await client.query('SELECT * FROM test_table');
-    //         const results = { 'results': (result) ? result.rows : null };
-    //         res.send(JSON.stringify(results));
-    //         client.release();
-    //     } catch (err) {
-    //         console.error(err);
-    //         res.send("Error " + err);
-    //     }
-    // });
+    static findOne(email, next) {
+        const text = 'SELECT * FROM users WHERE email = $1';
+        const values = [email];
 
-    static async findOne(email, next) {
-        let err = null;
-        try {
-            const client = await db().connect();
-            const result = await client.query('SELECT * FROM users WHERE email = \''+ email+'\'');
-            // const results = { 'results': (result) ? result.rows : null };
-            // const results = [new User(), new User()];
-            // res.send(JSON.stringify(results));
-            next(err, result.rows);
-            client.release();
-        } catch (err) {
-            console.error(err);
-            next(err);
-        }
-
-        // const err = new Error('hahahaha');
-        // const err = null;
-        // const result = null;
-        // next(err, result);
+        query(text, values, next);
     }
 }
 
