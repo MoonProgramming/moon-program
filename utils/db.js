@@ -39,7 +39,6 @@ pool.on('remove', (client) => {
 
 module.exports = {
     query: function (text, values, next) {
-
         pool.connect((err, client, release) => {
             if (err) {
                 console.error('Error acquiring client', err.stack);
@@ -54,5 +53,25 @@ module.exports = {
                 next(err, result.rows);
             })
         });
+    },
+    tx: async (multiQuery, next) => {
+        const client = await pool.connect();
+        try {
+            console.log('BEGIN');
+            await client.query('BEGIN');
+            try {
+                console.log('Execute tx');
+                await multiQuery(client);
+                console.log('COMMIT');
+                client.query('COMMIT');
+            } catch (e) {
+                console.log('ROLLBACK');
+                client.query('ROLLBACK');
+                next(e);
+            }
+        } finally {
+            client.release();
+            console.log('client.released');
+        }
     }
 }

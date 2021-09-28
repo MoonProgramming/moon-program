@@ -18,3 +18,14 @@ exports.addAlert = (res, status, message) => {
         }];
     }  
 };
+
+exports.isNotEmpty = (res) => {
+    if (res.locals.alerts && res.locals.alerts.length > 0) {
+        return true;
+    }
+    return false;
+};
+
+exports.clearAlerts = (res) => {
+    res.locals.alerts = [];
+};
