@@ -23,28 +23,30 @@
     </div>
 
     <div class="container">
-        <div class="pb-2 mt-4 mb-4 border-bottom">
-            <h3>Sudoku</h3>
-            <div class="small">Select empty box, key-in/click/drag your numbers.</div>
+        <div class="pb-2 mt-4 mb-2 border-bottom">
+            <h2>Sudoku</h2>
+            <div class="small mt-2">&bull; Select empty box.<br>
+                &bull; Key-in/click/drag your numbers.</div>
         </div>
 
         <% include templates/alert.ejs %>
 
-        <div class="btn-group dropright">
-            <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+
+        <div class="row justify-content-sm-left sketch-container mt-2">
+            <div class="col-sm-auto" id="sketch-holder"></div>
+        </div>
+
+        <div class="btn-group dropup">
+            <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Action
             </button>
             <div class="dropdown-menu">
-                <button class="dropdown-item" type="button" onclick="genNewQuestion()">New Game</button>
+                <button class="dropdown-item btn-sm btn-light" type="button" onclick="genNewQuestion()">&bull; New Game</button>
                 <div class="dropdown-divider"></div>
-                <button class="dropdown-item" type="button" onclick="resetQuestion()">Reset</button>
-                <button class="dropdown-item" type="button" onclick="showAnswer()">Show Answer</button>
-                <button class="dropdown-item" type="button" onclick="hintNextStep()">Hint Next Step</button>
+                <button class="dropdown-item btn-sm btn-light" type="button" onclick="resetQuestion()">&bull; Reset</button>
+                <button class="dropdown-item btn-sm btn-light" type="button" onclick="showAnswer()">&bull; Show Answer</button>
+                <button class="dropdown-item btn-sm btn-light" type="button" onclick="hintNextStep()">&bull; Hint Next Step</button>
             </div>
-        </div>
-        <div class="sketch-container mt-2">
-            <div id="sketch-holder"></div>
         </div>
     </div>
     <script src="/lib/sudokuGenerator.js"></script>
