@@ -2,6 +2,6 @@
  * GET /sudoku
  * Sudoku page.
  */
-exports.getSudoku = (req, res) => {
+exports.initPage = (req, res) => {
     res.render('sudoku');
 };

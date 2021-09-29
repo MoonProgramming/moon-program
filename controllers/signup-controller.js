@@ -6,7 +6,7 @@ const validator = require('validator');
  * GET /signup
  * Signup page.
  */
-exports.getSignup = (req, res) => {
+exports.initPage = (req, res) => {
     if (req.user) {
         return res.redirect('/');
     }

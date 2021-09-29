@@ -1,8 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const cryptoBlocksController = require('../controllers/crypto-blocks-controller');
 
-router.get('/', function (req, res) {
-    res.render('crypto-blocks');
-});
+router.get('/', cryptoBlocksController.initPage);
 
 module.exports = router;

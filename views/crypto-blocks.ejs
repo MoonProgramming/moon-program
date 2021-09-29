@@ -1,3 +1,28 @@
 <% layout('layout') -%>
+    <% script('https://unpkg.com/p5.createloop@0.2.8/dist/p5.createloop.js') -%>
 
-test
+    <div class="container">
+        <div class="pb-2 mt-4 mb-4 border-bottom">
+            <h3>Crypto Blocks Collection</h3>
+            <div class="small">Crypto Blocks Collection is a generative NFT art collection of digital blocks
+                processing in the blockchain domain.<br>
+                Each with unique properties combination.<br>
+                Available for purchase at <a href="https://opensea.io/collection/crypto-blocks-collection"
+                    target="blank">Opensea.io</a>
+            </div>
+        </div>
+
+        <% include templates/alert.ejs %>
+
+        <div class="row justify-content-sm-center sketch-container mt-2">
+            <div class="col-sm-auto" id="sketch-holder"></div>
+        </div>
+        <div class="row justify-content-sm-center">
+            <div class="col-auto">
+                <button class="btn btn-sm btn-secondary" type="button" onclick="generateNew()">
+                    <small>Generate New NFT &raquo;</small>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="/lib/cryptoBlocksGenerator.js"></script>
