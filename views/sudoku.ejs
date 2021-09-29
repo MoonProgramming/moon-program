@@ -1,3 +1,28 @@
 <% layout('layout') -%>
 
-test
+    <div class="container">
+        <div class="pb-2 mt-4 mb-4 border-bottom">
+            <h3>Sudoku</h3>
+            <div class="small">Select empty box, key-in/click/drag your numbers.</div>
+        </div>
+
+        <% include templates/alert.ejs %>
+
+        <div class="btn-group dropright">
+            <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Action
+            </button>
+            <div class="dropdown-menu">
+                <button class="dropdown-item" type="button" onclick="genNewQuestion()">New Game</button>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item" type="button" onclick="resetQuestion()">Reset</button>
+                <button class="dropdown-item" type="button" onclick="showAnswer()">Show Answer</button>
+                <button class="dropdown-item" type="button" onclick="hintNextStep()">Hint Next Step</button>
+            </div>
+        </div>
+        <div class="sketch-container mt-2">
+            <div id="sketch-holder"></div>
+        </div>
+    </div>
+    <script src="/lib/sudokuGenerator.js"></script>
