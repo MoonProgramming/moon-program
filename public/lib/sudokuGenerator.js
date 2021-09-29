@@ -603,9 +603,9 @@ class SudokuGenerator {
             }
         }
         if (allBoxesFilled && sudokuComplete)
-            alert('well done!');
+            showResultModal(true);
         else if (allBoxesFilled)
-            alert('not correct');
+            showResultModal(false);
     }
     appearMoreThanOnce(arr, element) {
         let count = 0;
@@ -654,4 +654,18 @@ function showAnswer() {
 }
 function hintNextStep() {
     sudokuInstance.hintNextStep();
+}
+function showResultModal(success) {
+    let title = 'Sorry, wrong answer...';
+    let body = '';
+    $('#sudokuCompleteModalBody').hide();
+    $('#saveResultButton').hide();
+    if (success) {
+        title = 'Congratulations! You\'ve done it!';
+        // $('#sudokuCompleteModalBody').show();
+        // $('#saveResultButton').show();
+    }
+    $('#sudokuCompleteModalTitle').html(title);
+    // $('#sudokuCompleteModalBody').html(body);
+    setTimeout(function(){ $('#sudokuCompleteModal').modal('show'); }, 100);
 }
