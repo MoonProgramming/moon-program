@@ -95,7 +95,7 @@ class SudokuGenerator {
                     }
                 }
                 // uncomment to prevent any default behavior
-                return false;
+                // return false;
             };
             s.mouseDragged = ((event) => {
                 dragX = s.mouseX;

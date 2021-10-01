@@ -1,0 +1,87 @@
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form id="login-form" method="POST" action="signin">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalTitle">Sign in</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="loginModalBody">
+                    <div id="alerts"></div>
+                    <div id="loading-spinner" class="text-center">
+                        <img class="loader" src="/images/loading-spinner.gif" style="display:none">
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label font-weight-bold text-right" for="email">
+                            Email
+                        </label>
+                        <div class="col-md-7">
+                            <input class="form-control" type="email" name="email" id="email" placeholder="Email"
+                                autofocus="" autocomplete="email" required="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label font-weight-bold text-right" for="password">
+                            Password
+                        </label>
+                        <div class="col-md-7"><input class="form-control" type="password" name="password" id="password"
+                                placeholder="Password" autocomplete="password" minlength="8" required="">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-outline-success">Sign in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $("#login-form").submit(function (event) {
+        /* stop form from submitting normally */
+        event.preventDefault();
+        $('#alerts').html('');
+        $('.loader').show();
+
+        /* get the action attribute from the <form action=""> element */
+        const $form = $(this);
+        const url = $form.attr('action');
+
+        /* Send the data using post with element id name and name2*/
+        const posting = $.post(url, {
+            email: $('#email').val(),
+            password: $('#password').val()
+        });
+
+        /* Alerts the results */
+        posting.done(function (data) {
+            $('.loader').hide();
+            if (data.success) {
+                window.location.replace(data.pageName);
+            } else {
+                data.alerts.unshift({
+                    status: 'danger',
+                    message: 'Sign in failed.'
+                });
+                for (alert of data.alerts) {
+                    const alertMsg = 
+                    "<div class='alert alert-" + alert.status + " alert-dismissible fade show' role='alert'>" +
+                        alert.message +
+                    "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                    "<span aria-hidden='true'>&times;</span></button></div>";
+
+                    $('#alerts').append(alertMsg);
+                }
+            }
+        });
+        posting.fail(function () {
+            console.log('posting failed');
+        });
+    });
+
+</script>

@@ -1,4 +1,5 @@
 const db = require('../utils/db');
+const bcrypt = require('bcrypt');
 
 class User {
     email;
@@ -15,9 +16,9 @@ class User {
                     message: 'Account with that email address already exists.'
                 });
             }
-
-            const text2 = 'INSERT INTO users(email, password) VALUES($1, $2) RETURNING *';
-            const values2 = [this.email, this.password];
+            const hashedPassword = await bcrypt.hash(this.password, 10);
+            const text2 = 'INSERT INTO users(email, password) VALUES($1, $2) RETURNING email';
+            const values2 = [this.email, hashedPassword];
             const result2 = await client.query(text2, values2);
             if (result2.rows.length) {
                 return next(null, {
@@ -28,9 +29,10 @@ class User {
         }, next);
     }
 
-    save(next) {
+    async save(next) {
+        const hashedPassword = await bcrypt.hash(this.password, 10);
         const text = 'INSERT INTO users(email, password) VALUES($1, $2) RETURNING *';
-        const values = [this.email, this.password];
+        const values = [this.email, hashedPassword];
         db.query(text, values, next);
     }
 

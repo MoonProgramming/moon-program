@@ -12,6 +12,7 @@ const indexRouter = require('./routes/index');
 const sudokuRouter = require('./routes/sudoku');
 const cryptoBlocksRouter = require('./routes/crypto-blocks');
 const signupRouter = require('./routes/signup');
+const loginRouter = require('./routes/login');
 
 
 /**
@@ -42,6 +43,7 @@ app.use('/', indexRouter);
 app.use('/sudoku', sudokuRouter);
 app.use('/crypto-blocks', cryptoBlocksRouter);
 app.use('/signup', signupRouter);
+app.use('/signin', loginRouter);
 
 /**
  * Start Express server.

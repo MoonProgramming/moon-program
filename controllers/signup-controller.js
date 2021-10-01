@@ -24,11 +24,11 @@ exports.postSignup = (req, res, next) => {
     let password = req.body.password;
     let confirmPassword = req.body.confirmPassword;
 
-    if (!validator.isEmail(email) || !validator.isLength(email, {min:3, max: 100})) 
+    if (!validator.isEmail(email) || !validator.isLength(email, { min: 3, max: 100 }))
         alertsUtil.addAlert(res, 'danger', 'Please enter a valid email address.');
-    if (!validator.isLength(password, { min: 8, max: 40})) 
+    if (!validator.isLength(password, { min: 8, max: 40 }))
         alertsUtil.addAlert(res, 'danger', 'Password must be 8-40 characters long');
-    if (password !== confirmPassword) 
+    if (password !== confirmPassword)
         alertsUtil.addAlert(res, 'danger', 'Passwords do not match');
 
     if (alertsUtil.isNotEmpty(res)) {
