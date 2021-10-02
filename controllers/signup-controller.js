@@ -10,7 +10,7 @@ exports.initPage = (req, res) => {
     if (req.user) {
         return res.redirect('/');
     }
-    res.render('signup');
+    res.render('signup', { csrfToken: req.csrfToken() });
 };
 
 /**
@@ -30,7 +30,7 @@ exports.postSignup = (req, res, next) => {
         alertsUtil.addAlert(res, 'danger', 'Passwords do not match');
 
     if (alertsUtil.isNotEmpty(res)) {
-        return res.render('signup');
+        return res.render('signup', { csrfToken: req.csrfToken() });
     }
     email = validator.normalizeEmail(email, { gmail_remove_dots: false });
 
@@ -43,28 +43,6 @@ exports.postSignup = (req, res, next) => {
             return next(err);
         }
         alertsUtil.addAlert(res, result.status, result.message);
-        return res.render('signup');
+        return res.render('signup', { csrfToken: req.csrfToken() });
     })
-
-    // User.findOne(user.email, (err, result) => {
-    //     if (err) { return next(err); }
-    //     if (result.length > 0) {
-    //         alertsUtil.addAlert(res, 'danger', 'Account with that email address already exists.');
-    //         // alertsUtil.addAlert(res, 'success', 'Account succesfully created.');
-    //         // req.flash('errors', { msg: 'Account with that email address already exists.' });
-    //         // res.send(JSON.stringify(result));
-    //         return res.render('signup');
-    //     }
-    //     user.save((err, result) => {
-    //         if (err) { return next(err); }
-    //         // req.logIn(user, (err) => {
-    //         //     if (err) {
-    //         //         return next(err);
-    //         //     }
-    //         //     res.redirect('/');
-    //         // });
-    //         alertsUtil.addAlert(res, 'success', 'Account succesfully created.');
-    //         return res.render('signup');
-    //     });
-    // });
 }

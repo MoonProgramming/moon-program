@@ -3,6 +3,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <form id="login-form" method="POST" action="/acct/signin">
+                <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
                 <div class="modal-header">
                     <h5 class="modal-title" id="loginModalTitle">Sign in</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -51,14 +52,21 @@
         /* get the action attribute from the <form action=""> element */
         const $form = $(this);
         const url = $form.attr('action');
+        const token = $('#_csrf').val();
 
-        /* Send the data using post with element id name and name2*/
-        const posting = $.post(url, {
-            email: $('#email').val(),
-            password: $('#password').val()
+        const posting = $.ajax({
+            credentials: 'same-origin', // <-- includes cookies in the request
+            headers: {
+                'CSRF-Token': token // <-- is the csrf token as a header
+            },
+            url: url,
+            type: "POST",
+            data: {
+                email: $('#email').val(),
+                password: $('#password').val()
+            }
         });
 
-        /* Alerts the results */
         posting.done(function (data) {
             $('.loader').hide();
             if (data.success) {
@@ -84,6 +92,7 @@
                 }
             }
         });
+        
         posting.fail(function () {
             console.log('posting failed');
         });

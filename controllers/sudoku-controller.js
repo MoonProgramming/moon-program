@@ -3,5 +3,5 @@
  * Sudoku page.
  */
 exports.initPage = (req, res) => {
-    res.render('sudoku');
+    res.render('sudoku', { csrfToken: req.csrfToken() });
 };
