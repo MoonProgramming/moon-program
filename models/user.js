@@ -7,7 +7,7 @@ class User {
 
     validateAndSave(next) {
         db.tx(async client => {
-            const text = 'SELECT * FROM users WHERE email = $1';
+            const text = 'SELECT id, email FROM users WHERE email = $1';
             const values = [this.email];
             const { rows } = await client.query(text, values);
             if (rows.length) {
@@ -17,7 +17,7 @@ class User {
                 });
             }
             const hashedPassword = await bcrypt.hash(this.password, 10);
-            const text2 = 'INSERT INTO users(email, password) VALUES($1, $2) RETURNING email';
+            const text2 = 'INSERT INTO users(email, password) VALUES($1, $2) RETURNING id, email';
             const values2 = [this.email, hashedPassword];
             const result2 = await client.query(text2, values2);
             if (result2.rows.length) {

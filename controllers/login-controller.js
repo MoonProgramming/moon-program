@@ -2,6 +2,7 @@ const { User } = require('../models/user');
 const alertsUtil = require('../utils/alerts');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 exports.postLogin = (req, res, next) => {
     let email = req.body.email;
@@ -11,7 +12,7 @@ exports.postLogin = (req, res, next) => {
         alertsUtil.addAlert(res, 'danger', 'Incorrect email address.');
     if (!validator.isLength(password, { min: 8, max: 40 }))
         alertsUtil.addAlert(res, 'danger', 'Incorrect password.');
-
+    
     if (alertsUtil.isNotEmpty(res)) {
         const loginResponse = {
             success: false,
@@ -42,23 +43,25 @@ exports.postLogin = (req, res, next) => {
                 }
                 return res.send(loginResponse);
             }
-            // login user
-            // req.logIn(user, (err) => {
-            //     if (err) {
-            //         return next(err);
-            //     }
-            //     res.redirect('/');
-            // });
-            
-            const host = req.headers.host;
-            const referer = req.headers.referer;
-            const pageName = referer.split(host + '/')[1];
+
+            // login user (create and assign token)
+            const payload = {
+                userId: result[0].id,
+            };
+            const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+            res.cookie('auth-token', token, { httpOnly: true, secure: true, maxAge: 60*60*1000 });
             const loginResponse = {
                 success: true,
-                alerts: res.locals.alerts,
-                pageName: pageName
+                alerts: res.locals.alerts
             }
+            
             return res.send(loginResponse);
         })
     })
+}
+
+exports.getLogout = (req, res, next) => {
+    req.user = null;
+    res.clearCookie('auth-token');
+    return res.redirect('/');
 }

@@ -2,7 +2,7 @@
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form id="login-form" method="POST" action="signin">
+            <form id="login-form" method="POST" action="/acct/signin">
                 <div class="modal-header">
                     <h5 class="modal-title" id="loginModalTitle">Sign in</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -62,18 +62,23 @@
         posting.done(function (data) {
             $('.loader').hide();
             if (data.success) {
-                window.location.replace(data.pageName);
+                $('#loginModal').modal('hide');
+                const html = "<li class='nav-item mt-3 mt-md-0'>" +
+                    "<a type='button' class='btn btn-outline-success' href='/acct/signout'>" +
+                    "Sign out</a></li>";
+
+                $('#acct-nav-holder').html(html);
             } else {
                 data.alerts.unshift({
                     status: 'danger',
                     message: 'Sign in failed.'
                 });
                 for (alert of data.alerts) {
-                    const alertMsg = 
-                    "<div class='alert alert-" + alert.status + " alert-dismissible fade show' role='alert'>" +
+                    const alertMsg =
+                        "<div class='alert alert-" + alert.status + " alert-dismissible fade show' role='alert'>" +
                         alert.message +
-                    "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-                    "<span aria-hidden='true'>&times;</span></button></div>";
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                        "<span aria-hidden='true'>&times;</span></button></div>";
 
                     $('#alerts').append(alertMsg);
                 }

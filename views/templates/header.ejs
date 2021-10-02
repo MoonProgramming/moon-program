@@ -26,9 +26,18 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form> -->
 
-        <ul class="navbar-nav">
+        <% if (user) { %>
+            <ul class="navbar-nav" id="acct-nav-holder">
+                <li class="nav-item mt-3 mt-md-0">
+                    <a type="button" class="btn btn-outline-success" href="/acct/signout">
+                        Sign out
+                    </a>
+                </li>
+            </ul>
+        <% } else { %>
+        <ul class="navbar-nav" id="acct-nav-holder">
             <li class="nav-item">
-                <a class="nav-link <% if(pageName === 'signup'){%>active<%}%>" href="/signup">Sign up</a>
+                <a class="nav-link <% if(pageName === 'acct'){%>active<%}%>" href="/acct/signup">Sign up</a>
             </li>
             <li class="nav-item mt-3 mt-md-0">
                 <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#loginModal">
@@ -36,6 +45,7 @@
                 </button>
             </li>
         </ul>
+        <% } %>
 
     </div>
 </nav>

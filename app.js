@@ -7,12 +7,12 @@ const express = require('express');
 const chalk = require('chalk');
 const path = require('path');
 const engine = require('ejs-locals');
+const jwt = require('jsonwebtoken');
 
 const indexRouter = require('./routes/index');
 const sudokuRouter = require('./routes/sudoku');
 const cryptoBlocksRouter = require('./routes/crypto-blocks');
-const signupRouter = require('./routes/signup');
-const loginRouter = require('./routes/login');
+const acctRouter = require('./routes/acct');
 
 
 /**
@@ -33,8 +33,16 @@ app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded());
 
 // set pageName to local
-app.use(function(req, res, next){
+app.use(function (req, res, next) {
+    const header = req.headers;
+    console.log('referer', header.referer);
+    if (header.cookie) {
+        token = header.cookie.split('auth-token=')[1];
+        req.user = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    }
+    console.log('req.user', req.user)
     res.locals.pageName = req.path.split('/')[1];
+    res.locals.user = req.user;
     res.locals.alerts = [];
     next();
 });
@@ -42,8 +50,7 @@ app.use(function(req, res, next){
 app.use('/', indexRouter);
 app.use('/sudoku', sudokuRouter);
 app.use('/crypto-blocks', cryptoBlocksRouter);
-app.use('/signup', signupRouter);
-app.use('/signin', loginRouter);
+app.use('/acct', acctRouter);
 
 /**
  * Start Express server.

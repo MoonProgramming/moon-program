@@ -10,9 +10,7 @@ exports.initPage = (req, res) => {
     if (req.user) {
         return res.redirect('/');
     }
-    res.render('signup', {
-        title: 'Create Account'
-    });
+    res.render('signup');
 };
 
 /**
