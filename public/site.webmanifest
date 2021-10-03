@@ -1,6 +1,7 @@
 {
     "name": "moon-program",
     "short_name": "MoonProgram",
+    "description": "Moon (阿滿) personal website.",
     "icons": [
         {
             "src": "/images/android-chrome-192x192.png",

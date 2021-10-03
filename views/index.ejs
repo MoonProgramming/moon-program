@@ -1,49 +1,44 @@
 <% layout('layout') -%>
     <style>
-        .jumbotron {
-            /* background-image: url("/images/Crypto-Block-61.gif"); */
-            /* background-size: cover; */
-            background-color: hsl(0, 0%, 100%);
-        }
-
         .card-img-top {
-            height: 286px;
+            height: 250px;
         }
     </style>
 
-    <div id="sketch-holder"></div>
-
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-            <h1>Moon (阿滿) personal website</h1>
-            <p>&bull; This site serve as a personal bag of stuff that I find interesting,<br>
-                including projects that I've done.</p>
-        </div>
-    </div>
-
     <div class="container">
+        <div class="pb-2 mt-5 mb-4 border-bottom">
+            <h2>Moon (阿滿) personal website</h2>
+            <div class="small mt-4 mb-4">&bull; This site serve as my personal web dev sandbox.<br>
+                &bull; Projects I've done that I still consider interesting.
+            </div>
+        </div>
+
         <div class="card-deck">
-            <div class="card" style="max-width: 330px;">
-                <img src="/images/Pen-Sudoku.jpg" class="card-img-top" alt="">
+            <div class="card" style="max-width: 250px;">
+                <a href="/sudoku">
+                    <img src="/images/Pen-Sudoku.jpg" class="card-img-top" alt="">
+                </a>
                 <div class="card-body">
                     <h5 class="card-title">Sudoku</h5>
                     <p class="card-text">A hobby experimental Sudoku game developed during covid-19 lockdown.</p>
 
                 </div>
-                <div class="card-footer">
-                    <a href="/sudoku" class="btn btn-primary">Go</a>
+                <div class="card-footer text-center">
+                    <a href="/sudoku" class="btn btn-outline-primary">Go</a>
                 </div>
             </div>
-            <div class="card" style="max-width: 330px;">
-                <img src="/images/card_thumbnail_crypto.png" class="card-img-top" alt="">
+            <div class="card" style="max-width: 250px;">
+                <a href="/crypto-blocks">
+                    <img src="/images/card_thumbnail_crypto.png" class="card-img-top" alt="">
+                </a>
                 <div class="card-body">
                     <h5 class="card-title">Crypto Block</h5>
-                    <p class="card-text">A NFT collection.</p>
+                    <p class="card-text">A generative NFT art collection of digital blocks
+                        processing in the blockchain domain.</p>
                 </div>
-                <div class="card-footer">
-                    <a href="/crypto-blocks" class="btn btn-primary">Go</a>
+                <div class="card-footer text-center">
+                    <a href="/crypto-blocks" class="btn btn-outline-primary">Go</a>
                 </div>
             </div>
         </div>
     </div>
-    <script src="/lib/jumbotronGenerator.js"></script>

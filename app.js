@@ -52,7 +52,10 @@ app.use(
                     'https://stackpath.bootstrapcdn.com',
                     "'unsafe-inline'"
                 ],
-                imgSrc: ["'self'"],
+                imgSrc: [
+                    "'self'",
+                    'data:'
+                ],
                 connectSrc: ["'self'"],
                 fontSrc: ["'self'"],
                 objectSrc: ["'self'"],
@@ -70,8 +73,8 @@ app.use(
  */
 app.set('trust proxy', 1);
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 300 // limit each IP to 100 requests per windowMs
+    windowMs: 1 * 60 * 1000, // 1 minutes
+    max: 300 // limit each IP to 300 requests per windowMs
 });
 
 app.use(limiter);
@@ -84,17 +87,16 @@ app.use(csrfProtection);
 // set incoming request
 app.use(function (req, res, next) {
     req.user = null;
-    if (req.header.cookie) {
+    if (req.cookies) {
         try {
-            const token = req.header.cookie.split('auth-token=')[1];
+            const token = req.cookies.auth_token;
             if (token)
                 req.user = jwt.verify(token, process.env.JWT_SECRET_KEY);
         } catch (err) {
-            res.clearCookie('auth-token');
+            res.clearCookie('auth_token');
             console.error(err);
         }
     }
-    console.log('req.user', req.user)
     res.locals.pageName = req.path.split('/')[1];
     res.locals.user = req.user;
     res.locals.alerts = [];
@@ -118,7 +120,7 @@ app.listen(app.get('port'), () => {
 
 // error handling
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function (req, res) {
     var err = new Error('Not Found');
     err.status = 404;
     // set locals, only providing error in development

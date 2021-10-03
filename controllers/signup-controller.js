@@ -7,15 +7,12 @@ const validator = require('validator');
  * Signup page.
  */
 exports.initPage = (req, res) => {
-    if (req.user) {
-        return res.redirect('/');
-    }
     res.render('signup', { csrfToken: req.csrfToken() });
 };
 
 /**
  * POST /signup
- * Create a new local account.
+ * Create a new account.
  */
 exports.postSignup = (req, res, next) => {
     let email = req.body.email;

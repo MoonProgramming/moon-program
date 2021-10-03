@@ -49,7 +49,6 @@
         $('#alerts').html('');
         $('.loader').show();
 
-        /* get the action attribute from the <form action=""> element */
         const $form = $(this);
         const url = $form.attr('action');
         const token = $('#_csrf').val();
@@ -57,7 +56,7 @@
         const posting = $.ajax({
             credentials: 'same-origin', // <-- includes cookies in the request
             headers: {
-                'CSRF-Token': token // <-- is the csrf token as a header
+                'CSRF-Token': token
             },
             url: url,
             type: "POST",

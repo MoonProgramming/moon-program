@@ -49,7 +49,7 @@ exports.postLogin = (req, res, next) => {
                 userId: result[0].id,
             };
             const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
-            res.cookie('auth-token', token, { httpOnly: true, secure: true, maxAge: 60*60*1000 });
+            res.cookie('auth_token', token, { httpOnly: true, secure: true, maxAge: 60*60*1000 });
             const loginResponse = {
                 success: true,
                 alerts: res.locals.alerts
@@ -62,6 +62,6 @@ exports.postLogin = (req, res, next) => {
 
 exports.getLogout = (req, res, next) => {
     req.user = null;
-    res.clearCookie('auth-token');
-    return res.redirect('/');
+    res.clearCookie('auth_token');
+    return res.redirect('/crypto-blocks');
 }
