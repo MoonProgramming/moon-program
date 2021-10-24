@@ -16,6 +16,7 @@ const jwt = require('jsonwebtoken');
 const indexRouter = require('./routes/index');
 const sudokuRouter = require('./routes/sudoku');
 const cryptoBlocksRouter = require('./routes/crypto-blocks');
+const newNftProjectRouter = require('./routes/new-nft-project');
 const acctRouter = require('./routes/acct');
 
 
@@ -107,6 +108,7 @@ app.use(function (req, res, next) {
 app.use('/', indexRouter);
 app.use('/sudoku', sudokuRouter);
 app.use('/crypto-blocks', cryptoBlocksRouter);
+app.use('/new-nft-project', newNftProjectRouter);
 app.use('/acct', acctRouter);
 
 

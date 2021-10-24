@@ -1,0 +1,40 @@
+<% layout('layout') -%>
+
+    <div class="container">
+        <div class="pb-2 mt-4 mb-4 border-bottom">
+            <h2>New NFT Collection</h2>
+            <div class="small mt-3">&bull; Mint new NFT art collection with custom smart contract.<br>
+                &bull; Each with unique properties combination.<br>
+                &bull; Secondary market available for purchase at <a href="https://opensea.io/collection/crypto-blocks-collection"
+                    target="blank">Opensea.io</a>
+            </div>
+        </div>
+
+        <% include templates/alert.ejs %>
+        <div id="metamaskAlerts"></div>
+
+        <div class="text-right">
+            <button class="btn btn-sm btn-light" type="button" id="connectWalletButton" onclick="connectWallet()">
+                Connect Wallet &raquo;
+            </button>
+        </div>
+
+        <div class="row justify-content-sm-center sketch-container mt-2">
+            <div class="col-sm-auto" id="sketch-holder">
+                <iframe src='./new-nft-project/asset/full/1' width="400 px" height="400 px"></iframe>
+            </div>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-sm btn-light" type="button" id="mintNewNftButton">
+                mint for <%= mintPrice %> <%= currency %> &raquo;
+            </button>
+        </div>
+    </div>
+    <script>
+        let contractAddress = '<%= contractAddress %>';
+        // let contractAbiString = '<%- contractAbi %>';
+        // let contractAbi = contractAbiString.split(', ');
+        let contractAbi = '<%- JSON.stringify(contractAbi) %>';
+        let mintPrice = '<%= mintPrice %>';
+    </script>
+    <script type="module" src="/lib/wallet.js"></script>
