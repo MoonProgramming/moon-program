@@ -1,4 +1,5 @@
 let defaultWidth = 415;
+let thresholdSize = 437;
 
 let sketchHolder = document.getElementById("sketch-holder") || undefined;
 let canvas = null;
@@ -35,8 +36,8 @@ class SudokuGenerator {
             };
             s.windowResized = () => {
                 sketchHolder.innerHTML = "";
-                if (window.visualViewport.width < defaultWidth) {
-                    this.size = window.visualViewport.width;
+                if (window.visualViewport.width < thresholdSize) {
+                    this.size = window.visualViewport.width * 92 / 100;
                 } else {
                     this.size = defaultWidth;
                 }

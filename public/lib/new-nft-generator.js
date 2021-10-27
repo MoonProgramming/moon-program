@@ -2,12 +2,14 @@ let randomizer;
 let sketchHolder = document.getElementById("sketch-holder") || undefined;
 let renderer;
 let defaultSize = 400;
+let thresholdSize = 430;
 let totalSize;
 let frameSize;
 
 if (fullScreen) {
     sketchHolder = document.getElementsByTagName("BODY")[0] || undefined;
     defaultSize = window.visualViewport.width;
+    thresholdSize = window.visualViewport.width;
 }
 // function preload() {
 // 	// current owner (if known, else default to 0x0)
@@ -63,8 +65,8 @@ class newNftGenerator {
             sketchHolder.innerHTML = "";
 
             let maxSize = Math.min(window.visualViewport.width, window.visualViewport.height);
-            if (maxSize < defaultSize) {
-                totalSize = maxSize;
+            if (maxSize < thresholdSize) {
+                totalSize = maxSize * 92 / 100;
             } else {
                 totalSize = defaultSize;
             }
