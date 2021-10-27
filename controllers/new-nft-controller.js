@@ -52,7 +52,7 @@ exports.showMeta = async (req, res, next) => {
                 tokenHash: tokenHash,
             });
         }
-        const host = req.headers.host;
+        const host = 'http://' + req.headers.host;
         let tokenMeta = contract.genTokenMetaFromHash(tokenId, tokenHash, host);
         res.setHeader("Content-Type", "application/json");
         return res.send(JSON.stringify(tokenMeta));
