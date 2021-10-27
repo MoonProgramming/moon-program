@@ -54,6 +54,7 @@ exports.showMeta = async (req, res, next) => {
         }
         const host = req.headers.host;
         let tokenMeta = contract.genTokenMetaFromHash(tokenId, tokenHash, host);
+        res.setHeader("Content-Type", "application/json");
         return res.send(JSON.stringify(tokenMeta));
     } catch (err) {
         return next(err);
