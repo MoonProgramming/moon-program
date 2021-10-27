@@ -63,12 +63,12 @@ app.use(
                 mediaSrc: ["'self'"],
                 frameSrc: ["'self'"],
                 frameAncestors: [
+                    "'self'",
                     'https://testnets.opensea.io',
                     'https://opensea.io',
                 ],
             },
         },
-        // frameguard: false,
     })
 );
 

@@ -1,7 +1,6 @@
 let randomizer;
 let sketchHolder = document.getElementById("sketch-holder") || undefined;
 let defaultSize = 400;
-let thresholdSize = 430;
 let renderer;
 let totalSize;
 let frameSize;
@@ -54,8 +53,8 @@ class cryptoBlocksGenerator {
             sketchHolder.innerHTML = "";
 
             let maxSize = Math.min(window.visualViewport.width, window.visualViewport.height);
-            if (maxSize < thresholdSize) {
-                totalSize = maxSize * 92 / 100;
+            if (maxSize < defaultSize) {
+                totalSize = maxSize;
             } else {
                 totalSize = defaultSize;
             }
