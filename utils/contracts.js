@@ -52,6 +52,7 @@ exports.genTokenMetaFromHash = (tokenId, tokenHash, host) => {
     const imagePage = "https://pochi.nyc3.digitaloceanspaces.com/mainnet/0xa063df3b2c495ea66908ffcfd7adf2aa15a259828c0d374b406985cce2f71952.gif";
     const animationPage = mainPage + "/asset/full/" + tokenId;
     const tokenMeta = {
+        "environment": process.env.NODE_ENV,
         "collection_name": "New NFT",
         "website": mainPage,
         "artist": "Moon",
