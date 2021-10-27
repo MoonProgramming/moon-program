@@ -58,7 +58,7 @@ exports.genTokenMetaFromHash = (tokenId, tokenHash, host) => {
         "id": tokenId,
         "name": "New-NFT #" + tokenId,
         "tokenHash": tokenHash,
-        "description": "New NFT project that going to be awesome.\n[Interactive](" + assetPage + ")\nWebsite: [" + mainPage + "](" + mainPage + ")\nLicense: MIT\ntokenHash: " + tokenHash,
+        "description": "New NFT project that going to be awesome.\n\n[Interactive](" + assetPage + ")\n\n[Website](" + mainPage + ")\n\nLicense: MIT\n\ntokenHash: " + tokenHash,
         "external_url": assetPage,
         "image": imagePage,
         "animation_url": animationPage,
