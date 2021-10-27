@@ -62,8 +62,13 @@ app.use(
                 objectSrc: ["'self'"],
                 mediaSrc: ["'self'"],
                 frameSrc: ["'self'"],
+                frameAncestors: [
+                    'https://testnets.opensea.io',
+                    'https://opensea.io',
+                ],
             },
-        }
+        },
+        // frameguard: false,
     })
 );
 
