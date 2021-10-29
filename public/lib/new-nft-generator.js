@@ -101,7 +101,7 @@ class newNftGenerator {
                 s.saveFrames('out', 'png', 1, 1, data => {
                     fetch(postUrl, {
                         method: 'POST',
-                        // mode: 'cors', // no-cors, *cors, same-origin
+                        mode: 'no-cors', // no-cors, *cors, same-origin
                         credentials: 'same-origin',
                         headers: {
                             'CSRF-Token': token,
