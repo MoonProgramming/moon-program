@@ -103,7 +103,8 @@ class newNftGenerator {
                         credentials: 'same-origin', // <-- includes cookies in the request
                         headers: {
                             'CSRF-Token': token,
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': '*'
                         },
                         xhrFields: { withCredentials: true },
                         url: postUrl,
