@@ -104,8 +104,9 @@ class newNftGenerator {
                         headers: {
                             'CSRF-Token': token,
                             'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': '*'
+                            'Access-Control-Allow-Origin': '*',
                         },
+                        crossDomain : true,
                         xhrFields: { withCredentials: true },
                         url: postUrl,
                         type: "POST",
