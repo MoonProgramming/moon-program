@@ -107,6 +107,7 @@ class newNftGenerator {
                             'Access-Control-Allow-Origin': '*',
                         },
                         crossDomain : true,
+                        cors: false,
                         xhrFields: { withCredentials: true },
                         url: postUrl,
                         type: "POST",
