@@ -61,7 +61,7 @@ const initialize = async () => {
             const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
         } catch (error) {
             onboardButton.disabled = false;
-            showAlert(error.message);
+            showAlert(error.message, 'danger');
         }
     };
 
@@ -87,12 +87,12 @@ const initialize = async () => {
                 } catch (addError) {
                     console.log('Did not add network', addError);
                     onboardButton.disabled = false;
-                    showAlert(addError.message);
+                    showAlert(addError.message, 'danger');
                 }
             } else {
                 // console.log('Did not switch network', switchError);
                 onboardButton.disabled = false;
-                showAlert(switchError.message);
+                showAlert(switchError.message, 'danger');
             }
         }
     };
@@ -116,7 +116,7 @@ const initialize = async () => {
                 // For backwards compatibility reasons, if no accounts are available,
                 // eth_accounts will return an empty array.
                 console.error(err);
-                showAlert(err.message);
+                showAlert(err.message, 'danger');
             });
     } else {
         console.log('MetaMask not Installed');
@@ -141,10 +141,10 @@ const initialize = async () => {
             const shortAddress = currentAccount.replace(currentAccount.slice(6, 38), '...');
 
 
-            const balanceStr = (+ethers.utils.formatEther(await provider.getBalance(currentAccount))).toFixed(3)
-            console.log("Wallet balance", balanceStr)
-
+            const balanceStr = (+ethers.utils.formatEther(await provider.getBalance(currentAccount))).toFixed(3);
             onboardButton.innerText = shortAddress + '  /  ' + balanceStr + 'ETH' || 'Not able to get accounts';
+
+            populateUserNft();
 
             ethereum
                 .request({ method: 'eth_chainId' })
@@ -152,10 +152,39 @@ const initialize = async () => {
                 .catch((err) => {
                     // Some unexpected error.
                     console.error(err);
-                    showAlert(err.message);
+                    showAlert(err.message, 'danger');
                 });
         }
         console.log('currentAccount', currentAccount);
+    }
+
+    async function populateUserNft() {
+        const userCollectionMsg = document.getElementById("userCollectionMsg");
+        const userCollectionHolder = document.getElementById("userCollectionHolder");
+        const numberNftOwned = (await contract.balanceOf(currentAccount)).toNumber();
+        if (numberNftOwned > 0) {
+            let collection = '';
+            for (let i = 0; i < numberNftOwned; i++) {
+                let tokenId = (await contract.tokenOfOwnerByIndex(currentAccount, i)).toNumber();
+                collection += `<div class="card" style="min-width: 252px; max-width: 252px;">
+                    <a href="/new-nft-project/asset/${tokenId}">
+                        <img src="/images/new-nft/${tokenId}.png" class="card-img-top" alt="">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">Token ID: #${tokenId}</h5>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="/new-nft-project/asset/${tokenId}" class="btn btn-outline-primary">Details</a>
+                        <a href="https://testnets.opensea.io/assets/0x15a30c07976003f7ae3889d52dc5bfbaedf38975/${tokenId}" class="btn btn-outline-primary">OpenSea</a>
+                    </div>
+                </div>`;
+            }
+            userCollectionMsg.innerHTML = '';
+            userCollectionHolder.innerHTML = collection;
+        } else {
+            userCollectionMsg.innerHTML = 'You currently have no NFT.';
+            userCollectionHolder.innerHTML = '';
+        }
     }
 
     /**********************************************************/
@@ -171,9 +200,10 @@ const initialize = async () => {
     }
 
     mintNewNftButton.addEventListener('click', async () => {
+        $('#metamaskAlerts').html('');
         try {
             console.log("About to mint")
-            const nftPrice = await contract.getNFTPrice()
+            const nftPrice = await contract.getNFTPrice();
             if (!nftPrice) {
                 console.log("Cannot find the mint fee, aborting minting")
                 return
@@ -181,22 +211,38 @@ const initialize = async () => {
             const nftPrice2 = ethers.utils.formatEther(nftPrice);
             console.log(nftPrice2);
             const tx = await contract.mintAndRefundExcess(1, { value: nftPrice.mul(1) })
-            console.log(tx);
             handleTransaction(tx);
         } catch (error) {
-            console.error(error)
+            console.error(error);
+            showAlert(error.message, 'danger');
         }
     });
 
     async function handleTransaction(tx) {
-        console.log("Tx is ", tx)
-        mintMessage = `<img src="./images/loading-spinner.gif" width="20px" /> Transaction in progress.... waiting for confirmation. The transaction hash is <a target='_blank' href='https://etherscan.io/tx/${tx.hash}'>${tx.hash}</a>`
-        showAlert(mintMessage);
-        const confirmed = await tx.wait()
+        console.log("Tx is ", tx);
+        const mintMessage = `<div class="d-flex flex-row">
+        <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span></div>
+        <div class="pl-5">Transaction in progress.... waiting for confirmation. 
+        The transaction hash is <a target='_blank' href='https://etherscan.io/tx/${tx.hash}'>${tx.hash}</a></div></div>`
+        showAlert(mintMessage, 'info');
+
+        const confirmed = await tx.wait();
+        console.log("confirmed is ", confirmed);
         const events = confirmed.events
         const newTokenEvents = events.filter((e) => e.event === "NewTokenHash")
         console.log(newTokenEvents);
-      }
+
+        const numberMinted = newTokenEvents.length;
+        const mintSuccessMsg = "You have successfully minted " + numberMinted + " NFT!"
+        showAlert(mintSuccessMsg, 'success');
+
+        const tokenId = newTokenEvents[0].args.tokenId.toNumber();
+        const nftHolder = document.getElementById("nftHolder");
+        nftHolder.innerHTML = `<iframe class="embed-responsive-item" src="./new-nft-project/asset/full/${tokenId}"></iframe>`
+
+        setTimeout(populateUserNft, 10000);
+    }
 
     function handleDisconnect(error) {
         console.log('Metamask disconnected, please connect to MetaMask.');
@@ -210,9 +256,9 @@ const initialize = async () => {
 
 window.addEventListener('DOMContentLoaded', initialize);
 
-function showAlert(message) {
+function showAlert(message, status) {
     const alertMsg =
-        "<div class='alert alert-" + 'danger' + " alert-dismissible fade show' role='alert'>" +
+        "<div class='alert alert-" + status + " alert-dismissible fade show' role='alert'>" +
         message +
         "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
         "<span aria-hidden='true'>&times;</span></button></div>";

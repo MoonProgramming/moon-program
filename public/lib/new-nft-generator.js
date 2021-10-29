@@ -1,16 +1,5 @@
 let randomizer;
-let sketchHolder = document.getElementById("sketch-holder") || undefined;
-let renderer;
-let defaultSize = 400;
-let thresholdSize = 430;
-let totalSize;
-let frameSize;
 
-if (fullScreen) {
-    sketchHolder = document.getElementsByTagName("BODY")[0] || undefined;
-    defaultSize = window.visualViewport.width;
-    thresholdSize = window.visualViewport.width;
-}
 // function preload() {
 // 	// current owner (if known, else default to 0x0)
 // 	const owner = beyondHelpers.get('owner', '0x0000000000000000000000000000000000000000');
@@ -25,55 +14,73 @@ if (fullScreen) {
 
 class P5DeterministicRandomWithHexSeed {
     constructor(seed) {
-		if (seed.startsWith('0x')) {
-			seed = seed.substr(2);
-		}
-		this.seed = seed;
-		this.seedIndex = 0;
-		this.nextRandomSequence();
-	}
+        if (seed.startsWith('0x')) {
+            seed = seed.substr(2);
+        }
+        this.seed = seed;
+        this.seedIndex = 0;
+        this.nextRandomSequence();
+    }
 
-	random() {
-		return random();
-	}
+    random() {
+        return random();
+    }
 
-	nextRandomSequence() {
-		// get current seed
-		const e = this.seed.substr(this.seedIndex, 6);
-		// increment seedIndex for later call
-		this.seedIndex += 6;
-		// if it's too near the end, add again and modulo
-		if (this.seedIndex >= this.seed.length - 6) {
-			this.seedIndex = (this.seedIndex + 6) % this.seed.length;
-		}
+    nextRandomSequence() {
+        // get current seed
+        const e = this.seed.substr(this.seedIndex, 6);
+        // increment seedIndex for later call
+        this.seedIndex += 6;
+        // if it's too near the end, add again and modulo
+        if (this.seedIndex >= this.seed.length - 6) {
+            this.seedIndex = (this.seedIndex + 6) % this.seed.length;
+        }
 
-		randomSeed(parseInt(e, 16))
-	}
+        randomSeed(parseInt(e, 16))
+    }
 }
 
 class newNftGenerator {
+    defaultSize;
+    thresholdSize;
+    sketchHolder;
+
+    renderer;
+    totalSize;
+    frameSize;
     texture;
     offset = 2;
+
+    constructor(defaultSize, thresholdSize, sketchHolder) {
+        this.defaultSize = defaultSize;
+        this.thresholdSize = thresholdSize;
+        this.sketchHolder = sketchHolder;
+        this.totalSize = this.defaultSize;
+        this.frameSize = this.totalSize - (2 * this.offset);
+    }
+
     sketch = (s) => {
         s.preload = () => { };
         s.setup = () => {
-            renderer = s.createCanvas(defaultSize, defaultSize);
+            this.renderer = s.createCanvas(this.defaultSize, this.defaultSize);
             s.windowResized();
             this.start(s);
         };
         s.windowResized = () => {
-            sketchHolder.innerHTML = "";
+            if (this.sketchHolder) {
+                this.sketchHolder.innerHTML = "";
 
-            let maxSize = Math.min(window.visualViewport.width, window.visualViewport.height);
-            if (maxSize < thresholdSize) {
-                totalSize = maxSize * 92 / 100;
-            } else {
-                totalSize = defaultSize;
+                let maxSize = Math.min(window.visualViewport.width, window.visualViewport.height);
+                if (maxSize < this.thresholdSize) {
+                    this.totalSize = maxSize * 92 / 100;
+                } else {
+                    this.totalSize = this.defaultSize;
+                }
+                this.frameSize = this.totalSize - (2 * this.offset);
+                s.resizeCanvas(this.totalSize, this.totalSize);
+
+                this.renderer.parent(this.sketchHolder);
             }
-            frameSize = totalSize - (2 * this.offset);
-            s.resizeCanvas(totalSize, totalSize);
-
-            renderer.parent(sketchHolder);
         };
         s.draw = () => {
             // noise texture
@@ -81,42 +88,56 @@ class newNftGenerator {
             s.blendMode(s.OVERLAY);
             s.image(this.texture, this.offset, this.offset);
             s.pop();
-        
+
             // canvas frame
             s.push();
             s.noFill();
             s.strokeWeight(5);
-            s.square(0.5, 0.5, totalSize - 1);
+            s.square(0.5, 0.5, this.totalSize - 1);
             s.pop();
+
+            if (newlyMinted && !this.sketchHolder && s.frameCount == 1) {
+                console.log('saveFrames');
+                s.saveFrames('out', 'png', 1, 1, data => {
+                    fetch(postUrl, {
+                        method: 'POST',
+                        // mode: 'cors', // no-cors, *cors, same-origin
+                        credentials: 'same-origin',
+                        headers: {
+                            'CSRF-Token': token,
+                            'Content-Type': 'application/json'
+                        },
+                        referrerPolicy: 'no-referrer',
+                        body: JSON.stringify(data)
+                    }).then(response => {
+                        console.log(response);
+                    });
+                });
+            }
         };
-        s.mousePressed = () => {
-        }
     }
     start(s) {
-        // let nftMeta = this.generateNewProperties(s);
-        // jsonMeta.push(nftMeta);
-
         s.background(tokenAttributes[1].value);
         s.noLoop();
-        this.texture = s.createGraphics(defaultSize, defaultSize);
+        this.texture = s.createGraphics(this.defaultSize, this.defaultSize);
         this.addNoiseBackground(s);
     }
 
     addNoiseBackground(s) {
         const noisePerLayer = 800;
         const layerCount = 35;
-        const pixelSize = defaultSize / 777;
+        const pixelSize = this.defaultSize / 777;
         this.texture.stroke('rgba(0,0,0,' + pixelSize + ')');
-    
+
         for (let layer = 0; layer < layerCount; layer++) {
             let length = s.random(0.4, 0.6);
             for (let i = 0; i < noisePerLayer; i++) {
                 let mass = s.random(0.4, 1.5);
-                let x = s.random(this.offset, defaultSize - length);
-                let y = s.random(this.offset, defaultSize - length);
+                let x = s.random(this.offset, this.defaultSize - length);
+                let y = s.random(this.offset, this.defaultSize - length);
                 let xEnd = x + s.random(-1, 1) * length;
                 let yEnd = y + s.random(-1, 1) * length;
-    
+
                 this.texture.strokeWeight(mass);
                 this.texture.line(x, y, xEnd, yEnd);
             }
@@ -124,5 +145,21 @@ class newNftGenerator {
     }
 }
 
-let newNftInstance = new newNftGenerator();
+let sketchHolder = document.getElementById("sketch-holder") || undefined;
+let defaultSize = 400;
+let thresholdSize = 430;
+
+if (fullScreen) {
+    defaultSize = window.visualViewport.width;
+    thresholdSize = window.visualViewport.width;
+    sketchHolder = document.getElementsByTagName("BODY")[0] || undefined;
+}
+
+let newNftInstance = new newNftGenerator(defaultSize, thresholdSize, sketchHolder);
 let canvas = new p5(newNftInstance.sketch, sketchHolder);
+
+console.log('newlyMinted', newlyMinted);
+if (newlyMinted) {
+    let smallNftInstance = new newNftGenerator(350, 350, null);
+    new p5(smallNftInstance.sketch);
+}

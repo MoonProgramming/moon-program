@@ -10,6 +10,8 @@
             </div>
         </div>
 
+        <div class="pb-2 mt-4 mb-4 border-bottom">
+
         <% include templates/alert.ejs %>
         <div id="metamaskAlerts"></div>
 
@@ -19,8 +21,8 @@
             </button>
         </div>
 
-        <div class="row justify-content-sm-center mt-2">
-            <div class="embed-responsive embed-responsive-1by1" style="max-width: 400px;">
+        <div class="d-flex justify-content-sm-center mt-2">
+            <div id="nftHolder" class="embed-responsive embed-responsive-1by1" style="max-width: 400px;">
                 <iframe class="embed-responsive-item" src="./new-nft-project/asset/full/3"></iframe>
             </div>
         </div>
@@ -29,11 +31,16 @@
                 mint for <%= mintPrice %> <%= currency %> &raquo;
             </button>
         </div>
+        </div>
+
+        <div class="pb-2 mt-4 mb-4 border-bottom">
+            <h3>Your NFT Collection:</h3>
+            <div class="small mt-3" id="userCollectionMsg">&bull; Please connect metamask wallet to see your collection.</div>
+            <div class="card-deck" id="userCollectionHolder"></div>
+        </div>
     </div>
     <script>
         let contractAddress = '<%= contractAddress %>';
-        // let contractAbiString = '<%- contractAbi %>';
-        // let contractAbi = contractAbiString.split(', ');
         let contractAbi = '<%- JSON.stringify(contractAbi) %>';
         let mintPrice = '<%= mintPrice %>';
     </script>

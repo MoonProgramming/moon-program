@@ -48,9 +48,9 @@ exports.getTokenHash = (tokenId) => {
 exports.genTokenMetaFromHash = (tokenId, tokenHash, host) => {
     const attributes = this.genTokenAttributesFromHash(tokenHash);
     const mainPage = host + '/new-nft-project';
-    const assetPage = host + '/new-nft-project/asset/' + tokenId;
-    const imagePage = "https://pochi.nyc3.digitaloceanspaces.com/mainnet/0xa063df3b2c495ea66908ffcfd7adf2aa15a259828c0d374b406985cce2f71952.gif";
-    const animationPage = mainPage + "/asset/full/" + tokenId;
+    const assetPage = host + `/new-nft-project/asset/${tokenId}`;
+    const imagePage = host + `/images/new-nft/${tokenId}.png`;
+    const animationPage = mainPage + `/asset/full/${tokenId}`;;
     const tokenMeta = {
         "collection_name": "New NFT",
         "website": mainPage,
@@ -73,7 +73,6 @@ exports.genTokenAttributesFromHash = (tokenHash) => {
     for (let j = 0; j < 32; j++)
         hashPairs.push(tokenHash.slice(2 + 2 * j, 4 + 2 * j));
     let rawParams = hashPairs.map(x => parseInt(x, 16));
-    console.log(rawParams);
 
     let color = { "trait_type": "Color", "value": rawParams[0] < 190? "common" : "rare" };
     attributes.push(color);
