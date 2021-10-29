@@ -99,41 +99,41 @@ class newNftGenerator {
             if (newlyMinted && !this.sketchHolder && s.frameCount == 1) {
                 console.log('saveFrames');
                 s.saveFrames('out', 'png', 1, 1, data => {
-                    const posting = $.ajax({
-                        credentials: 'same-origin', // <-- includes cookies in the request
-                        headers: {
-                            'CSRF-Token': token,
-                            'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': '*',
-                        },
-                        crossDomain : true,
-                        cors: false,
-                        xhrFields: { withCredentials: true },
-                        url: postUrl,
-                        type: "POST",
-                        data: JSON.stringify(data),
-                    });
-            
-                    posting.done(function (data) {
-                        console.log(data);
-                    });
-                    
-                    posting.fail(function () {
-                        console.log('posting failed');
-                    });
-                    // fetch(postUrl, {
-                    //     method: 'POST',
-                    //     mode: 'no-cors', // no-cors, *cors, same-origin
-                    //     credentials: 'same-origin',
+                    // const posting = $.ajax({
+                    //     credentials: 'same-origin', // <-- includes cookies in the request
                     //     headers: {
                     //         'CSRF-Token': token,
-                    //         'Content-Type': 'application/json'
+                    //         'Content-Type': 'application/json',
+                    //         'Access-Control-Allow-Origin': '*',
                     //     },
-                    //     referrerPolicy: 'no-referrer',
-                    //     body: JSON.stringify(data)
-                    // }).then(response => {
-                    //     console.log(response);
+                    //     crossDomain : true,
+                    //     cors: false,
+                    //     xhrFields: { withCredentials: true },
+                    //     url: postUrl,
+                    //     type: "POST",
+                    //     data: JSON.stringify(data),
                     // });
+            
+                    // posting.done(function (data) {
+                    //     console.log(data);
+                    // });
+                    
+                    // posting.fail(function () {
+                    //     console.log('posting failed');
+                    // });
+                    fetch(postUrl, {
+                        method: 'POST',
+                        mode: 'no-cors', // no-cors, *cors, same-origin
+                        credentials: 'same-origin',
+                        headers: {
+                            'x-csrf-token': token,
+                            'Content-Type': 'application/json'
+                        },
+                        referrerPolicy: 'no-referrer',
+                        body: JSON.stringify(data)
+                    }).then(response => {
+                        console.log(response);
+                    });
                 });
             }
         };
