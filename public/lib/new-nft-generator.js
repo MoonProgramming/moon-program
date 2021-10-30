@@ -123,10 +123,10 @@ class newNftGenerator {
                     // });
                     fetch(postUrl, {
                         method: 'POST',
-                        mode: 'no-cors', // no-cors, *cors, same-origin
+                        mode: 'same-origin', // no-cors, *cors, same-origin
                         credentials: 'same-origin',
                         headers: {
-                            'x-csrf-token': token,
+                            'CSRF-Token': token,
                             'Content-Type': 'application/json'
                         },
                         referrerPolicy: 'no-referrer',
