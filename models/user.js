@@ -2,8 +2,10 @@ const db = require('../utils/db');
 const bcrypt = require('bcrypt');
 
 class User {
+    id;
     email;
     password;
+    created;
 
     validateAndSave(next) {
         db.tx(async client => {

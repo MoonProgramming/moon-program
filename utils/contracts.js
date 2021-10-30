@@ -1,5 +1,6 @@
 const { ethers } = require("ethers");
 
+const projectName = 'New NFT Project';
 const contractAddress = '0x15a30c07976003f7AE3889D52dc5BFbaEdf38975';
 const currency = 'ETH';
 const abi = [
@@ -49,7 +50,7 @@ exports.genTokenMetaFromHash = (tokenId, tokenHash, host) => {
     const attributes = this.genTokenAttributesFromHash(tokenHash);
     const mainPage = host + '/new-nft-project';
     const assetPage = host + `/new-nft-project/asset/${tokenId}`;
-    const imagePage = host + `/images/new-nft/${tokenId}.png`;
+    const imagePage = mainPage + `/img/${tokenId}`;
     const animationPage = mainPage + `/asset/full/${tokenId}`;;
     const tokenMeta = {
         "collection_name": "New NFT",
@@ -86,6 +87,7 @@ exports.genTokenAttributesFromHash = (tokenHash) => {
     return attributes;
 }
 
+exports.projectName = projectName;
 exports.contractAddress = contractAddress;
 exports.abi = abi;
 exports.currency = currency;

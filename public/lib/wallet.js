@@ -168,7 +168,7 @@ const initialize = async () => {
                 let tokenId = (await contract.tokenOfOwnerByIndex(currentAccount, i)).toNumber();
                 collection += `<div class="card" style="min-width: 252px; max-width: 252px;">
                     <a href="/new-nft-project/asset/${tokenId}">
-                        <img src="/images/new-nft/${tokenId}.png" class="card-img-top" alt="">
+                        <img src="/new-nft-project/img/${tokenId}" class="card-img-top" alt="">
                     </a>
                     <div class="card-body">
                         <h5 class="card-title">Token ID: #${tokenId}</h5>
