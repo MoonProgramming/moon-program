@@ -12,6 +12,7 @@ const abi = [
     "function tokenOfOwnerByIndex(address owner, uint index) view returns (uint)",
     "function tokenIdToHash(uint) view returns (bytes32)",
     "function getNFTPrice() view returns (uint)",
+    "function ownerOf(uint) view returns (address)",
 
     // Send some of your tokens to someone else
     "function transfer(address to, uint amount)",
@@ -46,6 +47,11 @@ exports.getTokenHash = (tokenId) => {
     return result;
 }
 
+exports.getOwner = (tokenId) => {
+    const result = this.getContract().ownerOf(tokenId);
+    return result;
+}
+
 exports.genTokenMetaFromHash = (tokenId, tokenHash, host) => {
     const attributes = this.genTokenAttributesFromHash(tokenHash);
     const mainPage = host + '/new-nft-project';
@@ -55,7 +61,9 @@ exports.genTokenMetaFromHash = (tokenId, tokenHash, host) => {
     const tokenMeta = {
         "collection_name": "New NFT",
         "website": mainPage,
-        "artist": "Moon",
+        "artistName": "Moon",
+        "artistEmail": "moon.programming@gmail.com",
+        "contract": contractAddress,
         "id": tokenId,
         "name": "New-NFT #" + tokenId,
         "tokenHash": tokenHash,
@@ -63,6 +71,7 @@ exports.genTokenMetaFromHash = (tokenId, tokenHash, host) => {
         "external_url": assetPage,
         "image": imagePage,
         "animation_url": animationPage,
+        "opensea_url": `https://testnets.opensea.io/assets/${contractAddress}/${tokenId}`,
         "attributes": attributes
     }
     return tokenMeta;

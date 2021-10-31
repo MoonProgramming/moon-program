@@ -55,7 +55,8 @@ app.use(
                 ],
                 imgSrc: [
                     "'self'",
-                    'data:'
+                    'data:',
+                    'https://storage.googleapis.com',
                 ],
                 connectSrc: ["'self'"],
                 fontSrc: ["'self'"],

@@ -1,8 +1,5 @@
-const { ethers } = require("ethers");
 const contract = require('../utils/contracts');
 const alertsUtil = require('../utils/alerts');
-const fs = require("fs");
-const path = require('path');
 const { NftPreviewImg } = require('../models/nftPreviewImg');
 
 exports.initPage = async (req, res, next) => {
@@ -24,22 +21,28 @@ exports.getAsset = async (req, res, next) => {
     try {
         const tokenId = +(req.params.tokenId);
         const tokenHash = await contract.getTokenHash(tokenId);
-        let tokenAttributes = [];
         console.log('getAsset', tokenHash);
         if (tokenHash === '0x0000000000000000000000000000000000000000000000000000000000000000') {
-            alertsUtil.addAlert(res, 'danger', 'Token does not exist.');
-        } else {
-            tokenAttributes = contract.genTokenAttributesFromHash(tokenHash);
+            throw new Error('Token does not exist.');
         }
+        const owner = await contract.getOwner(tokenId);
+        const host = getHost(req);
+        const tokenMeta = contract.genTokenMetaFromHash(tokenId, tokenHash, host);
 
         res.render('new-nft-asset', {
             csrfToken: req.csrfToken(),
-            tokenHash: tokenHash,
-            tokenAttributes: tokenAttributes
+            owner: owner,
+            tokenMeta: tokenMeta
         });
     } catch (err) {
-        return next(err);
+        alertsUtil.addAlert(res, 'danger', err.message);
+        return res.render('new-nft-asset', {
+            csrfToken: req.csrfToken(),
+            owner: '',
+            tokenMeta: {}
+        });
     }
+
 };
 
 
@@ -47,26 +50,22 @@ exports.showMeta = async (req, res, next) => {
     try {
         const tokenId = +(req.params.tokenId);
         const tokenHash = await contract.getTokenHash(tokenId);
-        console.log('showmeta', tokenHash);
+        console.log('showMeta', tokenHash);
         if (tokenHash === '0x0000000000000000000000000000000000000000000000000000000000000000') {
-            alertsUtil.addAlert(res, 'danger', 'Token does not exist.');
-            return res.render('new-nft-asset', {
-                csrfToken: req.csrfToken(),
-                tokenHash: tokenHash,
-            });
+            throw new Error('Token does not exist.');
         }
 
-        let host = '';
-        if (process.env.NODE_ENV === 'production') {
-            host = 'https://' + req.headers.host;
-        } else {
-            host = 'http://' + req.headers.host;
-        }
-        let tokenMeta = contract.genTokenMetaFromHash(tokenId, tokenHash, host);
+        const host = getHost(req);
+        const tokenMeta = contract.genTokenMetaFromHash(tokenId, tokenHash, host);
         res.setHeader("Content-Type", "application/json");
         return res.send(JSON.stringify(tokenMeta));
     } catch (err) {
-        return next(err);
+        alertsUtil.addAlert(res, 'danger', err.message);
+        return res.render('new-nft-asset', {
+            csrfToken: req.csrfToken(),
+            owner: '',
+            tokenMeta: {}
+        });
     }
 };
 
@@ -74,15 +73,10 @@ exports.showFull = async (req, res, next) => {
     try {
         const tokenId = +(req.params.tokenId);
         const tokenHash = await contract.getTokenHash(tokenId);
-        let tokenAttributes = [];
+
         console.log('showfull', tokenHash);
         if (tokenHash === '0x0000000000000000000000000000000000000000000000000000000000000000') {
-            alertsUtil.addAlert(res, 'danger', 'Token does not exist.');
-            return res.render('new-nft-asset', {
-                csrfToken: req.csrfToken(),
-                tokenHash: tokenHash,
-                tokenAttributes: tokenAttributes
-            });
+            throw new Error('Token does not exist.');
         } else {
             let newlyMinted = false;
             NftPreviewImg.findOne(contract.contractAddress, tokenId, (err, result) => {
@@ -90,14 +84,9 @@ exports.showFull = async (req, res, next) => {
                 if (!result.length) {
                     newlyMinted = true;
                 }
-                let host = '';
-                if (process.env.NODE_ENV === 'production') {
-                    host = 'https://' + req.headers.host;
-                } else {
-                    host = 'http://' + req.headers.host;
-                }
-    
-                tokenAttributes = contract.genTokenAttributesFromHash(tokenHash);
+
+                const host = getHost(req);
+                const tokenAttributes = contract.genTokenAttributesFromHash(tokenHash);
                 return res.render('new-nft-full', {
                     csrfToken: req.csrfToken(),
                     tokenHash: tokenHash,
@@ -108,25 +97,29 @@ exports.showFull = async (req, res, next) => {
             });
         }
     } catch (err) {
-        return next(err);
+        alertsUtil.addAlert(res, 'danger', err.message);
+        return res.render('new-nft-asset', {
+            csrfToken: req.csrfToken(),
+            owner: '',
+            tokenMeta: {}
+        });
     }
 };
 
 exports.showImg = async (req, res, next) => {
     try {
         const tokenId = +(req.params.tokenId);
-        let tokenAttributes = [];
         console.log('showImg' + tokenId);
 
         NftPreviewImg.findOne(contract.contractAddress, tokenId, (err, result) => {
-            if (err) { return next(err); }
-            if (!result.length) {
-                console.log('NftPreviewImg.findOne no result');
-                alertsUtil.addAlert(res, 'danger', "Image preview yet to generate.");
+            if (err || !result.length) {
+                if (err) { alertsUtil.addAlert(res, 'danger', err.message); }
+                else if (!result.length) { alertsUtil.addAlert(res, 'danger', 'Image preview yet to generate.'); }
+                
                 return res.render('new-nft-asset', {
                     csrfToken: req.csrfToken(),
-                    tokenHash: '',
-                    tokenAttributes: tokenAttributes
+                    owner: '',
+                    tokenMeta: {}
                 });
             }
 
@@ -140,7 +133,12 @@ exports.showImg = async (req, res, next) => {
             res.end(buf);
         });
     } catch (err) {
-        return next(err);
+        alertsUtil.addAlert(res, 'danger', err.message);
+        return res.render('new-nft-asset', {
+            csrfToken: req.csrfToken(),
+            owner: '',
+            tokenMeta: {}
+        });
     }
 }
 
@@ -149,14 +147,9 @@ exports.postImg = async (req, res, next) => {
         console.log('post received');
         const tokenId = +(req.params.tokenId);
         const tokenHash = await contract.getTokenHash(tokenId);
-        let tokenAttributes = [];
+
         if (tokenHash === '0x0000000000000000000000000000000000000000000000000000000000000000') {
-            alertsUtil.addAlert(res, 'danger', 'Token does not exist.');
-            return res.render('new-nft-asset', {
-                csrfToken: req.csrfToken(),
-                tokenHash: tokenHash,
-                tokenAttributes: tokenAttributes
-            });
+            throw new Error('Token does not exist.');
         }
         const body = req.body;
         let imageData = body[0].imageData;
@@ -175,6 +168,19 @@ exports.postImg = async (req, res, next) => {
             return res.send('image saved.');
         });
     } catch (err) {
-        return next(err);
+        alertsUtil.addAlert(res, 'danger', err.message);
+        return res.render('new-nft-asset', {
+            csrfToken: req.csrfToken(),
+            owner: '',
+            tokenMeta: {}
+        });
     }
+}
+
+function getHost(req) {
+    let host = 'http://' + req.headers.host;
+    if (process.env.NODE_ENV === 'production') {
+        host = 'https://' + req.headers.host;
+    }
+    return host;
 }
