@@ -175,7 +175,7 @@ const initialize = async () => {
                     </div>
                     <div class="card-footer text-center">
                         <a href="/new-nft-project/asset/${tokenId}" class="btn btn-outline-primary">Details</a>
-                        <a href="https://testnets.opensea.io/assets/0x15a30c07976003f7ae3889d52dc5bfbaedf38975/${tokenId}" class="btn btn-outline-primary">OpenSea</a>
+                        <a href="https://testnets.opensea.io/assets/${contractAddress}/${tokenId}" class="btn btn-outline-primary">OpenSea</a>
                     </div>
                 </div>`;
             }

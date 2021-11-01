@@ -172,8 +172,8 @@ let defaultSize = 400;
 let thresholdSize = 430;
 
 if (fullScreen) {
-    defaultSize = window.visualViewport.width;
-    thresholdSize = window.visualViewport.width;
+    defaultSize = 1600;
+    thresholdSize = 1600;
     sketchHolder = document.getElementsByTagName("BODY")[0] || undefined;
 }
 
