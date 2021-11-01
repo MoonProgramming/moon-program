@@ -41,10 +41,10 @@ const initialize = async () => {
     let currentAccount = null;
     let contract = null;
     let provider = null;
-    let mintPrice = null;
     const { ethereum } = window;
     const targetChain = network.rinkebyChain;
     const onboardButton = document.getElementById('connectWalletButton');
+    const mintAmount = document.getElementById('mintAmount');
     const mintNewNftButton = document.getElementById('mintNewNftButton');
 
 
@@ -199,6 +199,11 @@ const initialize = async () => {
         }
     }
 
+    mintAmount.addEventListener('change', async () => {
+        const nftTotalPrice = ($('#mintAmount').val() * mintPrice).toFixed(5);
+        $('#mintTotalPrice').html(`NFT for ${nftTotalPrice} ETH`);
+    });
+
     mintNewNftButton.addEventListener('click', async () => {
         $('#metamaskAlerts').html('');
         try {
@@ -208,9 +213,9 @@ const initialize = async () => {
                 console.log("Cannot find the mint fee, aborting minting")
                 return
             }
-            const nftPrice2 = ethers.utils.formatEther(nftPrice);
-            console.log(nftPrice2);
-            const tx = await contract.mintAndRefundExcess(1, { value: nftPrice.mul(1) })
+            // const nftPrice2 = ethers.utils.formatEther(nftPrice);
+            const amount = $('#mintAmount').val();
+            const tx = await contract.mintAndRefundExcess(amount, { value: nftPrice.mul(amount) })
             handleTransaction(tx);
         } catch (error) {
             console.error(error);
@@ -220,6 +225,9 @@ const initialize = async () => {
 
     async function handleTransaction(tx) {
         console.log("Tx is ", tx);
+
+        $('#mintDiv').html('');
+
         const mintMessage = `<div class="d-flex flex-row">
         <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span></div>
@@ -237,9 +245,55 @@ const initialize = async () => {
         const mintSuccessMsg = "You have successfully minted " + numberMinted + " NFT!"
         showAlert(mintSuccessMsg, 'success');
 
-        const tokenId = newTokenEvents[0].args.tokenId.toNumber();
-        const nftHolder = document.getElementById("nftHolder");
-        nftHolder.innerHTML = `<iframe class="embed-responsive-item" src="./new-nft-project/asset/full/${tokenId}"></iframe>`
+        const firstTokenId = newTokenEvents[0].args.tokenId.toNumber();
+        // const nftHolder = document.getElementById("nftHolder");
+        // nftHolder.innerHTML = `<iframe class="embed-responsive-item" src="./new-nft-project/asset/full/${tokenId}"></iframe>`
+        let html = `<div id="carouselvideo" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselvideo" data-slide-to="0" class="active"></li>`
+        for (let i = 1; i < numberMinted; i++) {
+            html += `<li data-target="#carouselvideo" data-slide-to="${i}"></li>`;
+        }
+        html += `</ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="d-flex justify-content-center">
+                    <div class="embed-responsive embed-responsive-1by1" style="max-width: 400px;">
+                        <iframe class="embed-responsive-item" src="/new-nft-project/asset/full/${firstTokenId}"></iframe>
+                    </div>
+                    <div class="carousel-caption">
+                        <h5>New NFT #${firstTokenId}</h5>
+                    </div>
+                </div>
+            </div>`
+        for (let i = 1; i < numberMinted; i++) {
+            const tokenId = newTokenEvents[i].args.tokenId.toNumber();
+            html += `<div class="carousel-item">
+                <div class="d-flex justify-content-center">
+                    <div class="embed-responsive embed-responsive-1by1" style="max-width: 400px;">
+                        <iframe class="embed-responsive-item" src="/new-nft-project/asset/full/${tokenId}"></iframe>
+                    </div>
+                    <div class="carousel-caption">
+                        <h5>New NFT #${tokenId}</h5>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        html += `</div></div>`;
+        if (numberMinted > 1) {
+            html += `<div class="d-flex justify-content-center">
+                <button class="btn-lg btn-secondary" type="button" data-target="#carouselvideo" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Prev</span>
+                </button>
+                <button class="btn-lg btn-secondary ml-3" type="button" data-target="#carouselvideo" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </button>
+            </div>`;
+        }
+        $('#mintDiv').html(html);
 
         setTimeout(populateUserNft, 10000);
     }

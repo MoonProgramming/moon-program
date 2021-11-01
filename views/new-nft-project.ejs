@@ -3,39 +3,55 @@
     <div class="container">
         <div class="pb-2 mt-4 mb-4 border-bottom">
             <h2>New NFT Collection</h2>
-            <div class="small mt-3">&bull; Mint new NFT art collection with custom smart contract.<br>
-                &bull; Each with unique properties combination.<br>
-                &bull; Secondary market available for purchase at <a href="https://testnets.opensea.io/collection/moontest01"
-                    target="blank">Opensea.io</a>
+            <div class="d-flex flex-wrap">
+                <div class="mr-auto small mt-3">&bull; Mint new NFT art collection with custom smart contract.<br>
+                    &bull; Each with unique properties combination.<br>
+                    &bull; Secondary market available for purchase at <a
+                    href="https://testnets.opensea.io/collection/moontest01" target="blank">Opensea.io</a>
+                </div>
+                <div class="mt-auto">
+                    <button class="btn btn-sm btn-light" type="button" id="connectWalletButton"
+                        onclick="connectWallet()">
+                        Connect Wallet &raquo;
+                    </button>
+                </div>
             </div>
         </div>
 
         <div class="pb-2 mt-4 mb-4 border-bottom">
 
-        <% include templates/alert.ejs %>
-        <div id="metamaskAlerts"></div>
+            <% include templates/alert.ejs %>
+            <div id="metamaskAlerts"></div>
 
-        <div class="text-right">
-            <button class="btn btn-sm btn-light" type="button" id="connectWalletButton" onclick="connectWallet()">
-                Connect Wallet &raquo;
-            </button>
-        </div>
-
-        <div class="d-flex justify-content-sm-center mt-2">
-            <div id="nftHolder" class="embed-responsive embed-responsive-1by1" style="max-width: 400px;">
-                <iframe class="embed-responsive-item" src="/new-nft-project/asset/full/3"></iframe>
+            <div id="mintDiv" class="mb-3">
+                <div class="d-flex justify-content-center">
+                    <div class="input-group input-group-lg" style="max-width: 600px;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">I want to mint</span>
+                        </div>
+                        <input id="mintAmount" type="number" class="form-control" value=1 aria-label="amount" min="1" max="50" step="1">
+                        <div class="input-group-append">
+                            <span id="mintTotalPrice" class="input-group-text">NFT for 0.00001 ETH</span>
+                            <button id="mintNewNftButton" class="btn btn-primary ml-3" type="button">Mint!</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="text-center">
-            <button class="btn btn-sm btn-light" type="button" id="mintNewNftButton">
-                mint for <%= mintPrice %> <%= currency %> &raquo;
-            </button>
-        </div>
+
+        <div class="pb-2 mt-4 mb-4 border-bottom">
+            <h3>Gallery:</h3>
+            <div class="small mt-3" id="galleryMsg">
+                &bull; Items are yet to be create.<br>
+                &bull; Be the first to mint a NFT.
+            </div>
+            <div class="card-deck" id="galleryHolder"></div>
         </div>
 
         <div class="pb-2 mt-4 mb-4 border-bottom">
             <h3>Your NFT Collection:</h3>
-            <div class="small mt-3" id="userCollectionMsg">&bull; Please connect metamask wallet to see your collection.</div>
+            <div class="small mt-3" id="userCollectionMsg">&bull; Please connect metamask wallet to see your collection.
+            </div>
             <div class="card-deck" id="userCollectionHolder"></div>
         </div>
     </div>
