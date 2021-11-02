@@ -46,7 +46,7 @@ const initialize = async () => {
     const onboardButton = document.getElementById('connectWalletButton');
     const mintAmount = document.getElementById('mintAmount');
     const mintNewNftButton = document.getElementById('mintNewNftButton');
-
+    mintNewNftButton.disabled = true;
 
     function onClickInstall() {
         window.open('https://metamask.io/download.html', '_blank');
@@ -73,7 +73,7 @@ const initialize = async () => {
                 params: [{ chainId: targetChain.chainId }],
             });
             // We recommend reloading the page, unless you must do otherwise
-            window.location.reload();
+            return window.location.reload();
         } catch (switchError) {
             // This error code indicates that the chain has not been added to MetaMask.
             if (switchError.code === 4902) {
@@ -83,7 +83,7 @@ const initialize = async () => {
                         params: [targetChain],
                     });
                     // We recommend reloading the page, unless you must do otherwise
-                    window.location.reload();
+                    return window.location.reload();
                 } catch (addError) {
                     console.log('Did not add network', addError);
                     onboardButton.disabled = false;
@@ -140,11 +140,8 @@ const initialize = async () => {
             onboardButton.disabled = true;
             const shortAddress = currentAccount.replace(currentAccount.slice(6, 38), '...');
 
-
             const balanceStr = (+ethers.utils.formatEther(await provider.getBalance(currentAccount))).toFixed(3);
             onboardButton.innerText = shortAddress + '  /  ' + balanceStr + 'ETH' || 'Not able to get accounts';
-
-            populateUserNft();
 
             ethereum
                 .request({ method: 'eth_chainId' })
@@ -158,35 +155,6 @@ const initialize = async () => {
         console.log('currentAccount', currentAccount);
     }
 
-    async function populateUserNft() {
-        const userCollectionMsg = document.getElementById("userCollectionMsg");
-        const userCollectionHolder = document.getElementById("userCollectionHolder");
-        const numberNftOwned = (await contract.balanceOf(currentAccount)).toNumber();
-        if (numberNftOwned > 0) {
-            let collection = '';
-            for (let i = 0; i < numberNftOwned; i++) {
-                let tokenId = (await contract.tokenOfOwnerByIndex(currentAccount, i)).toNumber();
-                collection += `<div class="card" style="min-width: 252px; max-width: 252px;">
-                    <a href="/new-nft-project/asset/${tokenId}">
-                        <img src="/new-nft-project/img/${tokenId}" class="card-img-top" alt="">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title">Token ID: #${tokenId}</h5>
-                    </div>
-                    <div class="card-footer text-center">
-                        <a href="/new-nft-project/asset/${tokenId}" class="btn btn-outline-primary">Details</a>
-                        <a href="https://testnets.opensea.io/assets/${contractAddress}/${tokenId}" class="btn btn-outline-primary">OpenSea</a>
-                    </div>
-                </div>`;
-            }
-            userCollectionMsg.innerHTML = '';
-            userCollectionHolder.innerHTML = collection;
-        } else {
-            userCollectionMsg.innerHTML = 'You currently have no NFT.';
-            userCollectionHolder.innerHTML = '';
-        }
-    }
-
     /**********************************************************/
     /* Handle chain (network) and chainChanged (per EIP-1193) */
     /**********************************************************/
@@ -196,6 +164,42 @@ const initialize = async () => {
             onboardButton.innerText = `Switch To Ethereum Network >>`;
             onboardButton.onclick = onClickSwitchChain;
             onboardButton.disabled = false;
+            mintNewNftButton.disabled = true;
+        } else {
+            mintNewNftButton.disabled = false;
+            populateUserNft();
+        }
+    }
+
+    async function populateUserNft() {
+        const userCollectionMsg = document.getElementById("userCollectionMsg");
+        const userCollectionHolder = document.getElementById("userCollectionHolder");
+        const numberNftOwned = (await contract.balanceOf(currentAccount)).toNumber();
+        if (numberNftOwned > 0) {
+            let collection = '';
+            for (let i = 0; i < numberNftOwned; i++) {
+                let tokenId = (await contract.tokenOfOwnerByIndex(currentAccount, i)).toNumber();
+                collection += `<div class="card mb-2" style="min-width: 252px; max-width: 252px;">
+                    <a href="/new-nft-project/asset/${tokenId}">
+                        <img src="/new-nft-project/img/${tokenId}" class="card-img-top" alt="">
+                    </a>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <div class="h5">#${tokenId}
+                            <a href="https://testnets.opensea.io/assets/${contractAddress}/${tokenId}">
+                                <img style="width:30px;" class="ml-2" src="https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.png"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="/new-nft-project/asset/${tokenId}" class="btn btn-sm btn-outline-primary">Details</a>
+                        </div>
+                    </div>
+                </div>`;
+            }
+            userCollectionMsg.innerHTML = '';
+            userCollectionHolder.innerHTML = collection;
+        } else {
+            userCollectionMsg.innerHTML = 'You currently have no NFT.';
+            userCollectionHolder.innerHTML = '';
         }
     }
 
@@ -246,8 +250,6 @@ const initialize = async () => {
         showAlert(mintSuccessMsg, 'success');
 
         const firstTokenId = newTokenEvents[0].args.tokenId.toNumber();
-        // const nftHolder = document.getElementById("nftHolder");
-        // nftHolder.innerHTML = `<iframe class="embed-responsive-item" src="./new-nft-project/asset/full/${tokenId}"></iframe>`
         let html = `<div id="carouselvideo" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselvideo" data-slide-to="0" class="active"></li>`
@@ -309,6 +311,59 @@ const initialize = async () => {
 };
 
 window.addEventListener('DOMContentLoaded', initialize);
+const itemPerPage = 8;
+const pageTotal = Math.ceil(totalSupply / itemPerPage);
+let currentPage = 1;
+$('#galleryPage'+currentPage).addClass('disabled');
+
+$('#galleryPagePrev').click(function() {
+    if (currentPage > 1) {
+        currentPage--;
+        updateGallery();
+    }
+});
+$('#galleryPageNext').click(function() {
+    if (currentPage < pageTotal) {
+        currentPage++;
+        updateGallery();
+    }
+});
+for (let i=1; i<=pageTotal; i++) {
+    $('#galleryPage'+i).click(function() {
+        currentPage = i;
+        updateGallery();
+    });
+}
+
+function updateGallery() {
+    $('.page-item').removeClass('disabled');
+    if (currentPage === 1) $('#galleryPagePrev').addClass('disabled');
+    if (currentPage === pageTotal) $('#galleryPageNext').addClass('disabled');
+    $('#galleryPage'+currentPage).addClass('disabled');
+
+    let startItem = ((currentPage-1)*itemPerPage) + 1;
+    let endItem = Math.min(totalSupply, currentPage*itemPerPage);
+    let tokenId = startItem;
+    let html = '';
+    for (; tokenId<=endItem; tokenId++) {
+        html += `<div class="card mb-2" style="min-width: 252px; max-width: 252px;">
+                    <a href="/new-nft-project/asset/${tokenId}">
+                        <img src="/new-nft-project/img/${tokenId}" class="card-img-top" alt="">
+                    </a>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <div class="h5">#${tokenId}
+                            <a href="https://testnets.opensea.io/assets/${contractAddress}/${tokenId}">
+                                <img style="width:30px;" class="ml-2" src="https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.png"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="/new-nft-project/asset/${tokenId}" class="btn btn-sm btn-outline-primary">Details</a>
+                        </div>
+                    </div>
+                </div>`
+    }
+    $('#galleryHolder').html(html);
+}
 
 function showAlert(message, status) {
     const alertMsg =

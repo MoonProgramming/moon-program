@@ -10,8 +10,7 @@
                     href="https://testnets.opensea.io/collection/moontest01" target="blank">Opensea.io</a>
                 </div>
                 <div class="mt-auto">
-                    <button class="btn btn-sm btn-light" type="button" id="connectWalletButton"
-                        onclick="connectWallet()">
+                    <button class="btn btn-sm btn-light" type="button" id="connectWalletButton" onclick="connectWallet()">
                         Connect Wallet &raquo;
                     </button>
                 </div>
@@ -19,7 +18,6 @@
         </div>
 
         <div class="pb-2 mt-4 mb-4 border-bottom">
-
             <% include templates/alert.ejs %>
             <div id="metamaskAlerts"></div>
 
@@ -32,7 +30,7 @@
                         <input id="mintAmount" type="number" class="form-control" value=1 aria-label="amount" min="1" max="50" step="1">
                         <div class="input-group-append">
                             <span id="mintTotalPrice" class="input-group-text">NFT for 0.00001 ETH</span>
-                            <button id="mintNewNftButton" class="btn btn-primary ml-3" type="button">Mint!</button>
+                            <button id="mintNewNftButton" class="btn btn-primary" type="button">Mint!</button>
                         </div>
                     </div>
                 </div>
@@ -40,12 +38,48 @@
         </div>
 
         <div class="pb-2 mt-4 mb-4 border-bottom">
-            <h3>Gallery:</h3>
-            <div class="small mt-3" id="galleryMsg">
-                &bull; Items are yet to be create.<br>
-                &bull; Be the first to mint a NFT.
+            <div class="d-flex justify-content-between">
+                <h3>Collection Gallery:</h3>
+                <div class="align-self-center">View on <a href="https://testnets.opensea.io/collection/moontest01" target="_blank">
+                    Opensea.io</a></div>
             </div>
-            <div class="card-deck" id="galleryHolder"></div>
+            <div class="small mt-3" id="galleryMsg">
+                <% if (!totalSupply) { %>
+                    &bull; Items are yet to be create.<br>
+                    &bull; Be the first to mint a NFT.
+                <% } %>
+            </div>
+            <div class="card-deck" id="galleryHolder">
+                <% let maxShow = Math.min(8, totalSupply); for (let tokenId=1; tokenId<=maxShow; tokenId++) { %>
+                <div class="card mb-2" style="min-width: 252px; max-width: 252px;">
+                    <a href="/new-nft-project/asset/<%= tokenId %>">
+                        <img src="/new-nft-project/img/<%= tokenId %>" class="card-img-top" alt="">
+                    </a>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <div class="h5">#<%= tokenId %>
+                            <a href="https://testnets.opensea.io/assets/<%= contractAddress %>/<%= tokenId %>">
+                                <img style="width:30px;" class="ml-2" src="https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.png"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="/new-nft-project/asset/<%= tokenId %>" class="btn btn-sm btn-outline-primary">Details</a>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+
+            <% if (totalSupply > 8) { let pageTotal = Math.ceil(totalSupply / 8); %>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center mt-2">
+                  <li id="galleryPagePrev" class="page-item disabled"><button class="page-link">Prev</button></li>
+                  <% for (let page=1; page<=pageTotal; page++) { %>
+                    <li id="galleryPage<%= page %>" class="page-item"><button class="page-link"><%= page %></button></li>
+                  <% } %>
+                  <li id="galleryPageNext" class="page-item"><button class="page-link" href="#">Next</button></li>
+                </ul>
+            </nav>
+            <% } %>
         </div>
 
         <div class="pb-2 mt-4 mb-4 border-bottom">
@@ -59,5 +93,6 @@
         let contractAddress = '<%= contractAddress %>';
         let contractAbi = '<%- JSON.stringify(contractAbi) %>';
         let mintPrice = '<%= mintPrice %>';
+        let totalSupply = '<%= totalSupply %>';
     </script>
     <script type="module" src="/lib/wallet.js"></script>

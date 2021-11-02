@@ -5,11 +5,13 @@ const { NftPreviewImg } = require('../models/nftPreviewImg');
 exports.initPage = async (req, res, next) => {
     try {
         const mintPrice = await contract.getNftPrice();
+        const totalSupply = await contract.getTotalSupply();
         res.render('new-nft-project', {
             csrfToken: req.csrfToken(),
             contractAddress: contract.contractAddress,
             contractAbi: contract.abi,
             mintPrice: mintPrice,
+            totalSupply: totalSupply,
             currency: contract.currency,
         });
     } catch (err) {

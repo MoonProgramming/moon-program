@@ -42,6 +42,16 @@ exports.getNftPrice = async () => {
     return nftPrice;
 }
 
+exports.getTotalSupply = async () => {
+    const result = await this.getContract().totalSupply();
+    return result.toNumber();
+}
+
+exports.getTokenIdByIndex = async (index) => {
+    const result = await this.getContract().tokenByIndex(index);
+    return result.toNumber();
+}
+
 exports.getTokenHash = (tokenId) => {
     const result = this.getContract().tokenIdToHash(tokenId);
     return result;
