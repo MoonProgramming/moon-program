@@ -18,7 +18,17 @@
         </div>
 
         <div class="pb-2 mt-4 mb-4 border-bottom">
+            <div class="row justify-content-sm-center mt-2">
+                <div class="col-sm-auto" id="sketch-holder"></div>
+            </div>
+            <div class="text-center mb-3">
+                <button class="btn btn-sm btn-light" type="button" onclick="generateNewSketch()">
+                    Show Me Random Samples &raquo;
+                </button>
+            </div>
+
             <% include templates/alert.ejs %>
+
             <div id="metamaskAlerts"></div>
 
             <div id="mintDiv" class="mb-3">
@@ -94,5 +104,13 @@
         let contractAbi = '<%- JSON.stringify(contractAbi) %>';
         let mintPrice = '<%= mintPrice %>';
         let totalSupply = '<%= totalSupply %>';
+        let tokenHash = '<%= tokenHash %>';
+        let tokenAttributes = <%- JSON.stringify(tokenAttributes) %>;
+        let genAttrUrl = '<%= genAttrUrl %>';
+        const token = '<%= csrfToken %>';
+
+        const fullScreen = false;
+        const newlyMinted = false;
     </script>
     <script type="module" src="/lib/wallet.js"></script>
+    <script src="/lib/cityRunGenerator.js"></script>

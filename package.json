@@ -20,6 +20,7 @@
   "homepage": "https://moon-program.herokuapp.com/",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "chance": "1.1.8",
     "cookie-parser": "^1.4.5",
     "csurf": "^1.11.0",
     "dotenv": "^10.0.0",
@@ -30,6 +31,7 @@
     "express-rate-limit": "^5.4.0",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
+    "nice-color-palettes": "3.0.0",
     "pg": "^8.7.1",
     "validator": "^13.6.0"
   },

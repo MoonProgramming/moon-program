@@ -6,6 +6,12 @@ exports.initPage = async (req, res, next) => {
     try {
         const mintPrice = await contract.getNftPrice();
         const totalSupply = await contract.getTotalSupply();
+
+        // let tokenHash = '0x0000000000000000000000000000000000000000000000000000000000000000';
+        let tokenHash = '';
+        const tokenAttributes = contract.genTokenAttributesFromHash(tokenHash);
+        const host = getHost(req);
+        
         res.render('new-nft-project', {
             csrfToken: req.csrfToken(),
             contractAddress: contract.contractAddress,
@@ -13,11 +19,19 @@ exports.initPage = async (req, res, next) => {
             mintPrice: mintPrice,
             totalSupply: totalSupply,
             currency: contract.currency,
+            tokenHash: tokenHash,
+            tokenAttributes: tokenAttributes,
+            genAttrUrl: host + `/new-nft-project/genAttr`
         });
     } catch (err) {
         return next(err);
     }
 };
+
+exports.postGenAttr = async (req, res, next) => {
+    const tokenAttributes = contract.genTokenAttributesFromHash(null);
+    return res.send(tokenAttributes);
+}
 
 exports.getAsset = async (req, res, next) => {
     try {

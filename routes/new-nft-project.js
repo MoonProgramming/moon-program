@@ -3,6 +3,7 @@ const router = express.Router();
 const newNftProjectController = require('../controllers/new-nft-controller');
 
 router.get('/', newNftProjectController.initPage);
+router.post('/genAttr', newNftProjectController.postGenAttr);
 router.get('/meta/:tokenId', newNftProjectController.showMeta);
 router.get('/asset/:tokenId', newNftProjectController.getAsset);
 router.get('/asset/full/:tokenId', newNftProjectController.showFull);
