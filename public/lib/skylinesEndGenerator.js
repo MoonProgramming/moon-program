@@ -1,7 +1,7 @@
 console.log(tokenAttributes);
 console.log('tokenHash', tokenHash);
 
-class cityRunGenerator {
+class skylinesEndGenerator {
     defaultSize;
     thresholdSize;
     sketchHolder;
@@ -100,8 +100,8 @@ class cityRunGenerator {
                     this.totalSize = this.defaultSize;
                 s.resizeCanvas(this.totalSize, this.totalSize);
                 this.renderer.parent(this.sketchHolder);
-                this.start(s);
             }
+            this.start(s);
         };
         s.mouseClicked = () => {
             if (s.mouseX > 0 && s.mouseX < this.totalSize && s.mouseY > 0 && s.mouseY < this.totalSize) {
@@ -128,7 +128,7 @@ class cityRunGenerator {
 
             if (newlyMinted && !this.sketchHolder && s.frameCount == 1) {
                 console.log('saveFrames');
-                s.saveFrames('out', 'png', 1, 1, data => {
+                s.saveFrames('out', 'png', 0, 1, data => {
                     fetch(postUrl, {
                         method: 'POST',
                         mode: 'same-origin', // no-cors, *cors, same-origin
@@ -313,8 +313,14 @@ if (fullScreen) {
     sketchHolder = document.getElementsByTagName("BODY")[0] || undefined;
 }
 
-let cityRunInstance = new cityRunGenerator(defaultSize, thresholdSize, sketchHolder, tokenAttributes, tokenHash);
-let canvas = new p5(cityRunInstance.sketch, sketchHolder);
+let skylinesEndInstance = new skylinesEndGenerator(defaultSize, thresholdSize, sketchHolder, tokenAttributes, tokenHash);
+let canvas = new p5(skylinesEndInstance.sketch, sketchHolder);
+
+console.log('newlyMinted', newlyMinted);
+if (newlyMinted) {
+    let smallNftInstance = new skylinesEndGenerator(350, 350, null, tokenAttributes, tokenHash);
+    new p5(smallNftInstance.sketch);
+}
 
 function generateNewSketch() {
     const posting = $.ajax({
@@ -335,9 +341,9 @@ function generateNewSketch() {
             canvas = null;
         }
         sketchHolder.innerHTML = "";
-        cityRunInstance = null;
-        cityRunInstance = new cityRunGenerator(defaultSize, thresholdSize, sketchHolder, tokenAttributes, tokenHash);
-        canvas = new p5(cityRunInstance.sketch, sketchHolder);
+        skylinesEndInstance = null;
+        skylinesEndInstance = new skylinesEndGenerator(defaultSize, thresholdSize, sketchHolder, tokenAttributes, tokenHash);
+        canvas = new p5(skylinesEndInstance.sketch, sketchHolder);
     });
 
     posting.fail(function () {

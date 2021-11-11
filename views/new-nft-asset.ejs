@@ -5,8 +5,11 @@
 
             <% include templates/alert.ejs %>
 
-            <div class="row justify-content-sm-center mt-2 mb-3">
+            <div class="row justify-content-sm-center mt-2">
                 <div class="col-sm-auto" id="sketch-holder"></div>
+            </div>
+            <div class="text-center mb-3">
+                <div class="small">Click the picture to start/pause your journey.</div>
             </div>
 
             <% if (owner) { %>
@@ -43,6 +46,7 @@
         <script>
             const tokenMeta = <%- JSON.stringify(tokenMeta) %>;
             const tokenAttributes = tokenMeta.attributes;
+            const tokenHash = tokenMeta.tokenHash;
             const fullScreen = false;
             const newlyMinted = false;
 
@@ -64,5 +68,5 @@
                 alt="Available on OpenSea" /></a>`;
 
         </script>
-        <script src="/lib/new-nft-generator.js"></script>
+        <script src="/lib/skylinesEndGenerator.js"></script>
         <% } %>

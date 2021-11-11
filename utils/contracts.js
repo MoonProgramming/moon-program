@@ -2,7 +2,8 @@ const { ethers } = require("ethers");
 const Chance = require('chance');
 const colors = require('nice-color-palettes');
 
-const projectName = 'New NFT Project';
+const projectName = `Heading For Skyline's End`;
+const networkName = "rinkeby";
 const contractAddress = '0x15a30c07976003f7AE3889D52dc5BFbaEdf38975';
 const currency = 'ETH';
 const abi = [
@@ -28,7 +29,7 @@ const abi = [
 let contract = null;
 exports.getContract = () => {
     if (contract == null) {
-        const network = ethers.providers.getNetwork("rinkeby");
+        const network = ethers.providers.getNetwork(networkName);
         const provider = ethers.getDefaultProvider(network);
         contract = new ethers.Contract(contractAddress, abi, provider);
         console.log('new contract connection to ' + network.name);
@@ -71,15 +72,15 @@ exports.genTokenMetaFromHash = (tokenId, tokenHash, host) => {
     const imagePage = mainPage + `/img/${tokenId}`;
     const animationPage = mainPage + `/asset/full/${tokenId}`;;
     const tokenMeta = {
-        "collection_name": "New NFT",
+        "collection_name": "Heading For Skyline's End",
         "website": mainPage,
         "artistName": "Moon",
         "artistEmail": "moon.programming@gmail.com",
         "contract": contractAddress,
         "id": tokenId,
-        "name": "New-NFT #" + tokenId,
+        "name": "Heading For Skyline's End #" + tokenId,
         "tokenHash": tokenHash,
-        "description": "New NFT project that going to be awesome.\n\n[Interactive](" + assetPage + ")\n\n[Website](" + mainPage + ")\n\nLicense: MIT\n\ntokenHash: " + tokenHash,
+        "description": "New NFT project that going to be awesome. Click the picture to start/pause your journey.\n\n[Interactive](" + assetPage + ")\n\n[Website](" + mainPage + ")\n\nLicense: MIT\n\ntokenHash: " + tokenHash,
         "external_url": assetPage,
         "image": imagePage,
         "animation_url": animationPage,
