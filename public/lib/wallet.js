@@ -196,7 +196,7 @@ const initialize = async () => {
                     </a>
                     <div class="card-footer d-flex justify-content-between align-items-center">
                         <div class="h5">#${tokenId}
-                            <a href="https://testnets.opensea.io/assets/${contractAddress}/${tokenId}">
+                            <a href="${openseaAssetUrl}/${contractAddress}/${tokenId}">
                                 <img style="width:30px;" class="ml-2" src="https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.png"/>
                             </a>
                         </div>
@@ -363,7 +363,7 @@ function updateGallery() {
                     </a>
                     <div class="card-footer d-flex justify-content-between align-items-center">
                         <div class="h5">#${tokenId}
-                            <a href="https://testnets.opensea.io/assets/${contractAddress}/${tokenId}">
+                            <a href="${openseaAssetUrl}/${contractAddress}/${tokenId}">
                                 <img style="width:30px;" class="ml-2" src="https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.png"/>
                             </a>
                         </div>

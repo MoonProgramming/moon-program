@@ -7,7 +7,7 @@
                 <div class="mr-auto small mt-3">&bull; Mint new NFT art collection with custom smart contract.<br>
                     &bull; Each with unique properties combination.<br>
                     &bull; Secondary market available for purchase at <a
-                    href="https://testnets.opensea.io/collection/moontest01" target="blank">Opensea.io</a>
+                    href="<%= openseaCollectionUrl %>" target="blank">Opensea.io</a>
                 </div>
                 <div class="mt-auto">
                     <button class="btn btn-sm btn-light" type="button" id="connectWalletButton" onclick="connectWallet()">
@@ -51,7 +51,7 @@
         <div class="pb-2 mt-4 mb-4 border-bottom">
             <div class="d-flex justify-content-between">
                 <h3>Collection Gallery:</h3>
-                <div class="align-self-center">View on <a href="https://testnets.opensea.io/collection/moontest01" target="_blank">
+                <div class="align-self-center">View on <a href="<%= openseaCollectionUrl %>" target="_blank">
                     Opensea.io</a></div>
             </div>
             <div class="small mt-3" id="galleryMsg">
@@ -68,7 +68,7 @@
                     </a>
                     <div class="card-footer d-flex justify-content-between align-items-center">
                         <div class="h5">#<%= tokenId %>
-                            <a href="https://testnets.opensea.io/assets/<%= contractAddress %>/<%= tokenId %>">
+                            <a href="<%= openseaAssetUrl %>/<%= contractAddress %>/<%= tokenId %>">
                                 <img style="width:30px;" class="ml-2" src="https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.png"/>
                             </a>
                         </div>
@@ -111,6 +111,7 @@
         const projectPath = '<%= projectPath %>';
         const genAttrUrl = '<%= genAttrUrl %>';
         const token = '<%= csrfToken %>';
+        const openseaAssetUrl = '<%= openseaAssetUrl %>';
 
         const fullScreen = false;
         const newlyMinted = false;

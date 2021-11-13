@@ -25,7 +25,9 @@ exports.initPage = async (req, res, next) => {
             tokenHash: tokenHash,
             tokenAttributes: tokenAttributes,
             projectPath: projectPath,
-            genAttrUrl: url + `/genAttr`
+            genAttrUrl: url + `/genAttr`,
+            openseaCollectionUrl: contract.openseaCollectionUrl,
+            openseaAssetUrl: contract.openseaAssetUrl,
         });
     } catch (err) {
         return next(err);

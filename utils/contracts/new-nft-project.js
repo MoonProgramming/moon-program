@@ -4,10 +4,13 @@ const colors = require('nice-color-palettes');
 
 const projectName = `New NFT`;
 const projectPath = `new-nft-project`;
-const networkName = "rinkeby";
 const contractAddress = '0x15a30c07976003f7AE3889D52dc5BFbaEdf38975';
+const chainName = "rinkeby";
+const chainId = '0x4';
+const currency = 'ether';
+const openseaCollectionUrl = `https://testnets.opensea.io/collection/moontest01`;
+const openseaAssetUrl = `https://testnets.opensea.io/assets`
 
-const currency = 'ETH';
 const abi = [
     "function name() view returns (string)",
     "function symbol() view returns (string)",
@@ -31,7 +34,7 @@ const abi = [
 let contract = null;
 exports.getContract = () => {
     if (contract == null) {
-        const network = ethers.providers.getNetwork(networkName);
+        const network = ethers.providers.getNetwork(chainName);
         const provider = ethers.getDefaultProvider(network);
         contract = new ethers.Contract(contractAddress, abi, provider);
         console.log('new contract connection to ' + network.name);
@@ -85,7 +88,7 @@ exports.genTokenMetaFromHash = (tokenId, tokenHash, url) => {
         "external_url": assetPage,
         "image": imagePage,
         "animation_url": animationPage,
-        "opensea_url": `https://testnets.opensea.io/assets/${contractAddress}/${tokenId}`,
+        "opensea_url": `${openseaAssetUrl}/${contractAddress}/${tokenId}`,
         "attributes": attributes
     }
     return tokenMeta;
@@ -194,4 +197,7 @@ exports.projectName = projectName;
 exports.projectPath = projectPath;
 exports.contractAddress = contractAddress;
 exports.abi = abi;
+exports.chainId = chainId;
 exports.currency = currency;
+exports.openseaCollectionUrl = openseaCollectionUrl;
+exports.openseaAssetUrl = openseaAssetUrl;

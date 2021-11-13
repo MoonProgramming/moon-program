@@ -10,6 +10,8 @@ const chainName = "Polygon Testnet Mumbai";
 const chainId = '0x13881';
 const currency = 'matic';
 const rpcUrl = 'https://rpc-mumbai.maticvigil.com/v1/'+process.env.RPC_KEY;
+const openseaCollectionUrl = `https://testnets.opensea.io/collection/heading-for-skylines-test`;
+const openseaAssetUrl = `https://testnets.opensea.io/assets/mumbai`;
 
 let contract = null;
 exports.getContract = () => {
@@ -69,7 +71,7 @@ exports.genTokenMetaFromHash = (tokenId, tokenHash, url) => {
         "external_url": assetPage,
         "image": imagePage,
         "animation_url": animationPage,
-        "opensea_url": `https://testnets.opensea.io/assets/${contractAddress}/${tokenId}`,
+        "opensea_url": `${openseaAssetUrl}/${contractAddress}/${tokenId}`,
         "attributes": attributes
     }
     return tokenMeta;
@@ -180,3 +182,5 @@ exports.contractAddress = contractAddress;
 exports.abi = abi;
 exports.chainId = chainId;
 exports.currency = currency;
+exports.openseaCollectionUrl = openseaCollectionUrl;
+exports.openseaAssetUrl = openseaAssetUrl;
