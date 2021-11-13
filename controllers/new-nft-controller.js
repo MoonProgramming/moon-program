@@ -1,27 +1,31 @@
-const contract = require('../utils/contracts');
 const alertsUtil = require('../utils/alerts');
 const { NftPreviewImg } = require('../models/nftPreviewImg');
 
 exports.initPage = async (req, res, next) => {
     try {
+        let projectPath = req.originalUrl.split('/')[1];
+        let contract = require(`../utils/contracts/` + projectPath);
         const mintPrice = await contract.getNftPrice();
         const totalSupply = await contract.getTotalSupply();
 
         // let tokenHash = '0x0000000000000000000000000000000000000000000000000000000000000000';
         let tokenHash = '';
         const tokenAttributes = contract.genTokenAttributesFromHash(tokenHash);
-        const host = getHost(req);
+        let url = req.protocol + '://' + req.headers.host + req.originalUrl;
         
         res.render('new-nft-project', {
             csrfToken: req.csrfToken(),
+            projectName: contract.projectName,
             contractAddress: contract.contractAddress,
             contractAbi: contract.abi,
             mintPrice: mintPrice,
             totalSupply: totalSupply,
+            chainId: contract.chainId,
             currency: contract.currency,
             tokenHash: tokenHash,
             tokenAttributes: tokenAttributes,
-            genAttrUrl: host + `/new-nft-project/genAttr`
+            projectPath: projectPath,
+            genAttrUrl: url + `/genAttr`
         });
     } catch (err) {
         return next(err);
@@ -29,6 +33,8 @@ exports.initPage = async (req, res, next) => {
 };
 
 exports.postGenAttr = async (req, res, next) => {
+    const projectPath = req.originalUrl.split('/')[1];
+    const contract = require(`../utils/contracts/` + projectPath);
     const tokenAttributes = contract.genTokenAttributesFromHash(null);
     return res.send(tokenAttributes);
 }
@@ -36,14 +42,16 @@ exports.postGenAttr = async (req, res, next) => {
 exports.getAsset = async (req, res, next) => {
     try {
         const tokenId = +(req.params.tokenId);
+        const projectPath = req.originalUrl.split('/')[1];
+        const contract = require(`../utils/contracts/` + projectPath);
         const tokenHash = await contract.getTokenHash(tokenId);
         console.log('getAsset', tokenHash);
         if (tokenHash === '0x0000000000000000000000000000000000000000000000000000000000000000') {
             throw new Error('Token does not exist.');
         }
         const owner = await contract.getOwner(tokenId);
-        const host = getHost(req);
-        const tokenMeta = contract.genTokenMetaFromHash(tokenId, tokenHash, host);
+        let url = req.protocol + '://' + req.headers.host + '/' + projectPath;
+        const tokenMeta = contract.genTokenMetaFromHash(tokenId, tokenHash, url);
 
         res.render('new-nft-asset', {
             csrfToken: req.csrfToken(),
@@ -65,14 +73,16 @@ exports.getAsset = async (req, res, next) => {
 exports.showMeta = async (req, res, next) => {
     try {
         const tokenId = +(req.params.tokenId);
+        const projectPath = req.originalUrl.split('/')[1];
+        const contract = require(`../utils/contracts/` + projectPath);
         const tokenHash = await contract.getTokenHash(tokenId);
         console.log('showMeta', tokenHash);
         if (tokenHash === '0x0000000000000000000000000000000000000000000000000000000000000000') {
             throw new Error('Token does not exist.');
         }
 
-        const host = getHost(req);
-        const tokenMeta = contract.genTokenMetaFromHash(tokenId, tokenHash, host);
+        let url = req.protocol + '://' + req.headers.host + '/' + projectPath;
+        const tokenMeta = contract.genTokenMetaFromHash(tokenId, tokenHash, url);
         res.setHeader("Content-Type", "application/json");
         return res.send(JSON.stringify(tokenMeta));
     } catch (err) {
@@ -88,6 +98,8 @@ exports.showMeta = async (req, res, next) => {
 exports.showFull = async (req, res, next) => {
     try {
         const tokenId = +(req.params.tokenId);
+        const projectPath = req.originalUrl.split('/')[1];
+        const contract = require(`../utils/contracts/` + projectPath);
         const tokenHash = await contract.getTokenHash(tokenId);
 
         console.log('showfull', tokenHash);
@@ -101,14 +113,14 @@ exports.showFull = async (req, res, next) => {
                     newlyMinted = true;
                 }
 
-                const host = getHost(req);
+                let url = req.protocol + '://' + req.headers.host + '/' + projectPath;
                 const tokenAttributes = contract.genTokenAttributesFromHash(tokenHash);
                 return res.render('new-nft-full', {
                     csrfToken: req.csrfToken(),
                     tokenHash: tokenHash,
                     tokenAttributes: tokenAttributes,
                     newlyMinted: newlyMinted,
-                    postUrl: host + `/new-nft-project/img/${tokenId}`
+                    postUrl: url + `/img/${tokenId}`
                 });
             });
         }
@@ -125,7 +137,8 @@ exports.showFull = async (req, res, next) => {
 exports.showImg = async (req, res, next) => {
     try {
         const tokenId = +(req.params.tokenId);
-        console.log('showImg' + tokenId);
+        const projectPath = req.originalUrl.split('/')[1];
+        const contract = require(`../utils/contracts/` + projectPath);
 
         NftPreviewImg.findOne(contract.contractAddress, tokenId, (err, result) => {
             if (err || !result.length) {
@@ -162,6 +175,8 @@ exports.postImg = async (req, res, next) => {
     try {
         console.log('post received');
         const tokenId = +(req.params.tokenId);
+        const projectPath = req.originalUrl.split('/')[1];
+        const contract = require(`../utils/contracts/` + projectPath);
         const tokenHash = await contract.getTokenHash(tokenId);
 
         if (tokenHash === '0x0000000000000000000000000000000000000000000000000000000000000000') {
@@ -169,7 +184,6 @@ exports.postImg = async (req, res, next) => {
         }
         const body = req.body;
         let imageData = body[0].imageData;
-        console.log(imageData.length);
 
         const nftPreviewImg = new NftPreviewImg();
         nftPreviewImg.projectName = contract.projectName;
@@ -191,12 +205,4 @@ exports.postImg = async (req, res, next) => {
             tokenMeta: {}
         });
     }
-}
-
-function getHost(req) {
-    let host = 'http://' + req.headers.host;
-    if (process.env.NODE_ENV === 'production') {
-        host = 'https://' + req.headers.host;
-    }
-    return host;
 }

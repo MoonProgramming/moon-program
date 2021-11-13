@@ -1,37 +1,48 @@
 import { ethers } from "./ethers-5.1.esm.min.js"
 
-const network = {
-    ethereumChain: {
-        chainId: '0x1',
+const network = [{
+    chainName: 'Ethereum',
+    chainId: '0x1',
+    nativeCurrency: {
+        name: 'ether',
+        symbol: 'Ξ',
+        decimals: 18
     },
-    rinkebyChain: {
-        chainId: '0x4',
+},
+{
+    chainName: 'Rinkeby',
+    chainId: '0x4',
+    nativeCurrency: {
+        name: 'ether',
+        symbol: 'Ξ',
+        decimals: 18
     },
-    polygonChain: {
-        chainId: '0x89',
-        chainName: 'Polygon',
-        nativeCurrency: {
-            name: 'MATIC',
-            symbol: 'MATIC',
-            decimals: 18
-        },
-        rpcUrls: ['https://polygon-rpc.com'],
-        blockExplorerUrls: ['https://polygonscan.com/'],
-        iconUrls: [''],
+},
+{
+    chainName: 'Polygon',
+    chainId: '0x89',
+    nativeCurrency: {
+        name: 'matic',
+        symbol: 'MATIC',
+        decimals: 18
     },
-    mumbaiChain: {
-        chainId: '0x13881', // A 0x-prefixed hexadecimal string
-        chainName: 'Mumbai Testnet',
-        nativeCurrency: {
-            name: 'MATIC',
-            symbol: 'MATIC', // 2-6 characters long
-            decimals: 18
-        },
-        rpcUrls: ['https://rpc-mumbai.matic.today'],
-        blockExplorerUrls: ['https://explorer-mumbai.maticvigil.com/'],
-        iconUrls: [''],
-    }
+    rpcUrls: ['https://polygon-rpc.com'],
+    blockExplorerUrls: ['https://polygonscan.com/'],
+    iconUrls: [''],
+},
+{
+    chainName: 'Polygon Testnet Mumbai',
+    chainId: '0x13881', // A 0x-prefixed hexadecimal string
+    nativeCurrency: {
+        name: 'matic',
+        symbol: 'MATIC', // 2-6 characters long
+        decimals: 18
+    },
+    rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
+    blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+    iconUrls: [''],
 }
+];
 
 const initialize = async () => {
     //You will start here
@@ -42,7 +53,7 @@ const initialize = async () => {
     let contract = null;
     let provider = null;
     const { ethereum } = window;
-    const targetChain = network.rinkebyChain;
+    const targetChain = network.find(x => x.chainId === chainId);
     const onboardButton = document.getElementById('connectWalletButton');
     const mintAmount = document.getElementById('mintAmount');
     const mintNewNftButton = document.getElementById('mintNewNftButton');
@@ -141,7 +152,7 @@ const initialize = async () => {
             const shortAddress = currentAccount.replace(currentAccount.slice(6, 38), '...');
 
             const balanceStr = (+ethers.utils.formatEther(await provider.getBalance(currentAccount))).toFixed(3);
-            onboardButton.innerText = shortAddress + '  /  ' + balanceStr + 'ETH' || 'Not able to get accounts';
+            onboardButton.innerText = shortAddress + '  /  ' + balanceStr + ' ' + targetChain.nativeCurrency.symbol || 'Not able to get accounts';
 
             ethereum
                 .request({ method: 'eth_chainId' })
@@ -161,7 +172,7 @@ const initialize = async () => {
     async function handleChainChanged(_chainId) {
         console.log('handleChainChanged, current chain: ' + _chainId);
         if (_chainId !== targetChain.chainId) {
-            onboardButton.innerText = `Switch To Ethereum Network >>`;
+            onboardButton.innerText = `Switch To ${targetChain.chainName} Network >>`;
             onboardButton.onclick = onClickSwitchChain;
             onboardButton.disabled = false;
             mintNewNftButton.disabled = true;
@@ -180,8 +191,8 @@ const initialize = async () => {
             for (let i = 0; i < numberNftOwned; i++) {
                 let tokenId = (await contract.tokenOfOwnerByIndex(currentAccount, i)).toNumber();
                 collection += `<div class="card mb-2" style="min-width: 252px; max-width: 252px;">
-                    <a href="/new-nft-project/asset/${tokenId}">
-                        <img src="/new-nft-project/img/${tokenId}" class="card-img-top" alt="">
+                    <a href="/${projectPath}/asset/${tokenId}">
+                        <img src="/${projectPath}/img/${tokenId}" class="card-img-top" alt="">
                     </a>
                     <div class="card-footer d-flex justify-content-between align-items-center">
                         <div class="h5">#${tokenId}
@@ -190,7 +201,7 @@ const initialize = async () => {
                             </a>
                         </div>
                         <div>
-                            <a href="/new-nft-project/asset/${tokenId}" class="btn btn-sm btn-outline-primary">Details</a>
+                            <a href="/${projectPath}/asset/${tokenId}" class="btn btn-sm btn-outline-primary">Details</a>
                         </div>
                     </div>
                 </div>`;
@@ -223,7 +234,8 @@ const initialize = async () => {
             handleTransaction(tx);
         } catch (error) {
             console.error(error);
-            showAlert(error.message, 'danger');
+            const errMessage = error.data.message;
+            showAlert(errMessage, 'danger');
         }
     });
 
@@ -246,7 +258,7 @@ const initialize = async () => {
         console.log(newTokenEvents);
 
         const numberMinted = newTokenEvents.length;
-        const mintSuccessMsg = "You have successfully minted " + numberMinted + " NFT!"
+        const mintSuccessMsg = "You have successfully minted " + numberMinted + " NFT! See your NFT below:"
         showAlert(mintSuccessMsg, 'success');
 
         const firstTokenId = newTokenEvents[0].args.tokenId.toNumber();
@@ -261,7 +273,7 @@ const initialize = async () => {
             <div class="carousel-item active">
                 <div class="d-flex justify-content-center">
                     <div class="embed-responsive embed-responsive-1by1" style="max-width: 400px;">
-                        <iframe class="embed-responsive-item" src="/new-nft-project/asset/full/${firstTokenId}"></iframe>
+                        <iframe class="embed-responsive-item" src="/${projectPath}/asset/full/${firstTokenId}"></iframe>
                     </div>
                     <div class="carousel-caption">
                         <h5>New NFT #${firstTokenId}</h5>
@@ -273,7 +285,7 @@ const initialize = async () => {
             html += `<div class="carousel-item">
                 <div class="d-flex justify-content-center">
                     <div class="embed-responsive embed-responsive-1by1" style="max-width: 400px;">
-                        <iframe class="embed-responsive-item" src="/new-nft-project/asset/full/${tokenId}"></iframe>
+                        <iframe class="embed-responsive-item" src="/${projectPath}/asset/full/${tokenId}"></iframe>
                     </div>
                     <div class="carousel-caption">
                         <h5>New NFT #${tokenId}</h5>
@@ -314,22 +326,22 @@ window.addEventListener('DOMContentLoaded', initialize);
 const itemPerPage = 8;
 const pageTotal = Math.ceil(totalSupply / itemPerPage);
 let currentPage = 1;
-$('#galleryPage'+currentPage).addClass('disabled');
+$('#galleryPage' + currentPage).addClass('disabled');
 
-$('#galleryPagePrev').click(function() {
+$('#galleryPagePrev').click(function () {
     if (currentPage > 1) {
         currentPage--;
         updateGallery();
     }
 });
-$('#galleryPageNext').click(function() {
+$('#galleryPageNext').click(function () {
     if (currentPage < pageTotal) {
         currentPage++;
         updateGallery();
     }
 });
-for (let i=1; i<=pageTotal; i++) {
-    $('#galleryPage'+i).click(function() {
+for (let i = 1; i <= pageTotal; i++) {
+    $('#galleryPage' + i).click(function () {
         currentPage = i;
         updateGallery();
     });
@@ -339,16 +351,16 @@ function updateGallery() {
     $('.page-item').removeClass('disabled');
     if (currentPage === 1) $('#galleryPagePrev').addClass('disabled');
     if (currentPage === pageTotal) $('#galleryPageNext').addClass('disabled');
-    $('#galleryPage'+currentPage).addClass('disabled');
+    $('#galleryPage' + currentPage).addClass('disabled');
 
-    let startItem = ((currentPage-1)*itemPerPage) + 1;
-    let endItem = Math.min(totalSupply, currentPage*itemPerPage);
+    let startItem = ((currentPage - 1) * itemPerPage) + 1;
+    let endItem = Math.min(totalSupply, currentPage * itemPerPage);
     let tokenId = startItem;
     let html = '';
-    for (; tokenId<=endItem; tokenId++) {
+    for (; tokenId <= endItem; tokenId++) {
         html += `<div class="card mb-2" style="min-width: 252px; max-width: 252px;">
-                    <a href="/new-nft-project/asset/${tokenId}">
-                        <img src="/new-nft-project/img/${tokenId}" class="card-img-top" alt="">
+                    <a href="/${projectPath}/asset/${tokenId}">
+                        <img src="/${projectPath}/img/${tokenId}" class="card-img-top" alt="">
                     </a>
                     <div class="card-footer d-flex justify-content-between align-items-center">
                         <div class="h5">#${tokenId}
@@ -357,7 +369,7 @@ function updateGallery() {
                             </a>
                         </div>
                         <div>
-                            <a href="/new-nft-project/asset/${tokenId}" class="btn btn-sm btn-outline-primary">Details</a>
+                            <a href="/${projectPath}/asset/${tokenId}" class="btn btn-sm btn-outline-primary">Details</a>
                         </div>
                     </div>
                 </div>`

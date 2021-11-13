@@ -2,7 +2,7 @@
 
     <div class="container">
         <div class="pb-2 mt-4 mb-4 border-bottom">
-            <h2>New NFT Collection</h2>
+            <h2><%= projectName %> Collection</h2>
             <div class="d-flex flex-wrap">
                 <div class="mr-auto small mt-3">&bull; Mint new NFT art collection with custom smart contract.<br>
                     &bull; Each with unique properties combination.<br>
@@ -18,6 +18,8 @@
         </div>
 
         <div class="pb-2 mt-4 mb-4 border-bottom">
+            <% include templates/alert.ejs %>
+            
             <div class="row justify-content-sm-center mt-2">
                 <div class="col-sm-auto" id="sketch-holder"></div>
             </div>
@@ -27,8 +29,6 @@
                     Show Me Random Samples &raquo;
                 </button>
             </div>
-
-            <% include templates/alert.ejs %>
 
             <div id="metamaskAlerts"></div>
 
@@ -40,7 +40,7 @@
                         </div>
                         <input id="mintAmount" type="number" class="form-control" value=1 aria-label="amount" min="1" max="50" step="1">
                         <div class="input-group-append">
-                            <span id="mintTotalPrice" class="input-group-text">NFT for 0.00001 ETH</span>
+                            <span id="mintTotalPrice" class="input-group-text">NFT for <%= mintPrice %> <%= currency %></span>
                             <button id="mintNewNftButton" class="btn btn-primary" type="button">Mint!</button>
                         </div>
                     </div>
@@ -63,8 +63,8 @@
             <div class="card-deck" id="galleryHolder">
                 <% let maxShow = Math.min(8, totalSupply); for (let tokenId=1; tokenId<=maxShow; tokenId++) { %>
                 <div class="card mb-2" style="min-width: 252px; max-width: 252px;">
-                    <a href="/new-nft-project/asset/<%= tokenId %>">
-                        <img src="/new-nft-project/img/<%= tokenId %>" class="card-img-top" alt="">
+                    <a href="/<%= projectPath %>/asset/<%= tokenId %>">
+                        <img src="/<%= projectPath %>/img/<%= tokenId %>" class="card-img-top" alt="">
                     </a>
                     <div class="card-footer d-flex justify-content-between align-items-center">
                         <div class="h5">#<%= tokenId %>
@@ -73,7 +73,7 @@
                             </a>
                         </div>
                         <div>
-                            <a href="/new-nft-project/asset/<%= tokenId %>" class="btn btn-sm btn-outline-primary">Details</a>
+                            <a href="/<%= projectPath %>/asset/<%= tokenId %>" class="btn btn-sm btn-outline-primary">Details</a>
                         </div>
                     </div>
                 </div>
@@ -101,13 +101,15 @@
         </div>
     </div>
     <script>
-        let contractAddress = '<%= contractAddress %>';
-        let contractAbi = '<%- JSON.stringify(contractAbi) %>';
-        let mintPrice = '<%= mintPrice %>';
-        let totalSupply = '<%= totalSupply %>';
-        let tokenHash = '<%= tokenHash %>';
-        let tokenAttributes = <%- JSON.stringify(tokenAttributes) %>;
-        let genAttrUrl = '<%= genAttrUrl %>';
+        const contractAddress = '<%= contractAddress %>';
+        const contractAbi = '<%- JSON.stringify(contractAbi) %>';
+        const mintPrice = '<%= mintPrice %>';
+        const totalSupply = '<%= totalSupply %>';
+        const chainId = '<%= chainId %>';
+        const tokenHash = '<%= tokenHash %>';
+        const tokenAttributes = <%- JSON.stringify(tokenAttributes) %>;
+        const projectPath = '<%= projectPath %>';
+        const genAttrUrl = '<%= genAttrUrl %>';
         const token = '<%= csrfToken %>';
 
         const fullScreen = false;

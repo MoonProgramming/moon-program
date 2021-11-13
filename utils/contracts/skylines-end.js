@@ -1,38 +1,24 @@
 const { ethers } = require("ethers");
 const Chance = require('chance');
 const colors = require('nice-color-palettes');
+const { abi } = require('./skylines-end-abi');
 
 const projectName = `Heading For Skyline's End`;
-const networkName = "rinkeby";
-const contractAddress = '0x15a30c07976003f7AE3889D52dc5BFbaEdf38975';
-const currency = 'ETH';
-const abi = [
-    "function name() view returns (string)",
-    "function symbol() view returns (string)",
-    "function totalSupply() view returns (uint)",
-    "function tokenByIndex(uint) view returns (uint)",
-    "function balanceOf(address) view returns (uint)",
-    "function tokenOfOwnerByIndex(address owner, uint index) view returns (uint)",
-    "function tokenIdToHash(uint) view returns (bytes32)",
-    "function getNFTPrice() view returns (uint)",
-    "function ownerOf(uint) view returns (address)",
-
-    // Send some of your tokens to someone else
-    "function transfer(address to, uint amount)",
-    "function mintAndRefundExcess(uint) payable",
-
-    // event triggered
-    "event Transfer(address indexed from, address indexed to, uint amount)",
-    "event NewTokenHash(uint256 indexed tokenId, bytes32 tokenHash)"
-];
+const projectPath = `skylines-end`;
+const networkName = "Polygon Testnet Mumbai";
+const chainId = '0x13881';
+const rpcUrl = 'https://rpc-mumbai.maticvigil.com/v1/'+process.env.RPC_KEY;
+const contractAddress = '0x14De0ceeb43bdfc57eeE84Fb3Ed4d5f5f797EEe2';
+const currency = 'MATIC';
 
 let contract = null;
 exports.getContract = () => {
     if (contract == null) {
-        const network = ethers.providers.getNetwork(networkName);
-        const provider = ethers.getDefaultProvider(network);
+        // const network = ethers.providers.getNetwork(networkId);
+        // const provider = ethers.getDefaultProvider(network);
+        const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
         contract = new ethers.Contract(contractAddress, abi, provider);
-        console.log('new contract connection to ' + network.name);
+        console.log('new contract connection to ' + networkName);
         return contract;
     } else {
         return contract;
@@ -65,22 +51,21 @@ exports.getOwner = (tokenId) => {
     return result;
 }
 
-exports.genTokenMetaFromHash = (tokenId, tokenHash, host) => {
+exports.genTokenMetaFromHash = (tokenId, tokenHash, url) => {
     const attributes = this.genTokenAttributesFromHash(tokenHash);
-    const mainPage = host + '/new-nft-project';
-    const assetPage = host + `/new-nft-project/asset/${tokenId}`;
-    const imagePage = mainPage + `/img/${tokenId}`;
-    const animationPage = mainPage + `/asset/full/${tokenId}`;;
+    const assetPage = url + `/asset/${tokenId}`;
+    const imagePage = url + `/img/${tokenId}`;
+    const animationPage = url + `/asset/full/${tokenId}`;;
     const tokenMeta = {
         "collection_name": "Heading For Skyline's End",
-        "website": mainPage,
+        "website": url,
         "artistName": "Moon",
         "artistEmail": "moon.programming@gmail.com",
         "contract": contractAddress,
         "id": tokenId,
         "name": "Heading For Skyline's End #" + tokenId,
         "tokenHash": tokenHash,
-        "description": "New NFT project that going to be awesome. Click the picture to start/pause your journey.\n\n[Interactive](" + assetPage + ")\n\n[Website](" + mainPage + ")\n\nLicense: MIT\n\ntokenHash: " + tokenHash,
+        "description": "New NFT project that going to be awesome. Click the picture to start/pause your journey.\n\n[Interactive](" + assetPage + ")\n\n[Website](" + url + ")\n\nLicense: MIT\n\ntokenHash: " + tokenHash,
         "external_url": assetPage,
         "image": imagePage,
         "animation_url": animationPage,
@@ -190,6 +175,8 @@ function rearrangePaletteByBrightness(colorArr) {
 }
 
 exports.projectName = projectName;
+exports.projectPath = projectPath;
 exports.contractAddress = contractAddress;
 exports.abi = abi;
+exports.chainId = chainId;
 exports.currency = currency;

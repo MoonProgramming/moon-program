@@ -110,11 +110,15 @@ app.use(function (req, res, next) {
     next();
 });
 
+const newNftProject = require('./utils/contracts/new-nft-project');
+const skylinesEnd = require('./utils/contracts/skylines-end');
+
 // Routes
 app.use('/', indexRouter);
 app.use('/sudoku', sudokuRouter);
 app.use('/crypto-blocks', cryptoBlocksRouter);
-app.use('/new-nft-project', newNftProjectRouter);
+app.use(`/${newNftProject.projectPath}`, newNftProjectRouter);
+app.use(`/${skylinesEnd.projectPath}`, newNftProjectRouter);
 app.use('/acct', acctRouter);
 
 
