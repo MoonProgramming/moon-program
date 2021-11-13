@@ -216,7 +216,7 @@ const initialize = async () => {
 
     mintAmount.addEventListener('change', async () => {
         const nftTotalPrice = ($('#mintAmount').val() * mintPrice).toFixed(5);
-        $('#mintTotalPrice').html(`NFT for ${nftTotalPrice} ETH`);
+        $('#mintTotalPrice').html(`NFT for ${nftTotalPrice} ${targetChain.nativeCurrency.name}`);
     });
 
     mintNewNftButton.addEventListener('click', async () => {
@@ -228,14 +228,13 @@ const initialize = async () => {
                 console.log("Cannot find the mint fee, aborting minting")
                 return
             }
-            // const nftPrice2 = ethers.utils.formatEther(nftPrice);
             const amount = $('#mintAmount').val();
             const tx = await contract.mintAndRefundExcess(amount, { value: nftPrice.mul(amount) })
             handleTransaction(tx);
         } catch (error) {
             console.error(error);
-            const errMessage = error.data.message;
-            showAlert(errMessage, 'danger');
+            if (error.data) error = error.data;
+            showAlert(error.message, 'danger');
         }
     });
 

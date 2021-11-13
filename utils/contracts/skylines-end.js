@@ -5,11 +5,11 @@ const { abi } = require('./skylines-end-abi');
 
 const projectName = `Heading For Skyline's End`;
 const projectPath = `skylines-end`;
-const networkName = "Polygon Testnet Mumbai";
-const chainId = '0x13881';
-const rpcUrl = 'https://rpc-mumbai.maticvigil.com/v1/'+process.env.RPC_KEY;
 const contractAddress = '0x14De0ceeb43bdfc57eeE84Fb3Ed4d5f5f797EEe2';
-const currency = 'MATIC';
+const chainName = "Polygon Testnet Mumbai";
+const chainId = '0x13881';
+const currency = 'matic';
+const rpcUrl = 'https://rpc-mumbai.maticvigil.com/v1/'+process.env.RPC_KEY;
 
 let contract = null;
 exports.getContract = () => {
@@ -18,7 +18,7 @@ exports.getContract = () => {
         // const provider = ethers.getDefaultProvider(network);
         const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
         contract = new ethers.Contract(contractAddress, abi, provider);
-        console.log('new contract connection to ' + networkName);
+        console.log('new contract connection to ' + chainName);
         return contract;
     } else {
         return contract;

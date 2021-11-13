@@ -107,7 +107,7 @@
         const totalSupply = '<%= totalSupply %>';
         const chainId = '<%= chainId %>';
         const tokenHash = '<%= tokenHash %>';
-        const tokenAttributes = <%- JSON.stringify(tokenAttributes) %>;
+        let tokenAttributes = <%- JSON.stringify(tokenAttributes) %>;
         const projectPath = '<%= projectPath %>';
         const genAttrUrl = '<%= genAttrUrl %>';
         const token = '<%= csrfToken %>';
