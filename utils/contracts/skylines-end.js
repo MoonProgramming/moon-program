@@ -7,6 +7,7 @@ const projectName = `Heading For Skyline's End`;
 const projectPath = `skylines-end`;
 const baseUrl = 'https://moon-program.herokuapp.com/skylines-end/meta/'
 const contractAddress = '0x14De0ceeb43bdfc57eeE84Fb3Ed4d5f5f797EEe2';
+const contractUrl = `https://mumbai.polygonscan.com/address/${contractAddress}`;
 const chainName = "Polygon Testnet Mumbai";
 const chainId = '0x13881';
 const currency = 'matic';
@@ -22,6 +23,13 @@ const abi = metadata.output.abi;
 const rpcUrl = 'https://rpc-mumbai.maticvigil.com/v1/'+process.env.RPC_KEY;
 const openseaCollectionUrl = `https://testnets.opensea.io/collection/heading-for-skylines-test`;
 const openseaAssetUrl = `https://testnets.opensea.io/assets/mumbai`;
+const descriptionPoint = [
+    `A collection of algorithmically generated interactive NFT sets it's view in dusk of a city skyline.`,
+    `Available in the ${chainName} blockchain network. Contract <a href="${contractUrl}" target="blank">here.</a>`,
+    `Generative: each mint guarantee NFT token with unique properties combination.`,
+    `Interactive: click the picture to start/pause your journey.`,
+    `Secondary market available for purchase at <a href="${openseaCollectionUrl}" target="blank">Opensea.io</a>`
+];
 
 let contract = null;
 exports.getContract = () => {
@@ -41,6 +49,11 @@ exports.getNftPrice = async () => {
     const result = await this.getContract().getNFTPrice();
     const nftPrice = ethers.utils.formatEther(result);
     return nftPrice;
+}
+
+exports.getMaxSupply = async () => {
+    const result = await this.getContract().MAX_NFT_SUPPLY();
+    return result.toNumber();
 }
 
 exports.getTotalSupply = async () => {
@@ -77,7 +90,9 @@ exports.genTokenMetaFromHash = (tokenId, tokenHash, url) => {
         "id": tokenId,
         "name": "Heading For Skyline's End #" + tokenId,
         "tokenHash": tokenHash,
-        "description": "New NFT project that going to be awesome. Click the picture to start/pause your journey.\n\n[Interactive](" + assetPage + ")\n\n[Website](" + url + ")\n\nLicense: MIT\n\ntokenHash: " + tokenHash,
+        "description": `Where are we going from here?<br>\n\n
+                        Heading For Skyline's End is an algorithmically generated interactive NFT sets it's view in dusk of a city skyline.<br>\n\n
+                        Click the picture to start/pause your journey.`,
         "external_url": assetPage,
         "image": imagePage,
         "animation_url": animationPage,
@@ -194,3 +209,4 @@ exports.chainId = chainId;
 exports.currency = currency;
 exports.openseaCollectionUrl = openseaCollectionUrl;
 exports.openseaAssetUrl = openseaAssetUrl;
+exports.descriptionPoint = descriptionPoint;

@@ -298,7 +298,6 @@ class skylinesEndGenerator {
             this.seedIndex = (this.seedIndex + 6) % hash.length;
         }
         let seed = parseInt(e, 16);
-        console.log('seed', seed);
         s.randomSeed(seed)
     }
 }

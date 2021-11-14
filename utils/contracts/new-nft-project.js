@@ -6,15 +6,24 @@ const projectName = `New NFT`;
 const projectPath = `new-nft-project`;
 const baseUrl = 'https://moon-program.herokuapp.com/new-nft-project/meta/'
 const contractAddress = '0x15a30c07976003f7AE3889D52dc5BFbaEdf38975';
+const contractUrl = `https://rinkeby.etherscan.io/address/${contractAddress}`;
 const chainName = "rinkeby";
 const chainId = '0x4';
 const currency = 'ether';
 const openseaCollectionUrl = `https://testnets.opensea.io/collection/moontest01`;
-const openseaAssetUrl = `https://testnets.opensea.io/assets`
+const openseaAssetUrl = `https://testnets.opensea.io/assets`;
+const descriptionPoint = [
+    `A collection of algorithmically generated interactive NFT.`,
+    `Available in the ${chainName} blockchain network. Contract <a href="${contractUrl}" target="blank">here.</a>`,
+    `Generative: each mint guarantee NFT token with unique properties combination.`,
+    `Interactive: click the picture to start/pause your journey.`,
+    `Secondary market available for purchase at <a href="${openseaCollectionUrl}" target="blank">Opensea.io</a>`
+];
 
 const abi = [
     "function name() view returns (string)",
     "function symbol() view returns (string)",
+    "function MAX_NFT_SUPPLY() view returns (uint)",
     "function totalSupply() view returns (uint)",
     "function tokenByIndex(uint) view returns (uint)",
     "function balanceOf(address) view returns (uint)",
@@ -49,6 +58,11 @@ exports.getNftPrice = async () => {
     const result = await this.getContract().getNFTPrice();
     const nftPrice = ethers.utils.formatEther(result);
     return nftPrice;
+}
+
+exports.getMaxSupply = async () => {
+    const result = await this.getContract().MAX_NFT_SUPPLY();
+    return result.toNumber();
 }
 
 exports.getTotalSupply = async () => {
@@ -202,3 +216,4 @@ exports.chainId = chainId;
 exports.currency = currency;
 exports.openseaCollectionUrl = openseaCollectionUrl;
 exports.openseaAssetUrl = openseaAssetUrl;
+exports.descriptionPoint = descriptionPoint;

@@ -1,38 +1,40 @@
 <% layout('layout') -%>
 
     <div class="container">
-        <div class="pb-2 mt-4 mb-4 border-bottom">
+        <div class="pb-2 mt-4 mb-3 border-bottom">
             <h2><%= projectName %> Collection</h2>
-            <div class="d-flex flex-wrap">
-                <div class="mr-auto small mt-3">&bull; Mint new NFT art collection with custom smart contract.<br>
-                    &bull; Each with unique properties combination.<br>
-                    &bull; Secondary market available for purchase at <a
-                    href="<%= openseaCollectionUrl %>" target="blank">Opensea.io</a>
-                </div>
-                <div class="mt-auto">
-                    <button class="btn btn-sm btn-light" type="button" id="connectWalletButton" onclick="connectWallet()">
-                        Connect Wallet &raquo;
-                    </button>
+            <div class="row justify-content-sm-center mt-3">
+                <div class="col-sm-auto" id="sketch-holder">
+                    <img class="loader" src="/images/loading-spinner.gif">
                 </div>
             </div>
-        </div>
-
-        <div class="pb-2 mt-4 mb-4 border-bottom">
-            <% include templates/alert.ejs %>
-            
-            <div class="row justify-content-sm-center mt-2">
-                <div class="col-sm-auto" id="sketch-holder"></div>
-            </div>
-            <div class="text-center mb-3">
-                <div class="small">Click the picture to start/pause your journey.</div>
+            <div class="text-center mb-2">
                 <button class="btn btn-sm btn-light" type="button" onclick="generateNewSketch()">
                     Show Me Random Samples &raquo;
                 </button>
             </div>
+            <% include templates/alert.ejs %>
+        </div>
 
-            <div id="metamaskAlerts"></div>
+        <div class="pb-2 mt-4 mb-4 border-bottom">
+            <div class="d-flex justify-content-between">
+                <h3>Collection Description:</h3>
+                <button class="btn btn-sm btn-light" type="button" id="connectWalletButton" onclick="connectWallet()">
+                    Connect Wallet &raquo;
+                </button>
+            </div>
+            
+            <div class="d-flex flex-wrap mt-3">
+                <div class="small">
+                    <% for(let i=0; i<descriptionPoint.length; i++) { %>
+                        &bull; <%- descriptionPoint[i] %><br>
+                    <% } %>
+                </div>
+            </div>
 
-            <div id="mintDiv" class="mb-3">
+            <div id="metamaskAlerts" class="mt-2"></div>
+
+            <div id="mintDiv" class="mt-4 mb-3">
                 <div class="d-flex justify-content-center">
                     <div class="input-group input-group-lg" style="max-width: 600px;">
                         <div class="input-group-prepend">
@@ -101,6 +103,7 @@
         </div>
     </div>
     <script>
+        const projectName = '<%= projectName %>';
         const contractAddress = '<%= contractAddress %>';
         const contractAbi = '<%- JSON.stringify(contractAbi) %>';
         const mintPrice = '<%= mintPrice %>';

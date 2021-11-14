@@ -257,7 +257,7 @@ const initialize = async () => {
         console.log(newTokenEvents);
 
         const numberMinted = newTokenEvents.length;
-        const mintSuccessMsg = "You have successfully minted " + numberMinted + " NFT! See your NFT below:"
+        const mintSuccessMsg = "Congratulations! You have successfully minted " + numberMinted + " NFT! See your NFT(s) below:"
         showAlert(mintSuccessMsg, 'success');
 
         const firstTokenId = newTokenEvents[0].args.tokenId.toNumber();
@@ -275,7 +275,7 @@ const initialize = async () => {
                         <iframe class="embed-responsive-item" src="/${projectPath}/asset/full/${firstTokenId}"></iframe>
                     </div>
                     <div class="carousel-caption">
-                        <h5>New NFT #${firstTokenId}</h5>
+                        <h5>${projectName} #${firstTokenId}</h5>
                     </div>
                 </div>
             </div>`
@@ -287,7 +287,7 @@ const initialize = async () => {
                         <iframe class="embed-responsive-item" src="/${projectPath}/asset/full/${tokenId}"></iframe>
                     </div>
                     <div class="carousel-caption">
-                        <h5>New NFT #${tokenId}</h5>
+                        <h5>${projectName} #${tokenId}</h5>
                     </div>
                 </div>
             </div>`;
@@ -295,7 +295,7 @@ const initialize = async () => {
 
         html += `</div></div>`;
         if (numberMinted > 1) {
-            html += `<div class="d-flex justify-content-center">
+            html += `<div class="d-flex justify-content-center mt-2">
                 <button class="btn-lg btn-secondary" type="button" data-target="#carouselvideo" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Prev</span>

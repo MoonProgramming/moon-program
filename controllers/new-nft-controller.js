@@ -7,6 +7,11 @@ exports.initPage = async (req, res, next) => {
         let contract = require(`../utils/contracts/` + projectPath);
         const mintPrice = await contract.getNftPrice();
         const totalSupply = await contract.getTotalSupply();
+        const maxSupply = await contract.getMaxSupply();
+
+        let descriptionPoint = Array.from(contract.descriptionPoint);
+        if (totalSupply < maxSupply) descriptionPoint.push(`Maximum supply is ${maxSupply}, minting is still available.`);
+        else descriptionPoint.push(`Collection sold out.`);
 
         // let tokenHash = '0x0000000000000000000000000000000000000000000000000000000000000000';
         let tokenHash = '';
@@ -18,6 +23,7 @@ exports.initPage = async (req, res, next) => {
             projectName: contract.projectName,
             contractAddress: contract.contractAddress,
             contractAbi: contract.abi,
+            descriptionPoint: descriptionPoint,
             mintPrice: mintPrice,
             totalSupply: totalSupply,
             chainId: contract.chainId,
