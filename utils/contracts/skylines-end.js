@@ -46,7 +46,7 @@ exports.getContract = () => {
 }
 
 exports.getNftPrice = async () => {
-    const result = await this.getContract().getNFTPrice();
+    const result = await this.getContract().MINT_PUBLIC_FEE();
     const nftPrice = ethers.utils.formatEther(result);
     return nftPrice;
 }
