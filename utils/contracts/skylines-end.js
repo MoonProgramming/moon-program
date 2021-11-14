@@ -1,6 +1,6 @@
 const { ethers } = require("ethers");
 const Chance = require('chance');
-const colors = require('nice-color-palettes');
+const colors = require('nice-color-palettes/1000');
 const metadata = require('./SkylinesEnd_metadata.json');
 
 const projectName = `Heading For Skyline's End`;
