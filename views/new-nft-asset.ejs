@@ -60,7 +60,7 @@
             const marketLink = document.getElementById('market');
 
             tokenName.innerHTML = tokenMeta.name;
-            descriptionTable.innerHTML = description;
+            descriptionTable.innerHTML = description.replaceAll(`\n`, `<br>`);;
             attributesTable.innerHTML = '';
             tokenAttributes.forEach(x => {
                 attributesTable.innerHTML += `${x.trait_type}: ${x.value} <br>`
