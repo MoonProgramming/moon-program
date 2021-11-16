@@ -110,7 +110,7 @@ exports.genTokenMetaFromHash = (tokenId, tokenHash, url) => {
         "name": "Heading For Skyline's End #" + tokenId,
         "tokenHash": tokenHash,
         "animation_url": animationPage,
-        "description": `Where do we going from here?\n`+
+        "description": `Where do we go from here?\n`+
                         `Heading For Skyline's End is an algorithmically generated interactive NFT sets it's view in dusk of a city skyline.\n`+
                         `Click the picture to start/pause your journey.`,
         "external_url": assetPage,
