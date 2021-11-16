@@ -21,7 +21,7 @@ const network = [{
     blockExplorerUrls: ['https://rinkeby.etherscan.io/'],
 },
 {
-    chainName: 'Polygon',
+    chainName: 'Polygon Mainnet',
     chainId: '0x89',
     nativeCurrency: {
         name: 'matic',
