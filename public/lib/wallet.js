@@ -223,7 +223,7 @@ const initialize = async () => {
         $('#metamaskAlerts').html('');
         try {
             console.log("About to mint")
-            const nftPrice = await contract.getNFTPrice();
+            const nftPrice = await contract.MINT_PUBLIC_FEE();
             if (!nftPrice) {
                 console.log("Cannot find the mint fee, aborting minting")
                 return
