@@ -6,10 +6,11 @@ const metadata = require('./SkylinesEnd_metadata.json');
 const projectName = `Heading For Skyline's End`;
 const projectPath = `skylines-end`;
 const baseUrl = 'https://moon-program.herokuapp.com/skylines-end/meta/'
+
 const contractAddress = '0x14De0ceeb43bdfc57eeE84Fb3Ed4d5f5f797EEe2';
-const contractUrl = `https://mumbai.polygonscan.com/address/${contractAddress}`;
-const chainName = "Polygon Testnet Mumbai";
-const chainId = '0x13881';
+const contractUrl = `https://polygonscan.com/address/${contractAddress}`;
+const chainName = "Polygon";
+const chainId = '0x89';
 const currency = 'matic';
 const abi = metadata.output.abi;
 // Matic Mainnet RPC URL
@@ -20,9 +21,27 @@ const abi = metadata.output.abi;
 // websocketUrl = 'wss://rpc-mainnet.maticvigil.com/ws/v1/'+process.env.RPC_KEY;
 // Mumbai Testnet Websocket URL
 // websocketUrl = 'wss://rpc-mumbai.maticvigil.com/ws/v1/'+process.env.RPC_KEY;
-const rpcUrl = 'https://rpc-mumbai.maticvigil.com/v1/'+process.env.RPC_KEY;
-const openseaCollectionUrl = `https://testnets.opensea.io/collection/heading-for-skylines-test`;
-const openseaAssetUrl = `https://testnets.opensea.io/assets/mumbai`;
+const rpcUrl = 'https://rpc-mainnet.maticvigil.com/v1/'+process.env.RPC_KEY;
+const openseaCollectionUrl = `https://opensea.io/collection/heading-for-skylines-end`;
+const openseaAssetUrl = `https://opensea.io/assets/matic`;
+
+// const contractAddress = '0x14De0ceeb43bdfc57eeE84Fb3Ed4d5f5f797EEe2';
+// const contractUrl = `https://mumbai.polygonscan.com/address/${contractAddress}`;
+// const chainName = "Polygon Testnet Mumbai";
+// const chainId = '0x13881';
+// const currency = 'matic';
+// const abi = metadata.output.abi;
+// // Matic Mainnet RPC URL
+// // rpcUrl = 'https://rpc-mainnet.maticvigil.com/v1/'+process.env.RPC_KEY;
+// // Mumbai Testnet RPC URL
+// // rpcUrl = 'https://rpc-mumbai.maticvigil.com/v1/'+process.env.RPC_KEY;
+// // Matic Mainnet Websocket URL
+// // websocketUrl = 'wss://rpc-mainnet.maticvigil.com/ws/v1/'+process.env.RPC_KEY;
+// // Mumbai Testnet Websocket URL
+// // websocketUrl = 'wss://rpc-mumbai.maticvigil.com/ws/v1/'+process.env.RPC_KEY;
+// const rpcUrl = 'https://rpc-mumbai.maticvigil.com/v1/'+process.env.RPC_KEY;
+// const openseaCollectionUrl = `https://testnets.opensea.io/collection/heading-for-skylines-test`;
+// const openseaAssetUrl = `https://testnets.opensea.io/assets/mumbai`;
 const descriptionPoint = [
     `A collection of algorithmically generated interactive NFT sets it's view in dusk of a city skyline.`,
     `Available in the ${chainName} blockchain network. Contract <a href="${contractUrl}" target="blank">here.</a>`,

@@ -257,19 +257,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "getNFTPrice",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "getVault",
 				"outputs": [
 					{
@@ -878,11 +865,11 @@
 			]
 		},
 		"SkylinesEnd.sol": {
-			"keccak256": "0x8ca6d5a201f55bba5471dbc96e4523fe79b9195f22906f210746d47a85747077",
+			"keccak256": "0xf10ae8de7a8e1c2c393b992f39646f8418b0b8d2b91c80704e3e3e5f00b685ef",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b1187d426867afcc9078bf5aac76cd3ef935e00a216a58a4ad1d69fcd58267e9",
-				"dweb:/ipfs/QmPgvFqLWwg9jBH8jvGCaLkNbj3Xcb5U4LKLFyMtqKJKgc"
+				"bzz-raw://3876c5481e76a18453616cef8ae52b9209edba162e23b90f9c535465b2059946",
+				"dweb:/ipfs/QmVeLgKAiWuFq4ojhJtFqQyWVfvimr3rXwyfx8NiPTobd6"
 			]
 		}
 	},
