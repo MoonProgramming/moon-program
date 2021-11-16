@@ -64,6 +64,7 @@ exports.getAsset = async (req, res, next) => {
         res.render('new-nft-asset', {
             csrfToken: req.csrfToken(),
             owner: owner,
+            blockExplorerUrls: contract.blockExplorerUrls,
             tokenMeta: tokenMeta
         });
     } catch (err) {
@@ -71,6 +72,7 @@ exports.getAsset = async (req, res, next) => {
         return res.render('new-nft-asset', {
             csrfToken: req.csrfToken(),
             owner: '',
+            blockExplorerUrls: '',
             tokenMeta: {}
         });
     }
@@ -98,6 +100,7 @@ exports.showMeta = async (req, res, next) => {
         return res.render('new-nft-asset', {
             csrfToken: req.csrfToken(),
             owner: '',
+            blockExplorerUrls: '',
             tokenMeta: {}
         });
     }
@@ -137,6 +140,7 @@ exports.showFull = async (req, res, next) => {
         return res.render('new-nft-asset', {
             csrfToken: req.csrfToken(),
             owner: '',
+            blockExplorerUrls: '',
             tokenMeta: {}
         });
     }
@@ -156,6 +160,7 @@ exports.showImg = async (req, res, next) => {
                 return res.render('new-nft-asset', {
                     csrfToken: req.csrfToken(),
                     owner: '',
+                    blockExplorerUrls: '',
                     tokenMeta: {}
                 });
             }
@@ -174,6 +179,7 @@ exports.showImg = async (req, res, next) => {
         return res.render('new-nft-asset', {
             csrfToken: req.csrfToken(),
             owner: '',
+            blockExplorerUrls: '',
             tokenMeta: {}
         });
     }
@@ -210,6 +216,7 @@ exports.postImg = async (req, res, next) => {
         return res.render('new-nft-asset', {
             csrfToken: req.csrfToken(),
             owner: '',
+            blockExplorerUrls: '',
             tokenMeta: {}
         });
     }

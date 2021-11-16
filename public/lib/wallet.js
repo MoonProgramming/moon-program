@@ -8,6 +8,7 @@ const network = [{
         symbol: 'Ξ',
         decimals: 18
     },
+    blockExplorerUrls: ['https://etherscan.io/'],
 },
 {
     chainName: 'Rinkeby',
@@ -17,6 +18,7 @@ const network = [{
         symbol: 'Ξ',
         decimals: 18
     },
+    blockExplorerUrls: ['https://rinkeby.etherscan.io/'],
 },
 {
     chainName: 'Polygon',
@@ -247,7 +249,7 @@ const initialize = async () => {
         <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span></div>
         <div class="pl-5">Transaction in progress.... waiting for confirmation. 
-        The transaction hash is <a target='_blank' href='https://etherscan.io/tx/${tx.hash}'>${tx.hash}</a></div></div>`
+        The transaction hash is <a target='_blank' href='${targetChain.blockExplorerUrls[0]}tx/${tx.hash}'>${tx.hash}</a></div></div>`
         showAlert(mintMessage, 'info');
 
         const confirmed = await tx.wait();

@@ -5,6 +5,7 @@ const colors = require('nice-color-palettes');
 const projectName = `New NFT`;
 const projectPath = `new-nft-project`;
 const baseUrl = 'https://moon-program.herokuapp.com/new-nft-project/meta/'
+const blockExplorerUrls = `https://rinkeby.etherscan.io`;
 const contractAddress = '0x15a30c07976003f7AE3889D52dc5BFbaEdf38975';
 const contractUrl = `https://rinkeby.etherscan.io/address/${contractAddress}`;
 const chainName = "rinkeby";
@@ -210,6 +211,7 @@ function rearrangePaletteByBrightness(colorArr) {
 
 exports.projectName = projectName;
 exports.projectPath = projectPath;
+exports.blockExplorerUrls = blockExplorerUrls;
 exports.contractAddress = contractAddress;
 exports.abi = abi;
 exports.chainId = chainId;

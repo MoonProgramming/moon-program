@@ -7,6 +7,7 @@ const projectName = `Heading For Skyline's End`;
 const projectPath = `skylines-end`;
 const baseUrl = 'https://moon-program.herokuapp.com/skylines-end/meta/'
 
+const blockExplorerUrls = `https://polygonscan.com`;
 const contractAddress = '0x14De0ceeb43bdfc57eeE84Fb3Ed4d5f5f797EEe2';
 const contractUrl = `https://polygonscan.com/address/${contractAddress}`;
 const chainName = "Polygon";
@@ -25,6 +26,7 @@ const rpcUrl = 'https://rpc-mainnet.maticvigil.com/v1/'+process.env.RPC_KEY;
 const openseaCollectionUrl = `https://opensea.io/collection/heading-for-skylines-end`;
 const openseaAssetUrl = `https://opensea.io/assets/matic`;
 
+// const blockExplorerUrls = `https://mumbai.polygonscan.com`;
 // const contractAddress = '0x14De0ceeb43bdfc57eeE84Fb3Ed4d5f5f797EEe2';
 // const contractUrl = `https://mumbai.polygonscan.com/address/${contractAddress}`;
 // const chainName = "Polygon Testnet Mumbai";
@@ -222,6 +224,7 @@ function rearrangePaletteByBrightness(colorArr) {
 
 exports.projectName = projectName;
 exports.projectPath = projectPath;
+exports.blockExplorerUrls = blockExplorerUrls;
 exports.contractAddress = contractAddress;
 exports.abi = abi;
 exports.chainId = chainId;
