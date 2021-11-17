@@ -75,6 +75,31 @@
 				"anonymous": false,
 				"inputs": [
 					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "userAddress",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address payable",
+						"name": "relayerAddress",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "functionSignature",
+						"type": "bytes"
+					}
+				],
+				"name": "MetaTransactionExecuted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
 						"indexed": true,
 						"internalType": "uint256",
 						"name": "tokenId",
@@ -133,6 +158,19 @@
 				],
 				"name": "Transfer",
 				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "ERC712_VERSION",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			},
 			{
 				"inputs": [],
@@ -239,6 +277,45 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "userAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes",
+						"name": "functionSignature",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "sigR",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "sigS",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint8",
+						"name": "sigV",
+						"type": "uint8"
+					}
+				],
+				"name": "executeMetaTransaction",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "uint256",
 						"name": "tokenId",
 						"type": "uint256"
@@ -250,6 +327,51 @@
 						"internalType": "address",
 						"name": "",
 						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getChainId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getDomainSeperator",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getNonce",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "nonce",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -272,12 +394,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "owner",
+						"name": "_owner",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "operator",
+						"name": "_operator",
 						"type": "address"
 					}
 				],
@@ -285,7 +407,7 @@
 				"outputs": [
 					{
 						"internalType": "bool",
-						"name": "",
+						"name": "isOperator",
 						"type": "bool"
 					}
 				],
@@ -674,9 +796,6 @@
 				"getApproved(uint256)": {
 					"details": "See {IERC721-getApproved}."
 				},
-				"isApprovedForAll(address,address)": {
-					"details": "See {IERC721-isApprovedForAll}."
-				},
 				"name()": {
 					"details": "See {IERC721Metadata-name}."
 				},
@@ -865,11 +984,11 @@
 			]
 		},
 		"SkylinesEnd.sol": {
-			"keccak256": "0xf10ae8de7a8e1c2c393b992f39646f8418b0b8d2b91c80704e3e3e5f00b685ef",
+			"keccak256": "0xb531ad7810d43752c7c24be44fe3966f5e7b07a8dbff6349182995e029f5c256",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3876c5481e76a18453616cef8ae52b9209edba162e23b90f9c535465b2059946",
-				"dweb:/ipfs/QmVeLgKAiWuFq4ojhJtFqQyWVfvimr3rXwyfx8NiPTobd6"
+				"bzz-raw://00abc547e087c0f2672b3a8bc629c67f6f1531ede5c4f00851ce76fd92550bd9",
+				"dweb:/ipfs/QmSGv79VDHq7hign5cZgorkPF2LnjHP7ASeo9XuFmtCKCH"
 			]
 		}
 	},
