@@ -8,6 +8,7 @@ const projectPath = `skylines-end`;
 const baseUrl = 'https://moon-program.herokuapp.com/skylines-end/meta/'
 
 const blockExplorerUrls = `https://polygonscan.com`;
+// const contractAddress = '0x14De0ceeb43bdfc57eeE84Fb3Ed4d5f5f797EEe2';
 const contractAddress = '0xa6029A5F690f0648b5dA96Ba9ac657Ba29f0a545';
 const contractUrl = `https://polygonscan.com/address/${contractAddress}`;
 const chainName = "Polygon";
@@ -23,7 +24,7 @@ const abi = metadata.output.abi;
 // Mumbai Testnet Websocket URL
 // websocketUrl = 'wss://rpc-mumbai.maticvigil.com/ws/v1/'+process.env.RPC_KEY;
 const rpcUrl = 'https://rpc-mainnet.maticvigil.com/v1/'+process.env.RPC_KEY;
-const openseaCollectionUrl = `https://opensea.io/collection/heading-for-skylines-end`;
+const openseaCollectionUrl = `https://opensea.io/collection/heading-for-skylines-end-v2`;
 const openseaAssetUrl = `https://opensea.io/assets/matic`;
 
 // const blockExplorerUrls = `https://mumbai.polygonscan.com`;
