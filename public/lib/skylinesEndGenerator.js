@@ -322,6 +322,7 @@ if (newlyMinted) {
 }
 
 function generateNewSketch() {
+    console.log(genAttrUrl);
     const posting = $.ajax({
         credentials: 'same-origin',
         headers: {

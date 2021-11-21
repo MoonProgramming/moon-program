@@ -41,6 +41,7 @@ exports.initPage = async (req, res, next) => {
 };
 
 exports.postGenAttr = async (req, res, next) => {
+    console.log('postGenAttr');
     const projectPath = req.originalUrl.split('/')[1];
     const contract = require(`../utils/contracts/` + projectPath);
     const tokenAttributes = contract.genTokenAttributesFromHash(null);
