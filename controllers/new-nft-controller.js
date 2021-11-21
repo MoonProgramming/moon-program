@@ -16,7 +16,7 @@ exports.initPage = async (req, res, next) => {
         // let tokenHash = '0x0000000000000000000000000000000000000000000000000000000000000000';
         let tokenHash = '';
         const tokenAttributes = contract.genTokenAttributesFromHash(tokenHash);
-        let url = req.protocol + '://' + req.headers.host + req.originalUrl;
+        let url = req.protocol + '://' + req.headers.host + '/' + projectPath;
         
         res.render('new-nft-project', {
             csrfToken: req.csrfToken(),
