@@ -6,7 +6,7 @@
             <% include templates/alert.ejs %>
             
             <% if (owner) { %>
-            <h2 id="tokenName"></h2>
+            <h2 id="tokenName" class="tokenName"></h2>
 
             <div class="row justify-content-sm-center mt-3 mb-3">
                 <div class="col-sm-auto" id="sketch-holder"></div>
@@ -23,19 +23,19 @@
                         </tr>
                         <tr>
                             <th scope="row">Description</th>
-                            <td id="description"></td>
+                            <td id="description" class="description"></td>
                         </tr>
                         <tr>
                             <th scope="row">Attributes</th>
-                            <td id="attributes"></td>
+                            <td id="attributes" class="attributes"></td>
                         </tr>
                         <tr>
                             <th scope="row">Artist</th>
-                            <td id="artist"></td>
+                            <td id="artist" class="artist"></td>
                         </tr>
                         <tr>
                             <th scope="row">Market</th>
-                            <td id="market"></td>
+                            <td id="market" class="market"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -52,7 +52,49 @@
             const tokenHash = tokenMeta.tokenHash;
             const fullScreen = false;
             const newlyMinted = false;
+
+            // const tokenName = document.getElementById('tokenName');
+            // const descriptionTable = document.getElementById('description');
+            // const attributesTable = document.getElementById('attributes');
+            // const artistTable = document.getElementById('artist');
+            // const marketLink = document.getElementById('market');
+            // $(".logoHeader").attr("src", "images/logo-black.png");
+            // const tokenName = document.getElementsByClassName('tokenName');
+            // const descriptionTable = document.getElementsByClassName('description');
+            // const attributesTable = document.getElementsByClassName('attributes');
+            // const artistTable = document.getElementsByClassName('artist');
+            // const marketLink = document.getElementsByClassName('market');
+
+            console.log(tokenMeta);
+            console.log(description);
+            console.log($("#tokenName"));
+            console.log(tokenMeta.name);
+
+            $("#tokenName").html(tokenMeta.name);
+            // tokenName.innerHTML = tokenMeta.name;
+            // descriptionTable.innerHTML = description.replaceAll(`\n`, `<br>`);
+            $("#description").html(description.replace(/\n/g, '<br>'));
+            // descriptionTable.innerHTML = description.replace(/\n/g, '<br>');
+            
+            $("#attributes").html('');
+            // attributesTable.innerHTML = '';
+            tokenAttributes.forEach(x => {
+                $("#attributes").append(`${x.trait_type}: ${x.value} <br>`);
+                // attributesTable.innerHTML += `${x.trait_type}: ${x.value} <br>`;
+            });
+            $("#artist").html(`<a href="mailto:${tokenMeta.artistEmail}">${tokenMeta.artistName}</a>`);
+            // artistTable.innerHTML = `<a href="mailto:${tokenMeta.artistEmail}">${tokenMeta.artistName}</a>`;
+            $("#market").html(`<a href="${tokenMeta.opensea_url}" target="_blank">
+                OpenSea 
+                <img style="width:30px;" class="ml-2"
+                src="https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.png" 
+                alt="Available on OpenSea" /></a>`);
+            // marketLink.innerHTML = `<a href="${tokenMeta.opensea_url}" target="_blank">
+            //     OpenSea 
+            //     <img style="width:30px;" class="ml-2"
+            //     src="https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.png" 
+            //     alt="Available on OpenSea" /></a>`;
+
         </script>
-        <script src="/lib/new-nft-asset.js"></script>
         <script src="/lib/skylinesEndGenerator.js"></script>
     <% } %>
