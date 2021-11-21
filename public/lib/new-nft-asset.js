@@ -4,6 +4,10 @@ const attributesTable = document.getElementById('attributes');
 const artistTable = document.getElementById('artist');
 const marketLink = document.getElementById('market');
 
+console.log(tokenMeta);
+console.log(tokenName);
+console.log(tokenMeta.name);
+
 tokenName.innerHTML = tokenMeta.name;
 descriptionTable.innerHTML = description.replaceAll(`\n`, `<br>`);;
 attributesTable.innerHTML = '';
