@@ -115,7 +115,7 @@ class newNftGenerator {
                     // });
             
                     // posting.done(function (data) {
-                    //     console.log(data);
+                    //     
                     // });
                     
                     // posting.fail(function () {
