@@ -66,23 +66,22 @@ class furOutGenerator {
         };
         s.draw = () => {
             s.translate(this.totalSize/2, this.totalSize/2);
-  
-            for (let i=0; i<this.furs.length; i++) {
-                let x = this.furs[i].destinationX;
-                let y = this.furs[i].destinationY;
-                let nx = this.furs[i].noiseCoorX;
-                let ny = this.furs[i].noiseCoorY;
-                
-                this.furs[i].noiseCoorX = nx + 0.01;
-                this.furs[i].noiseCoorY = ny + 0.01;
-                
-                let sx = x/this.z;
-                let sy = y/this.z;
-                let amp = this.totalSize/12;
-                let ssx = sx + s.map(s.noise(nx),0,1,-amp,amp);
-                let ssy = sy + s.map(s.noise(ny),0,1,-amp,amp);
-                s.stroke(this.furs[i].color);
-                if (this.z > 1) {
+            if (this.z > 1) {
+                for (let i=0; i<this.furs.length; i++) {
+                    let x = this.furs[i].destinationX;
+                    let y = this.furs[i].destinationY;
+                    let nx = this.furs[i].noiseCoorX;
+                    let ny = this.furs[i].noiseCoorY;
+                    
+                    this.furs[i].noiseCoorX = nx + 0.01;
+                    this.furs[i].noiseCoorY = ny + 0.01;
+                    
+                    let sx = x/this.z;
+                    let sy = y/this.z;
+                    let amp = this.totalSize/12;
+                    let ssx = sx + s.map(s.noise(nx),0,1,-amp,amp);
+                    let ssy = sy + s.map(s.noise(ny),0,1,-amp,amp);
+                    s.stroke(this.furs[i].color);
                     s.point(ssx,ssy);
                 }
             }
