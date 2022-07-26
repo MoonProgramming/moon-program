@@ -37,7 +37,6 @@ class furOutGenerator {
     sketchHolder;
     renderer;
     totalSize;
-    texture;
 
     constructor(defaultSize, thresholdSize, sketchHolder) {
         this.defaultSize = defaultSize;

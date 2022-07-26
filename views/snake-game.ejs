@@ -1,0 +1,22 @@
+<% layout('layout') -%>
+
+    <div class="container">
+        <div class="pb-2 mt-4 mb-4 border-bottom">
+            <h2>Snake Game</h2>
+            <div class="small mt-3">&bull; Self made replica of a classic game.<br>
+                &bull; Interact with touch, mouse or directional button.
+            </div>
+        </div>
+
+        <% include templates/alert.ejs %>
+
+        <div class="row justify-content-sm-center mt-2">
+            <div class="col-sm-auto" id="sketch-holder"></div>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-sm btn-light" type="button" onclick="generateNew()">
+                New Game &raquo;
+            </button>
+        </div>
+    </div>
+    <script src="/lib/snakeGameEngine.js"></script>
