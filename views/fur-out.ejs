@@ -1,0 +1,21 @@
+<% layout('layout') -%>
+    <% script('https://unpkg.com/p5.createloop@0.2.8/dist/p5.createloop.js') -%>
+
+    <div class="container">
+        <div class="pb-2 mt-4 mb-4 border-bottom">
+            <h2>Fur Out Collection</h2>
+            <div class="small mt-3">&bull; Just give me some fur please.</div>
+        </div>
+
+        <% include templates/alert.ejs %>
+
+        <div class="row justify-content-sm-center mt-2">
+            <div class="col-sm-auto" id="sketch-holder"></div>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-sm btn-light" type="button" onclick="generateNew()">
+                Generate New Fur Out &raquo;
+            </button>
+        </div>
+    </div>
+    <script src="/lib/furOutGenerator.js"></script>

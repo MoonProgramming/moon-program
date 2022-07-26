@@ -17,6 +17,7 @@ const indexRouter = require('./routes/index');
 const sudokuRouter = require('./routes/sudoku');
 const cryptoBlocksRouter = require('./routes/crypto-blocks');
 const newNftProjectRouter = require('./routes/new-nft-project');
+const furOutRouter = require('./routes/fur-out');
 const acctRouter = require('./routes/acct');
 
 
@@ -119,6 +120,7 @@ app.use('/sudoku', sudokuRouter);
 app.use('/crypto-blocks', cryptoBlocksRouter);
 app.use(`/${newNftProject.projectPath}`, newNftProjectRouter);
 app.use(`/${skylinesEnd.projectPath}`, newNftProjectRouter);
+app.use('/fur-out', furOutRouter);
 app.use('/acct', acctRouter);
 
 

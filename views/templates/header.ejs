@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-color: #f5f5f5;">
-    <a class="navbar-brand" <% if(user){%>href="/"<%}%>>
+    <a class="navbar-brand" href="/">
         <img src="/images/brand_image.png" width="30" height="30" class="d-inline-block align-top" alt="">
         Moon Program
     </a>
@@ -9,7 +9,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-            <% if (user) { %>
+            
             <li class="nav-item"></li>
                 <a class="nav-link <% if(pageName === 'sudoku'){%>active<%}%>" href="/sudoku">
                     Sudoku
@@ -25,7 +25,12 @@
                     Skyline's End
                 </a>
             </li>
-            <% } %>
+            <li class="nav-item">
+                <a class="nav-link <% if(pageName === 'fur-out'){%>active<%}%>" href="/fur-out">
+                    Fur Out
+                </a>
+            </li>
+            
         </ul>
 
         <% if (user) { %>
