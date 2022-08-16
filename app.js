@@ -19,6 +19,7 @@ const cryptoBlocksRouter = require('./routes/crypto-blocks');
 const newNftProjectRouter = require('./routes/new-nft-project');
 const furOutRouter = require('./routes/fur-out');
 const snakeGameRouter = require('./routes/snake-game');
+const flowFieldRouter = require('./routes/flow-field');
 const acctRouter = require('./routes/acct');
 
 
@@ -123,6 +124,7 @@ app.use(`/${newNftProject.projectPath}`, newNftProjectRouter);
 app.use(`/${skylinesEnd.projectPath}`, newNftProjectRouter);
 app.use('/fur-out', furOutRouter);
 app.use('/snake-game', snakeGameRouter);
+app.use('/flow-field', flowFieldRouter);
 app.use('/acct', acctRouter);
 
 

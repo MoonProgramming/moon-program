@@ -1,0 +1,41 @@
+<% layout('layout') -%>
+
+<div class="container">
+    <div class="pb-2 mt-4 mb-4 border-bottom">
+        <h2>Flow Field</h2>
+        <div class="small mt-3">&bull; The flow won't stop generating.<br>
+            &bull; Click on picture to pause.
+        </div>
+    </div>
+
+    <% include templates/alert.ejs %>
+
+    <div class="row justify-content-sm-center mt-2">
+        <div class="col-sm-auto">
+            <div id="sketch-holder"></div>
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-between">
+                    <div id="attr1-slider"></div>
+                    <div id="attr1-value"></div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div id="attr2-slider"></div>
+                    <div id="attr2-value"></div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-sm btn-light" type="button" onclick="generateNew()" disabled>
+                        Generate New &raquo;
+                    </button>
+                    <button class="btn btn-sm btn-light" type="button" onclick="generateFullScreen()" disabled>
+                        Generate Full Screen &raquo;
+                    </button>
+                    <button class="btn btn-sm btn-light" type="button" onclick="download()" disabled>
+                        Download &raquo;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/lib/flowFieldGenerator.js"></script>
