@@ -15,21 +15,29 @@
             <div id="sketch-holder"></div>
             <div class="d-flex flex-column">
                 <div class="d-flex justify-content-between">
-                    <div id="attr1-slider"></div>
-                    <div id="attr1-value"></div>
+                    <div id="attr1-slider">
+                        <input type="range" min="0.001" max="0.1" value="0.01" step="0.001" id="roughnessSlider">
+                    </div>
+                    <div id="attr1-value">
+                        Roughness = <span id="roughnessOutput"></span>
+                    </div>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <div id="attr2-slider"></div>
-                    <div id="attr2-value"></div>
+                    <div id="attr2-slider">
+                        <input type="range" min="1" max="4" value="1" step="0.5" id="angleRangeSlider">
+                    </div>
+                    <div id="attr2-value">
+                        Angle Range = <span id="angleRangeOutput"></span>
+                    </div>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <button class="btn btn-sm btn-light" type="button" onclick="generateNew()" disabled>
+                    <button class="btn btn-sm btn-light" type="button" onclick="generateNew()">
                         Generate New &raquo;
                     </button>
-                    <button class="btn btn-sm btn-light" type="button" onclick="generateFullScreen()" disabled>
+                    <button class="btn btn-sm btn-light" type="button" onclick="generateFullScreen()" id="fullScreen">
                         Generate Full Screen &raquo;
                     </button>
-                    <button class="btn btn-sm btn-light" type="button" onclick="download()" disabled>
+                    <button class="btn btn-sm btn-light" type="button" id="download">
                         Download &raquo;
                     </button>
                 </div>
