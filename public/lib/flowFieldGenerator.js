@@ -97,7 +97,6 @@ class flowFieldGenerator {
                 let par = new Particle();
                 particles.push(par);
             }
-            console.log('particle count = ' + particles.length);
 
             // s.loadPixels();
             // for (let y = 0; y < s.height; y++) {
@@ -132,9 +131,7 @@ class flowFieldGenerator {
             }
             // s.updatePixels();
 
-
             zoff += 0.001;
-            console.log(s.frameRate());
         }
         s.mouseClicked = () => {
             if (s.mouseX < s.width && s.mouseY < s.height && s.mouseX > 0 && s.mouseY > 0) {
