@@ -1,4 +1,5 @@
 let defaultSize = 400;
+let isPause = false;
 let sketchHolder = document.getElementById("sketch-holder") || undefined;
 let roughnessSlider = document.getElementById("roughnessSlider") || undefined;
 let angleRangeSlider = document.getElementById("angleRangeSlider") || undefined;
@@ -63,7 +64,6 @@ class flowFieldGenerator {
             let p5Download = new p5.Element(downloadBtn);
             p5Download.mouseClicked(doDownload);
 
-            // s.pixelDensity(1);
             s.frameRate(10);
             s.windowResized();
         }
@@ -97,23 +97,11 @@ class flowFieldGenerator {
                 let par = new Particle();
                 particles.push(par);
             }
-
-            // s.loadPixels();
-            // for (let y = 0; y < s.height; y++) {
-            //     for (let x = 0; x < s.width; x++) {
-            //         let index = (x + y * s.floor(s.width)) * 4;
-            //         s.pixels[index] = 0;
-            //         s.pixels[index + 1] = 0;
-            //         s.pixels[index + 2] = 0;
-            //         s.pixels[index + 3] = 0;
-            //     }
-            // }
-            // s.updatePixels();
         }
         s.draw = () => {
             let roughness = roughnessSlider.value;
             let angleRange = angleRangeSlider.value;
-            // s.loadPixels();
+
             for (let i = 0; i < particles.length; i++) {
                 let par = particles[i];
                 let xoff = par.pos.x * roughness;
@@ -123,25 +111,18 @@ class flowFieldGenerator {
                 par.pos.sub(par.direction);
                 par.edge();
                 par.show();
-                // let index = (s.floor(par.pos.x) + s.floor(par.pos.y) * s.floor(s.width)) * 4;
-                // s.pixels[index] = 0;
-                // s.pixels[index + 1] = 0;
-                // s.pixels[index + 2] = 0;
-                // s.pixels[index + 3] += 5;
             }
-            // s.updatePixels();
-
             zoff += 0.001;
         }
         s.mouseClicked = () => {
             if (s.mouseX < s.width && s.mouseY < s.height && s.mouseX > 0 && s.mouseY > 0) {
                 if (s.isLooping()) {
                     s.noLoop();
-                    console.log('paused');
+                    showIcon('pause');
                 }
                 else {
                     s.loop();
-                    console.log('resume');
+                    showIcon('resume');
                 }
             }
         }
@@ -168,4 +149,14 @@ function generateNew() {
 function generateFullScreen() {
     let elem = document.querySelector("canvas");
     elem.requestFullscreen();
+}
+
+function showIcon(status) {
+    if (status === 'pause') {
+        $("#overlay").html('PAUSE');
+    } else {
+        $("#overlay").html('RESUME');
+    };
+    document.getElementById("overlay").style.display = "block";
+    $("#overlay").fadeOut(800);
 }

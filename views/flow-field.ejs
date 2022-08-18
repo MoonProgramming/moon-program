@@ -1,4 +1,17 @@
 <% layout('layout') -%>
+<style>
+    #container #sketch-holder, #overlay {
+        position: absolute;
+        background-color: rgba(0,0,0,0.2);
+        display: none;
+        font-size: large;
+        font-weight: 500;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+    }
+</style>
 
 <div class="container">
     <div class="pb-2 mt-4 mb-4 border-bottom">
@@ -12,7 +25,10 @@
 
     <div class="row justify-content-sm-center mt-2">
         <div class="col-sm-auto">
+                
+            <div id="overlay"></div>
             <div id="sketch-holder"></div>
+
             <div class="d-flex flex-column">
                 <div class="d-flex justify-content-between">
                     <div id="attr1-slider">
