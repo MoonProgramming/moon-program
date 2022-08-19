@@ -25,10 +25,10 @@
 
     <div class="row justify-content-sm-center mt-2">
         <div class="col-sm-auto">
-                
-            <div id="overlay"></div>
-            <div id="sketch-holder"></div>
-
+            <div id="fullscreen">
+                <div id="overlay"></div>
+                <div id="sketch-holder"></div>
+            </div>
             <div class="d-flex flex-column">
                 <div class="d-flex justify-content-between">
                     <div id="attr1-slider">
@@ -50,10 +50,10 @@
                     <button class="btn btn-sm btn-light" type="button" onclick="generateNew()">
                         Generate New &raquo;
                     </button>
-                    <button class="btn btn-sm btn-light" type="button" onclick="generateFullScreen()" id="fullScreen">
+                    <button class="btn btn-sm btn-light" type="button" onclick="generateFullScreen()">
                         Generate Full Screen &raquo;
                     </button>
-                    <button class="btn btn-sm btn-light" type="button" id="download">
+                    <button class="btn btn-sm btn-light" type="button" onclick="download()">
                         Download &raquo;
                     </button>
                 </div>

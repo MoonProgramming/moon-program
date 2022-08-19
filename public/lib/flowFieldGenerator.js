@@ -1,11 +1,11 @@
 let defaultSize = 400;
+let canvasId = 'flowField';
 let isPause = false;
 let sketchHolder = document.getElementById("sketch-holder") || undefined;
 let roughnessSlider = document.getElementById("roughnessSlider") || undefined;
 let angleRangeSlider = document.getElementById("angleRangeSlider") || undefined;
 let roughnessOutput = document.getElementById("roughnessOutput") || undefined;
 let angleRangeOutput = document.getElementById("angleRangeOutput") || undefined;
-let downloadBtn = document.getElementById("download") || undefined;
 
 roughnessOutput.innerHTML = roughnessSlider.value;
 angleRangeOutput.innerHTML = angleRangeSlider.value;
@@ -52,17 +52,15 @@ class flowFieldGenerator {
             }
         }
 
-        let renderer;
+        s.renderer;
         let totalSize = 400;
         let particles = [];
         let zoff = 0;
 
         s.preload = () => { }
         s.setup = () => {
-            renderer = s.createCanvas(this.defaultSize, this.defaultSize);
-
-            let p5Download = new p5.Element(downloadBtn);
-            p5Download.mouseClicked(doDownload);
+            s.renderer = s.createCanvas(this.defaultSize, this.defaultSize);
+            s.renderer.id(canvasId);
 
             s.frameRate(10);
             s.windowResized();
@@ -78,7 +76,7 @@ class flowFieldGenerator {
                     else
                         totalSize = this.defaultSize;
                     s.resizeCanvas(totalSize, totalSize);
-                    renderer.parent(this.sketchHolder);
+                    s.renderer.parent(this.sketchHolder);
                 } else {
                     totalSize = Math.max(s.windowWidth, s.windowHeight);
                     s.resizeCanvas(s.windowWidth, s.windowHeight);
@@ -126,9 +124,6 @@ class flowFieldGenerator {
                 }
             }
         }
-        function doDownload() {
-            s.saveCanvas(renderer, 'flowField', 'png');
-        }
     }
 }
 
@@ -147,16 +142,21 @@ function generateNew() {
 }
 
 function generateFullScreen() {
-    let elem = document.querySelector("canvas");
+    let elem = document.getElementById('fullscreen');
     elem.requestFullscreen();
 }
 
+function download() {
+    canvas.saveCanvas(canvas.renderer, 'flowField', 'png');
+}
+
 function showIcon(status) {
+    $("#overlay").stop(true, true);
     if (status === 'pause') {
         $("#overlay").html('PAUSE');
     } else {
         $("#overlay").html('RESUME');
     };
     document.getElementById("overlay").style.display = "block";
-    $("#overlay").fadeOut(800);
+    $("#overlay").fadeOut(4000);
 }
