@@ -30,7 +30,7 @@ class CanvasParanoiaGenerator {
         let totalSize = 600;
         let colors;
         let grainTexture;
-        let rectAlpha = 3;
+        let rectAlpha = 255;
         let layers = 150;
         let layerDistRange = 100;
         let rectArea = 50;
@@ -143,11 +143,11 @@ class CanvasParanoiaGenerator {
             s.noStroke();
             s.blendMode(s.HARD_LIGHT);
             
-            // for (let y = -rectArea; y < s.height + rectArea * 2; y += rectArea) {
-            //     for (let x = -rectArea; x < s.width + rectArea * 2; x += rectArea) {
-            //         drawRect(x, y, rectArea + rectArea / 2);
-            //     }
-            // }
+            for (let y = -rectArea; y < s.height + rectArea * 2; y += rectArea) {
+                for (let x = -rectArea; x < s.width + rectArea * 2; x += rectArea) {
+                    drawRect(x, y, rectArea + rectArea / 2);
+                }
+            }
             console.log('done rect');
 
             // blendMode(OVERLAY);
