@@ -89,6 +89,8 @@ class CanvasParanoiaGenerator {
         s.preload = () => {}
         s.setup = () => {
             s.renderer = s.createCanvas(this.defaultSize, this.defaultSize);
+            s.pixelDensity(1);
+            console.log('pixelDensity: '+ s.pixelDensity());
             s.windowResized();
             start();
         }
@@ -131,7 +133,7 @@ class CanvasParanoiaGenerator {
         }
         s.draw = () => {
             console.log('start draw, start rect');
-            s.pixelDensity(1);
+            
             
             createGrainTexture();
             console.log('done creating grain');
