@@ -136,22 +136,22 @@ class CanvasParanoiaGenerator {
             s.pixelDensity(3);
             console.log('pixelDensity: '+ s.pixelDensity());
             
-            // createGrainTexture();
+            createGrainTexture();
             console.log('done creating grain');
             
             s.background(200);
             s.noStroke();
             s.blendMode(s.HARD_LIGHT);
             
-            for (let y = -rectArea; y < s.height + rectArea * 2; y += rectArea) {
-                for (let x = -rectArea; x < s.width + rectArea * 2; x += rectArea) {
-                    drawRect(x, y, rectArea + rectArea / 2);
-                }
-            }
+            // for (let y = -rectArea; y < s.height + rectArea * 2; y += rectArea) {
+            //     for (let x = -rectArea; x < s.width + rectArea * 2; x += rectArea) {
+            //         drawRect(x, y, rectArea + rectArea / 2);
+            //     }
+            // }
             console.log('done rect');
 
             // blendMode(OVERLAY);
-            // s.image(grainTexture, 0, 0);
+            s.image(grainTexture, 0, 0);
             console.log('done draw');
             s.noLoop();
         }
