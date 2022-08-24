@@ -16,8 +16,7 @@
 <div class="container">
     <div class="pb-2 mt-4 mb-4 border-bottom">
         <h2>Canvas Paranoia</h2>
-        <div class="small mt-3">&bull; A simulator of random acrylic gradient texture painted on canvas material.<br>
-            &bull; Download the picture if you like, you will never get the same once it's gone.
+        <div class="small mt-3">&bull; A simulator of random acrylic gradient texture painted on canvas material.
         </div>
     </div>
 
@@ -30,22 +29,6 @@
                 <div id="sketch-holder"></div>
             </div>
             <div class="d-flex flex-column">
-                <!-- <div class="d-flex justify-content-between">
-                    <div id="attr1-slider">
-                        <input type="range" min="0.001" max="0.1" value="0.01" step="0.001" id="roughnessSlider">
-                    </div>
-                    <div id="attr1-value">
-                        Roughness = <span id="roughnessOutput"></span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <div id="attr2-slider">
-                        <input type="range" min="1" max="4" value="1" step="0.5" id="angleRangeSlider">
-                    </div>
-                    <div id="attr2-value">
-                        Angle Range = <span id="angleRangeOutput"></span>
-                    </div>
-                </div> -->
                 <div class="d-flex justify-content-between">
                     <button class="btn btn-sm btn-light" type="button" onclick="generateNew()">
                         Generate New &raquo;
@@ -62,4 +45,5 @@
     </div>
 </div>
 
-<script src="/lib/canvasParanoiaGenerator.js"></script>
+<script>const palettes = <%- JSON.stringify(palettes) %> </script>
+<script type="module" src="/lib/canvasParanoiaGenerator.js"></script>

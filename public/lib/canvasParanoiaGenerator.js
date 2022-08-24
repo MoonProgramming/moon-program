@@ -1,20 +1,7 @@
+import { PaletteSelector } from "./utils/paletteSelector.js"
+
 let defaultSize = 400;
 let sketchHolder = document.getElementById("sketch-holder") || undefined;
-
-const colorPalette = [
-    { index: 'Bees', colors: ["#20191b", "#E69A1E", "#f3cb4d", "#f2f5e3"] },
-    { index: 'Moscow', colors: ["#B8B4C9", "#F9E267", "#1E3B6C", "#D94030", "#5990A3"] },
-    { index: 'Polaroid', colors: ["#f4c172", "#7b8a56", "#363d4a", "#ff9369"] },
-    { index: 'Drown', colors: ["#001219", "#005f73", "#0a9396", "#94d2bd"] },
-    { index: 'Sunburst', colors: ["#e9d8a6", "#ee9b00", "#ca6702", "#bb3e03", "#ae2012"] },
-    { index: 'Rainbow', colors: ["#f94144", "#f3722c", "#f8961e", "#f9c74f", "#90be6d", "#43aa8b", "#577590"] },
-    { index: 'Japan', colors: ["#f0e0c6", "#7a999c", "#df4a33", "#475b62", "#fbaf3c", "#2a1f1d"] },
-    { index: 'Neon', colors: ["#75D5FD", "#B76CFD", "#FF2281", "#011FFD"] },
-    { index: 'Swamp', colors: ['#DDE4D2', '#A6C3AD', '#3F5F54', '#1A2419'] },
-    { index: 'Fox', colors: ['#DFE3E2', '#8B7568', '#B9391C', '#251A22'] },
-    { index: 'Wood', colors: ['#E5D9E3', '#D9AA64', '#935A3D', '#464D4F'] },
-    { index: 'Matrix', colors: ['#62D788', '#3D8C55', '#092F16', '#030200'] },
-];
 
 class CanvasParanoiaGenerator {
 
@@ -37,7 +24,6 @@ class CanvasParanoiaGenerator {
         let textSize = 30;
 
         function createGrainTexture() {
-            console.log('createGrainTexture', s.width, s.height);
             grainTexture = s.createImage(s.width, s.height);
             let d = s.pixelDensity();
             grainTexture.loadPixels();
@@ -87,14 +73,14 @@ class CanvasParanoiaGenerator {
         }
 
         s.preload = () => {}
+
         s.setup = () => {
             s.renderer = s.createCanvas(this.defaultSize, this.defaultSize);
-            
             s.windowResized();
             start();
         }
+
         s.windowResized = () => {
-            console.log('windowResized triggered');
             let fs = s.fullscreen();
             if (this.sketchHolder) {
                 if (!fs) {
@@ -115,46 +101,37 @@ class CanvasParanoiaGenerator {
                 textSize = Math.floor(totalSize / 20);
             }
         }
+
         function showLoadingText() {
             s.pixelDensity(1);
             s.background(200);
             s.textSize(textSize);
             s.textAlign(s.CENTER);
             s.text('loading...', s.width/2, s.height/2);
-            console.log('show loading text');
         }
-        function start() {
-            console.log('start');
-            
-            colors = s.random(colorPalette).colors;
 
+        function start() {
+            colors = new PaletteSelector(palettes).random(false, 150, 150);
             showLoadingText();
         }
-        s.draw = () => {
-            console.log('start draw');
 
+        s.draw = () => {
             s.pixelDensity(3);
-            console.log('pixelDensity: '+ s.pixelDensity());
-            
             createGrainTexture();
-            console.log('done creating grain');
             
             s.background(200);
             s.noStroke();
-            // s.blendMode(s.HARD_LIGHT);
             
             for (let y = -rectArea; y < s.height + rectArea * 2; y += rectArea) {
                 for (let x = -rectArea; x < s.width + rectArea * 2; x += rectArea) {
                     drawRect(x, y, rectArea + rectArea / 2);
                 }
             }
-            console.log('done rect');
 
-            // blendMode(OVERLAY);
             s.image(grainTexture, 0, 0);
-            console.log('done draw');
             s.noLoop();
         }
+        
         s.mouseClicked = () => {
             if (s.mouseX < s.width && s.mouseY < s.height && s.mouseX > 0 && s.mouseY > 0) {
                 if (s.isLooping()) {
@@ -173,7 +150,7 @@ class CanvasParanoiaGenerator {
 let canvasParanoiaInstance = new CanvasParanoiaGenerator(defaultSize, sketchHolder);
 let canvas = new p5(canvasParanoiaInstance.sketch, sketchHolder);
 
-function generateNew() {
+window.generateNew = () => {
     if (canvas) {
         canvas.remove();
         canvas = null;
@@ -184,12 +161,12 @@ function generateNew() {
     canvas = new p5(canvasParanoiaInstance.sketch, sketchHolder);
 }
 
-function generateFullScreen() {
+window.generateFullScreen = () => {
     let elem = document.getElementById('fullscreen');
     elem.requestFullscreen();
 }
 
-function download() {
+window.download = () => {
     canvas.saveCanvas(canvas.renderer, 'Canvas Paranoia', 'png');
 }
 
