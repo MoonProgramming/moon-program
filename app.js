@@ -21,6 +21,7 @@ const furOutRouter = require('./routes/fur-out');
 const snakeGameRouter = require('./routes/snake-game');
 const flowFieldRouter = require('./routes/flow-field');
 const canvasParanoiaRouter = require('./routes/canvas-paranoia');
+const emojiScreamRouter = require('./routes/emoji-scream');
 const acctRouter = require('./routes/acct');
 
 
@@ -50,7 +51,8 @@ app.use(
                     'https://stackpath.bootstrapcdn.com',
                     'https://unpkg.com',
                     "'unsafe-eval'",
-                    "'unsafe-inline'"
+                    "'unsafe-inline'",
+                    "blob:"
                 ],
                 styleSrc: [
                     "'self'",
@@ -61,6 +63,7 @@ app.use(
                     "'self'",
                     'data:',
                     'https://storage.googleapis.com',
+                    "blob:"
                 ],
                 connectSrc: ["'self'"],
                 fontSrc: ["'self'"],
@@ -127,6 +130,7 @@ app.use('/fur-out', furOutRouter);
 app.use('/snake-game', snakeGameRouter);
 app.use('/flow-field', flowFieldRouter);
 app.use('/canvas-paranoia', canvasParanoiaRouter);
+app.use('/emoji-scream', emojiScreamRouter);
 app.use('/acct', acctRouter);
 
 

@@ -14,7 +14,7 @@ class CanvasParanoiaGenerator {
     sketch = (s) => {
 
         s.renderer;
-        let totalSize = 600;
+        let totalSize = 400;
         let colors;
         let grainTexture;
         let rectAlpha = 3;

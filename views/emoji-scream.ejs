@@ -1,0 +1,33 @@
+<% layout('layout') -%>
+<% script('https://unpkg.com/p5.createloop@0.2.8/dist/p5.createloop.js') -%>
+
+<div class="container">
+    <div class="pb-2 mt-4 mb-4 border-bottom">
+        <h2>Emoji Scream</h2>
+        <div class="small mt-3">&bull; Shock expression emoji in manga style.
+        </div>
+    </div>
+
+    <% include templates/alert.ejs %>
+
+    <div class="row justify-content-sm-center mt-2">
+        <div class="col-sm-auto">
+            <div id="fullscreen">
+                <div id="overlay"></div>
+                <div id="sketch-holder"></div>
+            </div>
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-sm btn-light" type="button" onclick="generateNew()">
+                        Generate New &raquo;
+                    </button>
+                    <button class="btn btn-sm btn-light" type="button" onclick="download()" id="downloadGif">
+                        Download GIF &raquo;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="/lib/emojiScreamGenerator.js"></script>
