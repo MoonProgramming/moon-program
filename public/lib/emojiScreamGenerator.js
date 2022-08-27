@@ -12,6 +12,7 @@ class EmojiScreamGenerator {
     sketch = (s) => {
 
         s.renderer;
+        let isMobile;
         let totalSize = 400;
         let emoji;
         let emojis = [
@@ -37,7 +38,9 @@ class EmojiScreamGenerator {
         s.preload = () => { }
 
         s.setup = () => {
-            s.pixelDensity(4);
+            console.log('pixelDensity = ' + s.pixelDensity());
+            if (s.pixelDensity() > 1) isMobile = true;
+            s.pixelDensity(1);
             s.renderer = s.createCanvas(this.defaultSize, this.defaultSize);
             s.windowResized();
             start();
@@ -81,7 +84,11 @@ class EmojiScreamGenerator {
             }
 
             let area = s.width;
-            s.stroke(0);
+            s.stroke(0, 255);
+
+            if (isMobile) {
+                s.stroke(0, 100);
+            }
             s.strokeWeight(0.07);
             for (let i = 0; i < area; i++) {
                 let x = s.random(area);
