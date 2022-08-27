@@ -38,6 +38,7 @@ class EmojiScreamGenerator {
 
         s.setup = () => {
             s.renderer = s.createCanvas(this.defaultSize, this.defaultSize);
+            s.pixelDensity(1);
             s.windowResized();
             start();
         }
@@ -64,33 +65,6 @@ class EmojiScreamGenerator {
         function start() {
             s.background(255);
             emoji = emojis[s.floor(s.random(emojis.length))];
-
-            // s.createLoop({
-            //     duration: 3,
-            //     noise: {
-            //         radius: 0.8,
-            //         seed: s.random(0, 99999),
-            //     },
-            //     gif: {
-            //         render: false,
-            //         open: false,
-            //         download: false,
-            //         fileName: 'Crypto_Block_#' + itemCount + '.gif',
-            //         // startLoop: 0,
-            //         // endLoop: 2,
-            //         options: {
-            //             quality: 5,
-            //             width: null,
-            //             height: null,
-            //             debug: false,
-            //         },
-            //     }
-            // });
-            // createLoop({
-            // 	duration: 3,
-            //     gif: true,
-            // });
-            // animLoop.noiseFrequency(0.4)
         }
 
         s.draw = () => {
@@ -155,7 +129,7 @@ window.download = () => {
                 quality: 5,
                 width: null,
                 height: null,
-                debug: false,
+                debug: true,
             },
         }
     });
