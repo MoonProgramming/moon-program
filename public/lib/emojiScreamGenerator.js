@@ -37,8 +37,8 @@ class EmojiScreamGenerator {
         s.preload = () => { }
 
         s.setup = () => {
-            s.renderer = s.createCanvas(this.defaultSize, this.defaultSize);
             s.pixelDensity(1);
+            s.renderer = s.createCanvas(this.defaultSize, this.defaultSize);
             s.windowResized();
             start();
         }
