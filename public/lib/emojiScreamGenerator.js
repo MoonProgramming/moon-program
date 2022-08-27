@@ -87,7 +87,7 @@ class EmojiScreamGenerator {
             s.stroke(0, 255);
 
             if (isMobile) {
-                s.stroke(0, 60);
+                s.stroke(0, 40);
             }
             s.strokeWeight(0.07);
             for (let i = 0; i < area; i++) {
