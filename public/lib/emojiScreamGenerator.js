@@ -38,7 +38,6 @@ class EmojiScreamGenerator {
         s.preload = () => { }
 
         s.setup = () => {
-            console.log('pixelDensity = ' + s.pixelDensity());
             if (s.pixelDensity() > 1) isMobile = true;
             s.pixelDensity(1);
             s.renderer = s.createCanvas(this.defaultSize, this.defaultSize);
