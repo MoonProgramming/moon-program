@@ -50,7 +50,7 @@ class EmojiScreamGenerator {
                     this.sketchHolder.innerHTML = "";
                     let maxSize = Math.min(window.visualViewport.width, window.visualViewport.height);
                     if (maxSize < this.thresholdSize)
-                        totalSize = Math.floor(maxSize * 92 / 100);
+                        totalSize = Math.floor(maxSize * 0.92);
                     else
                         totalSize = this.defaultSize;
                     s.resizeCanvas(totalSize, totalSize);
@@ -71,21 +71,22 @@ class EmojiScreamGenerator {
             s.background(220, 8);
 
             s.noStroke();
-            s.textSize(300);
+            s.textSize(s.width * 0.82);
             s.textAlign(s.CENTER);
             s.fill(255, 255, 255, 10);
 
-            let range = 8;
+            let range = s.width * 0.02;
             for (let i = 0; i < 6; i++) {
-                s.text(emoji, s.width / 2 + s.random(-range, range), s.height / 1.3 + s.random(-range, range));
+                s.text(emoji, s.width / 2 + s.random(-range, range), s.height / 1.27 + s.random(-range, range));
             }
 
+            let area = s.width;
             s.stroke(0);
             s.strokeWeight(0.07);
-            for (let i = 0; i < 500; i++) {
-                let x = s.random(400);
-                let y = s.random(500);
-                s.line(x, y - i, x, y - i - s.random(400));
+            for (let i = 0; i < area; i++) {
+                let x = s.random(area);
+                let y = s.random(area + area * 0.25);
+                s.line(x, y - i, x, y - i - s.random(area));
             }
         }
     }
@@ -113,7 +114,7 @@ window.download = () => {
         console.log('download complete');
         elem.innerHTML = 'Download GIF &raquo;';
         elem.disabled = false;
-    }, 8000);
+    }, 10000);
 
     canvas.createLoop({
         duration: 3,
@@ -129,7 +130,7 @@ window.download = () => {
                 quality: 5,
                 width: null,
                 height: null,
-                debug: true,
+                debug: false,
             },
         }
     });
