@@ -19,6 +19,7 @@ class PaletteSelector {
                 maxTry++;
                 lumaRange = calculateLumaRange(palette);
             }
+            // console.log('lumaRange = ' + lumaRange);
         }
         
         if (maxLuma) {
@@ -30,6 +31,7 @@ class PaletteSelector {
                 maxTry++;
                 minLuma = calculateMinimumLuma(palette);
             }
+            // console.log('minLuma = ' + minLuma);
         }
 
         if (isOrderByBrightness) {

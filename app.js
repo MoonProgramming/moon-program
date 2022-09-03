@@ -22,6 +22,7 @@ const snakeGameRouter = require('./routes/snake-game');
 const flowFieldRouter = require('./routes/flow-field');
 const canvasParanoiaRouter = require('./routes/canvas-paranoia');
 const emojiScreamRouter = require('./routes/emoji-scream');
+const domainWarpingRouter = require('./routes/domain-warping');
 const acctRouter = require('./routes/acct');
 
 
@@ -131,6 +132,7 @@ app.use('/snake-game', snakeGameRouter);
 app.use('/flow-field', flowFieldRouter);
 app.use('/canvas-paranoia', canvasParanoiaRouter);
 app.use('/emoji-scream', emojiScreamRouter);
+app.use('/domain-warping', domainWarpingRouter);
 app.use('/acct', acctRouter);
 
 
