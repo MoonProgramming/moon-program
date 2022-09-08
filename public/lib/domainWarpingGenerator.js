@@ -158,14 +158,3 @@ window.generateFullScreen = () => {
 window.download = () => {
     canvas.saveCanvas(canvas.renderer, 'Domain Warping', 'jpeg');
 }
-
-function showIcon(status) {
-    $("#overlay").stop(true, true);
-    if (status === 'pause') {
-        $("#overlay").html('PAUSE');
-    } else {
-        $("#overlay").html('Another Piece (Same Base Color)');
-    };
-    document.getElementById("overlay").style.display = "block";
-    $("#overlay").fadeOut(6000);
-}
