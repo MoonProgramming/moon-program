@@ -51,6 +51,7 @@ app.use(
                     'https://cdnjs.cloudflare.com',
                     'https://stackpath.bootstrapcdn.com',
                     'https://unpkg.com',
+                    'https://cdn.skypack.dev',
                     "'unsafe-eval'",
                     "'unsafe-inline'",
                     "blob:"

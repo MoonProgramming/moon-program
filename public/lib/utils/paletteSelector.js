@@ -8,14 +8,14 @@ class PaletteSelector {
     // maxLuma ~= 150, minLumaRange ~= 150
     random(isOrderByBrightness, maxLuma, minLumaRange) {
         let index = Math.floor(Math.random() * this.palettes.length);
-        let palette = palettes[index];
+        let palette = this.palettes[index];
         
         if (minLumaRange) {
             let maxTry = 0;
             let lumaRange = calculateLumaRange(palette);
             while (lumaRange < minLumaRange && maxTry < 10) {
                 index = Math.floor(Math.random() * this.palettes.length);
-                palette = palettes[index];
+                palette = this.palettes[index];
                 maxTry++;
                 lumaRange = calculateLumaRange(palette);
             }
@@ -27,7 +27,7 @@ class PaletteSelector {
             let minLuma = calculateMinimumLuma(palette);
             while (minLuma > maxLuma && maxTry < 10) {
                 index = Math.floor(Math.random() * this.palettes.length);
-                palette = palettes[index];
+                palette = this.palettes[index];
                 maxTry++;
                 minLuma = calculateMinimumLuma(palette);
             }

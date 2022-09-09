@@ -1,3 +1,4 @@
+import palettes from 'https://cdn.skypack.dev/nice-color-palettes@3.0.0/1000.json' assert { type: "json" };
 import { PaletteSelector } from "./utils/paletteSelector.js"
 
 let defaultSize = 400;
