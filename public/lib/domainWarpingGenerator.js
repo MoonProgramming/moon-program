@@ -1,5 +1,9 @@
 import palettes from 'https://cdn.skypack.dev/nice-color-palettes@3.0.0/1000.json' assert { type: "json" };
-import { PaletteSelector } from "./utils/paletteSelector.js"
+import { PaletteSelector } from "./utils/paletteSelector.js";
+// Use 'https://cdn.skypack.dev/' + 'npm package name' + '@version its optional'
+// import { createNoise2D } from 'https://cdn.skypack.dev/simplex-noise@4.0.0';
+// const simplexNoise2D = createNoise2D();
+// console.log(noise2D(1, 1));
 
 let defaultSize = 400;
 let sketchHolder = document.getElementById("sketch-holder") || undefined;

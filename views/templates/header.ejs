@@ -9,51 +9,58 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-            
-            <li class="nav-item"></li>
-                <a class="nav-link <% if(pageName === 'sudoku'){%>active<%}%>" href="/sudoku">
-                    Sudoku
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Generative Art
                 </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item <% if(pageName === 'domain-warping'){%>active<%}%>" href="/domain-warping">
+                        Domain Warping
+                    </a>
+                    <a class="dropdown-item <% if(pageName === 'emoji-scream'){%>active<%}%>" href="/emoji-scream">
+                        Emoji Scream
+                    </a>
+                    <a class="dropdown-item <% if(pageName === 'canvas-paranoia'){%>active<%}%>" href="/canvas-paranoia">
+                        Canvas Paranoia
+                    </a>
+                    <a class="dropdown-item <% if(pageName === 'flow-field'){%>active<%}%>" href="/flow-field">
+                        Flow Field
+                    </a>
+                    <a class="dropdown-item <% if(pageName === 'fur-out'){%>active<%}%>" href="/fur-out">
+                        Fur Out
+                    </a>
+                </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link <% if(pageName === 'crypto-blocks'){%>active<%}%>" href="/crypto-blocks">
-                    Crypto Blocks
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    NFT
                 </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item <% if(pageName === 'skylines-end'){%>active<%}%>" href="/skylines-end">
+                        Skyline's End
+                    </a>
+                    <a class="dropdown-item <% if(pageName === 'crypto-blocks'){%>active<%}%>" href="/crypto-blocks">
+                        Crypto Blocks
+                    </a>
+                </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link <% if(pageName === 'skylines-end'){%>active<%}%>" href="/skylines-end">
-                    Skyline's End
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Games
                 </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link <% if(pageName === 'fur-out'){%>active<%}%>" href="/fur-out">
-                    Fur Out
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link <% if(pageName === 'snake-game'){%>active<%}%>" href="/snake-game">
-                    Snake Game
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link <% if(pageName === 'flow-field'){%>active<%}%>" href="/flow-field">
-                    Flow Field
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link <% if(pageName === 'canvas-paranoia'){%>active<%}%>" href="/canvas-paranoia">
-                    Canvas Paranoia
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link <% if(pageName === 'emoji-scream'){%>active<%}%>" href="/emoji-scream">
-                    Emoji Scream
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link <% if(pageName === 'domain-warping'){%>active<%}%>" href="/domain-warping">
-                    Domain Warping
-                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item <% if(pageName === 'snake-game'){%>active<%}%>" href="/snake-game">
+                        Snake Game
+                    </a>
+                    <a class="dropdown-item <% if(pageName === 'sudoku'){%>active<%}%>" href="/sudoku">
+                        Sudoku
+                    </a>
+                </div>
             </li>
         </ul>
 
@@ -69,13 +76,14 @@
                 </li>
             </ul>
         <% } else { %>
-        <ul class="navbar-nav" id="acct-nav-holder">
-            <li class="nav-item mt-3 mt-md-0">
-                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#loginModal">
-                    Admin Login
-                </button>
-            </li>
-        </ul>
+            <ul class="navbar-nav" id="acct-nav-holder">
+                <li class="nav-item mt-3 mt-md-0">
+                    <button type="button" class="btn btn-outline-success" data-toggle="modal"
+                        data-target="#loginModal">
+                        Admin Login
+                    </button>
+                </li>
+            </ul>
         <% } %>
 
     </div>
