@@ -62,6 +62,24 @@
                     </a>
                 </div>
             </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Music Albums
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item <% if(pageName === 'moon-negativeeffect'){%>active<%}%>" href="/music-albums/moon-negativeeffect">
+                        阿滿 - 負作用 (Negative Effect)
+                    </a>
+                    <a class="dropdown-item <% if(pageName === 'moon-spacestation'){%>active<%}%>" href="/music-albums/moon-spacestation">
+                        阿滿 - 太空站 (Space Station)
+                    </a>
+                    <a class="dropdown-item <% if(pageName === 'mage_era-immortal'){%>active<%}%>" href="/music-albums/mage_era-immortal">
+                        Mage Era - Immortal
+                    </a>
+                </div>
+            </li>
         </ul>
 
         <% if (user) { %>

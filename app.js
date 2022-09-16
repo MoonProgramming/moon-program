@@ -14,6 +14,7 @@ const csrfProtection = csrf({ cookie: true });
 const jwt = require('jsonwebtoken');
 
 const indexRouter = require('./routes/index');
+const musicAlbumsRouter = require('./routes/music-albums');
 const sudokuRouter = require('./routes/sudoku');
 const cryptoBlocksRouter = require('./routes/crypto-blocks');
 const newNftProjectRouter = require('./routes/new-nft-project');
@@ -71,7 +72,9 @@ app.use(
                 fontSrc: ["'self'"],
                 objectSrc: ["'self'"],
                 mediaSrc: ["'self'"],
-                frameSrc: ["'self'"],
+                frameSrc: [
+                    "'self'",
+                    'https://open.spotify.com'],
                 frameAncestors: [
                     "'self'",
                     'https://testnets.opensea.io',
@@ -113,7 +116,8 @@ app.use(function (req, res, next) {
             console.error(err);
         }
     }
-    res.locals.pageName = req.path.split('/')[1];
+    let pathName = req.path.split('/');
+    res.locals.pageName = pathName[pathName.length - 1];
     res.locals.user = req.user;
     res.locals.alerts = [];
     next();
@@ -124,6 +128,7 @@ const skylinesEnd = require('./utils/contracts/skylines-end');
 
 // Routes
 app.use('/', indexRouter);
+app.use('/music-albums', musicAlbumsRouter);
 app.use('/sudoku', sudokuRouter);
 app.use('/crypto-blocks', cryptoBlocksRouter);
 app.use(`/${newNftProject.projectPath}`, newNftProjectRouter);
