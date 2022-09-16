@@ -1,10 +1,4 @@
 import { PaletteSelector } from "./utils/paletteSelector.js";
-const paletteImport = await import(
-    'https://cdn.skypack.dev/nice-color-palettes@3.0.0/1000.json',
-    {
-        assert: { type: 'json' }
-    });
-const palettes = paletteImport.default;
 // Use 'https://cdn.skypack.dev/' + 'npm package name' + '@version its optional'
 // import { createNoise2D } from 'https://cdn.skypack.dev/simplex-noise@4.0.0';
 // const simplexNoise2D = createNoise2D();

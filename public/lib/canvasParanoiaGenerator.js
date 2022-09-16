@@ -1,11 +1,6 @@
-import { PaletteSelector } from "./utils/paletteSelector.js";
-const paletteImport = await import(
-    'https://cdn.skypack.dev/nice-color-palettes@3.0.0/1000.json',
-    {
-        assert: { type: 'json' }
-    });
-const palettes = paletteImport.default;
 
+import { PaletteSelector } from "./utils/paletteSelector.js";
+        
 let defaultSize = 400;
 let sketchHolder = document.getElementById("sketch-holder") || undefined;
 
