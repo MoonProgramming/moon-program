@@ -14,16 +14,11 @@ const csrfProtection = csrf({ cookie: true });
 const jwt = require('jsonwebtoken');
 
 const indexRouter = require('./routes/index');
+const genArtRouter = require('./routes/generative-art');
+const nftRouter = require('./routes/nft');
+const gamesRouter = require('./routes/games');
 const musicAlbumsRouter = require('./routes/music-albums');
-const sudokuRouter = require('./routes/sudoku');
-const cryptoBlocksRouter = require('./routes/crypto-blocks');
 const newNftProjectRouter = require('./routes/new-nft-project');
-const furOutRouter = require('./routes/fur-out');
-const snakeGameRouter = require('./routes/snake-game');
-const flowFieldRouter = require('./routes/flow-field');
-const canvasParanoiaRouter = require('./routes/canvas-paranoia');
-const emojiScreamRouter = require('./routes/emoji-scream');
-const domainWarpingRouter = require('./routes/domain-warping');
 const acctRouter = require('./routes/acct');
 
 
@@ -116,8 +111,8 @@ app.use(function (req, res, next) {
             console.error(err);
         }
     }
-    let pathName = req.path.split('/');
-    res.locals.pageName = pathName[pathName.length - 1];
+    let pathArray = req.path.split('/');
+    res.locals.pageName = pathArray[pathArray.length - 1];
     res.locals.user = req.user;
     res.locals.alerts = [];
     next();
@@ -128,17 +123,12 @@ const skylinesEnd = require('./utils/contracts/skylines-end');
 
 // Routes
 app.use('/', indexRouter);
+app.use('/generative-art', genArtRouter);
+app.use('/nft', nftRouter);
+app.use('/games', gamesRouter);
 app.use('/music-albums', musicAlbumsRouter);
-app.use('/sudoku', sudokuRouter);
-app.use('/crypto-blocks', cryptoBlocksRouter);
 app.use(`/${newNftProject.projectPath}`, newNftProjectRouter);
 app.use(`/${skylinesEnd.projectPath}`, newNftProjectRouter);
-app.use('/fur-out', furOutRouter);
-app.use('/snake-game', snakeGameRouter);
-app.use('/flow-field', flowFieldRouter);
-app.use('/canvas-paranoia', canvasParanoiaRouter);
-app.use('/emoji-scream', emojiScreamRouter);
-app.use('/domain-warping', domainWarpingRouter);
 app.use('/acct', acctRouter);
 
 
